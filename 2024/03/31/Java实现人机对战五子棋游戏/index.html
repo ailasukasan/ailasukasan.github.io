@@ -1,0 +1,907 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Java实现人机对战五子棋游戏 | PHM&#39;s world</title>
+    <meta name="author" content="ailasukasan" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.loli.net" />
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>歡迎來到烏托邦的世界</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>PHM&#39;S WORLD</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;PHM</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;這一排標簽全部沒有開發</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;PHM&#39;S WORLD</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">PHM</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">這一排標簽全部沒有開發</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>Java实现人机对战五子棋游戏</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/3/31
+        </span>
+        
+        
+    </div>
+    <div class="content" v-pre>
+        <h1 id="思路很简单，就是简单的启发式搜索算法，我就不赘述了。"><a href="#思路很简单，就是简单的启发式搜索算法，我就不赘述了。" class="headerlink" title="思路很简单，就是简单的启发式搜索算法，我就不赘述了。"></a>思路很简单，就是简单的启发式搜索算法，我就不赘述了。</h1><h2 id="注释略-needen’t"><a href="#注释略-needen’t" class="headerlink" title="注释略&#x2F;&#x2F;needen’t"></a>注释略&#x2F;&#x2F;needen’t</h2><pre><code class="java">import java.util.Scanner;
+import java.awt.Point;
+import java.util.Random;
+
+public class ChessGame &#123;
+
+​    private static final int BOARD_GRAD_SIZE = 15;
+
+​    public class ChessData &#123;
+​        int[][] chessMap = new int[BOARD_GRAD_SIZE][BOARD_GRAD_SIZE];
+​        int[][] scoreMap = new int[BOARD_GRAD_SIZE][BOARD_GRAD_SIZE];
+​        boolean playerFlag;
+​    &#125;
+
+​    public class Point &#123;
+​        int row;
+​        int col;
+
+​        public Point(int row, int col) &#123;
+​            this.row = row;
+​            this.col = col;
+​        &#125;
+​    &#125;
+
+​    public void initializeChessData(ChessData data) &#123;
+​        if (data == null)
+​            return;
+
+​        for (int row = 0; row &lt; BOARD_GRAD_SIZE; row++) &#123;
+​            for (int col = 0; col &lt; BOARD_GRAD_SIZE; col++) &#123;
+​                data.chessMap[row][col] = 0;
+​                data.scoreMap[row][col] = 0;
+​            &#125;
+​        &#125;
+​        data.playerFlag = true;
+​    &#125;
+
+​    public void updateGameMap(ChessData data, int row, int col) &#123;
+​        if (data == null)
+​            return;
+
+​        if (data.playerFlag) &#123;
+​            data.chessMap[row][col] = 1;
+​        &#125; else &#123;
+​            data.chessMap[row][col] = -1;
+​        &#125;
+
+​        data.playerFlag = !data.playerFlag;
+​    &#125;
+
+​    public boolean checkWin(ChessData game, int row, int col) &#123;
+​        for (int i = 0; i &lt; 5; i++) &#123;
+​            if (col - i &gt;= 0 &amp;&amp;
+​                    col - i + 4 &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                    game.chessMap[row][col - i] == game.chessMap[row][col - i + 1] &amp;&amp;
+​                    game.chessMap[row][col - i] == game.chessMap[row][col - i + 2] &amp;&amp;
+​                    game.chessMap[row][col - i] == game.chessMap[row][col - i + 3] &amp;&amp;
+​                    game.chessMap[row][col - i] == game.chessMap[row][col - i + 4]) &#123;
+​                return true;
+​            &#125;
+​        &#125;
+
+​        for (int i = 0; i &lt; 5; i++) &#123;
+​            if (row - i &gt;= 0 &amp;&amp;
+​                    row - i + 4 &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                    game.chessMap[row - i][col] == game.chessMap[row - i + 1][col] &amp;&amp;
+​                    game.chessMap[row - i][col] == game.chessMap[row - i + 2][col] &amp;&amp;
+​                    game.chessMap[row - i][col] == game.chessMap[row - i + 3][col] &amp;&amp;
+​                    game.chessMap[row - i][col] == game.chessMap[row - i + 4][col]) &#123;
+​                return true;
+​            &#125;
+​        &#125;
+
+​        for (int i = 0; i &lt; 5; i++) &#123;
+​            if (row + i &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                    row + i - 4 &gt;= 0 &amp;&amp;
+​                    col - i &gt;= 0 &amp;&amp;
+​                    col - i + 4 &lt; BOARD_GRAD_SIZE) &#123;
+​                boolean isWin = true;
+​                for (int j = 0; j &lt; 5; j++) &#123;
+​                    if (game.chessMap[row + i - j][col - i + j] != game.chessMap[row + i][col - i]) &#123;
+​                        isWin = false;
+​                        break;
+​                    &#125;
+​                &#125;
+​                if (isWin) &#123;
+​                    return true;
+​                &#125;
+​            &#125;
+​        &#125;
+
+​        for (int i = 0; i &lt; 5; i++) &#123;
+​            if (row - i &gt;= 0 &amp;&amp;
+​                    row - i + 4 &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                    col - i &gt;= 0 &amp;&amp;
+​                    col - i + 4 &lt; BOARD_GRAD_SIZE) &#123;
+​                boolean isWin = true;
+​                for (int j = 0; j &lt; 5; j++) &#123;
+​                    if (game.chessMap[row - i + j][col - i + j] != game.chessMap[row - i][col - i]) &#123;
+​                        isWin = false;
+​                        break;
+​                    &#125;
+​                &#125;
+​                if (isWin) &#123;
+​                    return true;
+​                &#125;
+​            &#125;
+​        &#125;
+
+​        return false;
+​    &#125;
+
+​    public Point actionByAI(ChessData data) &#123;
+​        calculateScore(data);
+
+​        int maxScore = 0;
+​        Point[] maxPoints = new Point[BOARD_GRAD_SIZE * BOARD_GRAD_SIZE];
+​        int k = 0;
+
+​        for (int row = 0; row &lt; BOARD_GRAD_SIZE; row++) &#123;
+​            for (int col = 0; col &lt; BOARD_GRAD_SIZE; col++) &#123;
+​                if (data.chessMap[row][col] == 0) &#123;
+​                    if (data.scoreMap[row][col] &gt; maxScore) &#123;
+​                        k = 0;
+​                        maxScore = data.scoreMap[row][col];
+​                        maxPoints[k] = new Point(row, col);
+​                        k++;
+​                    &#125; else if (data.scoreMap[row][col] == maxScore) &#123;
+​                        maxPoints[k] = new Point(row, col);
+​                        k++;
+​                    &#125;
+​                &#125;
+​            &#125;
+​        &#125;
+
+​        Random rand = new Random();
+​        int index = rand.nextInt(k);
+​        return maxPoints[index];
+​    &#125;
+
+​    public void calculateScore(ChessData data) &#123;
+​        int personNum;
+​        int botNum;
+​        int emptyNum;
+
+​        for (int row = 0; row &lt; BOARD_GRAD_SIZE; row++) &#123;
+​            for (int col = 0; col &lt; BOARD_GRAD_SIZE; col++) &#123;
+​                if (row &gt;= 0 &amp;&amp; col &gt;= 0 &amp;&amp; data.chessMap[row][col] == 0) &#123;
+​                    int[][] directs = &#123;
+​                            &#123; 1, 0 &#125;,
+​                            &#123; 1, 1 &#125;,
+​                            &#123; 0, 1 &#125;,
+​                            &#123; -1, 1 &#125;
+​                    &#125;;
+
+​                    for (int k = 0; k &lt; 4; k++) &#123;
+​                        int x = directs[k][0];
+​                        int y = directs[k][1];
+
+​                        personNum = 0;
+​                        botNum = 0;
+​                        emptyNum = 0;
+
+​                        for (int i = 1; i &lt;= 4; i++) &#123;
+​                            if (row + i * y &gt;= 0 &amp;&amp; row + i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col + i * x &gt;= 0 &amp;&amp; col + i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row + i * y][col + i * x] == 1) &#123;
+​                                personNum++;
+​                            &#125; else if (row + i * y &gt;= 0 &amp;&amp; row + i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col + i * x &gt;= 0 &amp;&amp; col + i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row + i * y][col + i * x] == 0) &#123;
+​                                emptyNum++;
+​                                break;
+​                            &#125; else &#123;
+​                                break;
+​                            &#125;
+​                        &#125;
+
+​                        for (int i = 1; i &lt;= 4; i++) &#123;
+​                            if (row - i * y &gt;= 0 &amp;&amp; row - i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col - i * x &gt;= 0 &amp;&amp; col - i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row - i * y][col - i * x] == 1) &#123;
+​                                personNum++;
+​                            &#125; else if (row - i * y &gt;= 0 &amp;&amp; row - i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col - i * x &gt;= 0 &amp;&amp; col - i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row - i * y][col - i * x] == 0) &#123;
+​                                emptyNum++;
+​                                break;
+​                            &#125; else &#123;
+​                                break;
+​                            &#125;
+​                        &#125;
+
+​                        if (personNum == 1) &#123;
+​                            data.scoreMap[row][col] += 10;
+​                        &#125; else if (personNum == 2) &#123;
+​                            if (emptyNum == 1) &#123;
+​                                data.scoreMap[row][col] += 30;
+​                            &#125; else if (emptyNum == 2) &#123;
+​                                data.scoreMap[row][col] += 40;
+​                            &#125;
+​                        &#125; else if (personNum == 3) &#123;
+​                            if (emptyNum == 1) &#123;
+​                                data.scoreMap[row][col] += 60;
+​                            &#125; else if (emptyNum == 2) &#123;
+​                                data.scoreMap[row][col] += 200;
+​                            &#125;
+​                        &#125; else if (personNum == 4) &#123;
+​                            data.scoreMap[row][col] += 20000;
+​                        &#125;
+
+​                        emptyNum = 0;
+
+​                        for (int i = 1; i &lt;= 4; i++) &#123;
+​                            if (row + i * y &gt; 0 &amp;&amp; row + i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col + i * x &gt; 0 &amp;&amp; col + i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row + i * y][col + i * x] == -1) &#123;
+​                                botNum++;
+​                            &#125; else if (row + i * y &gt; 0 &amp;&amp; row + i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col + i * x &gt; 0 &amp;&amp; col + i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row + i * y][col + i * x] == 0) &#123;
+​                                emptyNum++;
+​                                break;
+​                            &#125; else &#123;
+​                                break;
+​                            &#125;
+​                        &#125;
+
+​                        for (int i = 1; i &lt;= 4; i++) &#123;
+​                            if (row - i * y &gt; 0 &amp;&amp; row - i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col - i * x &gt; 0 &amp;&amp; col - i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row - i * y][col - i * x] == -1) &#123;
+​                                botNum++;
+​                            &#125; else if (row - i * y &gt; 0 &amp;&amp; row - i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col - i * x &gt; 0 &amp;&amp; col - i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row - i * y][col - i * x] == 0) &#123;
+​                                emptyNum++;
+​                                break;
+​                            &#125; else &#123;
+​                                break;
+​                            &#125;
+​                        &#125;
+
+​                        if (botNum == 0) &#123;
+​                            data.scoreMap[row][col] += 5;
+​                        &#125; else if (botNum == 1) &#123;
+​                            data.scoreMap[row][col] += 10;
+​                        &#125; else if (botNum == 2) &#123;
+​                            if (emptyNum == 1) &#123;
+​                                data.scoreMap[row][col] += 25;
+​                            &#125; else if (emptyNum == 2) &#123;
+​                                data.scoreMap[row][col] += 50;
+​                            &#125;
+​                        &#125; else if (botNum == 3) &#123;
+​                            if (emptyNum == 1) &#123;
+​                                data.scoreMap[row][col] += 55;
+​                            &#125; else if (emptyNum == 2) &#123;
+​                                data.scoreMap[row][col] += 300;
+​                            &#125;
+​                        &#125; else if (botNum &gt;= 4) &#123;
+​                            data.scoreMap[row][col] += 30000;
+​                        &#125;
+​                    &#125;
+​                &#125;
+​            &#125;
+​        &#125;
+​    &#125;
+
+​    public static void main(String[] args) &#123;
+​        ChessGame game = new ChessGame();
+​        ChessData data = game.new ChessData();
+​        game.initializeChessData(data);
+
+​        Scanner scanner = new Scanner(System.in);
+
+​        // 游戏主循环
+​        while (true) &#123;
+​            Point point = game.actionByAI(data);
+​            System.out.println(&quot;AI选择下在这里: (&quot; + point.row + &quot;, &quot; + point.col + &quot;)&quot;);
+​            game.updateGameMap(data, point.row, point.col);
+​            if (game.checkWin(data, point.row, point.col)) &#123;
+​                System.out.println(&quot;对不起，你输了，AI获胜&quot;);
+​                break;
+​            &#125;
+
+​            // 玩家输入逻辑
+​            System.out.println(&quot;轮到你下了，请输入坐标 (例如, &#39;3 4&#39;): &quot;);
+​            int playerRow = scanner.nextInt();
+​            int playerCol = scanner.nextInt();
+
+​            if (playerRow &lt; 0 || playerRow &gt;= BOARD_GRAD_SIZE || playerCol &lt; 0 || playerCol &gt;= BOARD_GRAD_SIZE) &#123;
+​                System.out.println(&quot;你不能下在这里，请重新输入！&quot;);
+​                continue;
+​            &#125;
+
+​            if (data.chessMap[playerRow][playerCol] != 0) &#123;
+​                System.out.println(&quot;你不能下在这里，这里已经有棋子了，下在其他地方吧&quot;);
+​                continue;
+​            &#125;
+
+​            game.updateGameMap(data, playerRow, playerCol);
+​            if (game.checkWin(data, playerRow, playerCol)) &#123;
+​                System.out.println(&quot;恭喜你赢了！&quot;);
+​                break;
+​            &#125;
+
+​            // 打印棋盘状态
+​            printChessboard(data);
+​        &#125;
+​    &#125;
+
+​    // 打印棋盘状态
+​    private static void printChessboard(ChessData data) &#123;
+​        for (int row = 0; row &lt; BOARD_GRAD_SIZE; row++) &#123;
+​            for (int col = 0; col &lt; BOARD_GRAD_SIZE; col++) &#123;
+​                if (data.chessMap[row][col] == 1) &#123;
+​                    System.out.print(&quot;X &quot;);
+​                &#125; else if (data.chessMap[row][col] == -1) &#123;
+​                    System.out.print(&quot;O &quot;);
+​                &#125; else &#123;
+​                    System.out.print(&quot;. &quot;);
+​                &#125;
+​            &#125;
+​            System.out.println();
+​        &#125;
+​    &#125;
+&#125;
+
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
+</div>
+
+
+
+
+
+<!--
+<div class="article">
+    <div>
+        <h1>Java实现人机对战五子棋游戏</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/3/31
+        </span>
+        
+        
+    </div>
+    
+    <div class="content" v-pre>
+    <h1 id="思路很简单，就是简单的启发式搜索算法，我就不赘述了。"><a href="#思路很简单，就是简单的启发式搜索算法，我就不赘述了。" class="headerlink" title="思路很简单，就是简单的启发式搜索算法，我就不赘述了。"></a>思路很简单，就是简单的启发式搜索算法，我就不赘述了。</h1><h2 id="注释略-needen’t"><a href="#注释略-needen’t" class="headerlink" title="注释略&#x2F;&#x2F;needen’t"></a>注释略&#x2F;&#x2F;needen’t</h2><pre><code class="java">import java.util.Scanner;
+import java.awt.Point;
+import java.util.Random;
+
+public class ChessGame &#123;
+
+​    private static final int BOARD_GRAD_SIZE = 15;
+
+​    public class ChessData &#123;
+​        int[][] chessMap = new int[BOARD_GRAD_SIZE][BOARD_GRAD_SIZE];
+​        int[][] scoreMap = new int[BOARD_GRAD_SIZE][BOARD_GRAD_SIZE];
+​        boolean playerFlag;
+​    &#125;
+
+​    public class Point &#123;
+​        int row;
+​        int col;
+
+​        public Point(int row, int col) &#123;
+​            this.row = row;
+​            this.col = col;
+​        &#125;
+​    &#125;
+
+​    public void initializeChessData(ChessData data) &#123;
+​        if (data == null)
+​            return;
+
+​        for (int row = 0; row &lt; BOARD_GRAD_SIZE; row++) &#123;
+​            for (int col = 0; col &lt; BOARD_GRAD_SIZE; col++) &#123;
+​                data.chessMap[row][col] = 0;
+​                data.scoreMap[row][col] = 0;
+​            &#125;
+​        &#125;
+​        data.playerFlag = true;
+​    &#125;
+
+​    public void updateGameMap(ChessData data, int row, int col) &#123;
+​        if (data == null)
+​            return;
+
+​        if (data.playerFlag) &#123;
+​            data.chessMap[row][col] = 1;
+​        &#125; else &#123;
+​            data.chessMap[row][col] = -1;
+​        &#125;
+
+​        data.playerFlag = !data.playerFlag;
+​    &#125;
+
+​    public boolean checkWin(ChessData game, int row, int col) &#123;
+​        for (int i = 0; i &lt; 5; i++) &#123;
+​            if (col - i &gt;= 0 &amp;&amp;
+​                    col - i + 4 &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                    game.chessMap[row][col - i] == game.chessMap[row][col - i + 1] &amp;&amp;
+​                    game.chessMap[row][col - i] == game.chessMap[row][col - i + 2] &amp;&amp;
+​                    game.chessMap[row][col - i] == game.chessMap[row][col - i + 3] &amp;&amp;
+​                    game.chessMap[row][col - i] == game.chessMap[row][col - i + 4]) &#123;
+​                return true;
+​            &#125;
+​        &#125;
+
+​        for (int i = 0; i &lt; 5; i++) &#123;
+​            if (row - i &gt;= 0 &amp;&amp;
+​                    row - i + 4 &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                    game.chessMap[row - i][col] == game.chessMap[row - i + 1][col] &amp;&amp;
+​                    game.chessMap[row - i][col] == game.chessMap[row - i + 2][col] &amp;&amp;
+​                    game.chessMap[row - i][col] == game.chessMap[row - i + 3][col] &amp;&amp;
+​                    game.chessMap[row - i][col] == game.chessMap[row - i + 4][col]) &#123;
+​                return true;
+​            &#125;
+​        &#125;
+
+​        for (int i = 0; i &lt; 5; i++) &#123;
+​            if (row + i &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                    row + i - 4 &gt;= 0 &amp;&amp;
+​                    col - i &gt;= 0 &amp;&amp;
+​                    col - i + 4 &lt; BOARD_GRAD_SIZE) &#123;
+​                boolean isWin = true;
+​                for (int j = 0; j &lt; 5; j++) &#123;
+​                    if (game.chessMap[row + i - j][col - i + j] != game.chessMap[row + i][col - i]) &#123;
+​                        isWin = false;
+​                        break;
+​                    &#125;
+​                &#125;
+​                if (isWin) &#123;
+​                    return true;
+​                &#125;
+​            &#125;
+​        &#125;
+
+​        for (int i = 0; i &lt; 5; i++) &#123;
+​            if (row - i &gt;= 0 &amp;&amp;
+​                    row - i + 4 &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                    col - i &gt;= 0 &amp;&amp;
+​                    col - i + 4 &lt; BOARD_GRAD_SIZE) &#123;
+​                boolean isWin = true;
+​                for (int j = 0; j &lt; 5; j++) &#123;
+​                    if (game.chessMap[row - i + j][col - i + j] != game.chessMap[row - i][col - i]) &#123;
+​                        isWin = false;
+​                        break;
+​                    &#125;
+​                &#125;
+​                if (isWin) &#123;
+​                    return true;
+​                &#125;
+​            &#125;
+​        &#125;
+
+​        return false;
+​    &#125;
+
+​    public Point actionByAI(ChessData data) &#123;
+​        calculateScore(data);
+
+​        int maxScore = 0;
+​        Point[] maxPoints = new Point[BOARD_GRAD_SIZE * BOARD_GRAD_SIZE];
+​        int k = 0;
+
+​        for (int row = 0; row &lt; BOARD_GRAD_SIZE; row++) &#123;
+​            for (int col = 0; col &lt; BOARD_GRAD_SIZE; col++) &#123;
+​                if (data.chessMap[row][col] == 0) &#123;
+​                    if (data.scoreMap[row][col] &gt; maxScore) &#123;
+​                        k = 0;
+​                        maxScore = data.scoreMap[row][col];
+​                        maxPoints[k] = new Point(row, col);
+​                        k++;
+​                    &#125; else if (data.scoreMap[row][col] == maxScore) &#123;
+​                        maxPoints[k] = new Point(row, col);
+​                        k++;
+​                    &#125;
+​                &#125;
+​            &#125;
+​        &#125;
+
+​        Random rand = new Random();
+​        int index = rand.nextInt(k);
+​        return maxPoints[index];
+​    &#125;
+
+​    public void calculateScore(ChessData data) &#123;
+​        int personNum;
+​        int botNum;
+​        int emptyNum;
+
+​        for (int row = 0; row &lt; BOARD_GRAD_SIZE; row++) &#123;
+​            for (int col = 0; col &lt; BOARD_GRAD_SIZE; col++) &#123;
+​                if (row &gt;= 0 &amp;&amp; col &gt;= 0 &amp;&amp; data.chessMap[row][col] == 0) &#123;
+​                    int[][] directs = &#123;
+​                            &#123; 1, 0 &#125;,
+​                            &#123; 1, 1 &#125;,
+​                            &#123; 0, 1 &#125;,
+​                            &#123; -1, 1 &#125;
+​                    &#125;;
+
+​                    for (int k = 0; k &lt; 4; k++) &#123;
+​                        int x = directs[k][0];
+​                        int y = directs[k][1];
+
+​                        personNum = 0;
+​                        botNum = 0;
+​                        emptyNum = 0;
+
+​                        for (int i = 1; i &lt;= 4; i++) &#123;
+​                            if (row + i * y &gt;= 0 &amp;&amp; row + i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col + i * x &gt;= 0 &amp;&amp; col + i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row + i * y][col + i * x] == 1) &#123;
+​                                personNum++;
+​                            &#125; else if (row + i * y &gt;= 0 &amp;&amp; row + i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col + i * x &gt;= 0 &amp;&amp; col + i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row + i * y][col + i * x] == 0) &#123;
+​                                emptyNum++;
+​                                break;
+​                            &#125; else &#123;
+​                                break;
+​                            &#125;
+​                        &#125;
+
+​                        for (int i = 1; i &lt;= 4; i++) &#123;
+​                            if (row - i * y &gt;= 0 &amp;&amp; row - i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col - i * x &gt;= 0 &amp;&amp; col - i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row - i * y][col - i * x] == 1) &#123;
+​                                personNum++;
+​                            &#125; else if (row - i * y &gt;= 0 &amp;&amp; row - i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col - i * x &gt;= 0 &amp;&amp; col - i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row - i * y][col - i * x] == 0) &#123;
+​                                emptyNum++;
+​                                break;
+​                            &#125; else &#123;
+​                                break;
+​                            &#125;
+​                        &#125;
+
+​                        if (personNum == 1) &#123;
+​                            data.scoreMap[row][col] += 10;
+​                        &#125; else if (personNum == 2) &#123;
+​                            if (emptyNum == 1) &#123;
+​                                data.scoreMap[row][col] += 30;
+​                            &#125; else if (emptyNum == 2) &#123;
+​                                data.scoreMap[row][col] += 40;
+​                            &#125;
+​                        &#125; else if (personNum == 3) &#123;
+​                            if (emptyNum == 1) &#123;
+​                                data.scoreMap[row][col] += 60;
+​                            &#125; else if (emptyNum == 2) &#123;
+​                                data.scoreMap[row][col] += 200;
+​                            &#125;
+​                        &#125; else if (personNum == 4) &#123;
+​                            data.scoreMap[row][col] += 20000;
+​                        &#125;
+
+​                        emptyNum = 0;
+
+​                        for (int i = 1; i &lt;= 4; i++) &#123;
+​                            if (row + i * y &gt; 0 &amp;&amp; row + i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col + i * x &gt; 0 &amp;&amp; col + i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row + i * y][col + i * x] == -1) &#123;
+​                                botNum++;
+​                            &#125; else if (row + i * y &gt; 0 &amp;&amp; row + i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col + i * x &gt; 0 &amp;&amp; col + i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row + i * y][col + i * x] == 0) &#123;
+​                                emptyNum++;
+​                                break;
+​                            &#125; else &#123;
+​                                break;
+​                            &#125;
+​                        &#125;
+
+​                        for (int i = 1; i &lt;= 4; i++) &#123;
+​                            if (row - i * y &gt; 0 &amp;&amp; row - i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col - i * x &gt; 0 &amp;&amp; col - i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row - i * y][col - i * x] == -1) &#123;
+​                                botNum++;
+​                            &#125; else if (row - i * y &gt; 0 &amp;&amp; row - i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col - i * x &gt; 0 &amp;&amp; col - i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row - i * y][col - i * x] == 0) &#123;
+​                                emptyNum++;
+​                                break;
+​                            &#125; else &#123;
+​                                break;
+​                            &#125;
+​                        &#125;
+
+​                        if (botNum == 0) &#123;
+​                            data.scoreMap[row][col] += 5;
+​                        &#125; else if (botNum == 1) &#123;
+​                            data.scoreMap[row][col] += 10;
+​                        &#125; else if (botNum == 2) &#123;
+​                            if (emptyNum == 1) &#123;
+​                                data.scoreMap[row][col] += 25;
+​                            &#125; else if (emptyNum == 2) &#123;
+​                                data.scoreMap[row][col] += 50;
+​                            &#125;
+​                        &#125; else if (botNum == 3) &#123;
+​                            if (emptyNum == 1) &#123;
+​                                data.scoreMap[row][col] += 55;
+​                            &#125; else if (emptyNum == 2) &#123;
+​                                data.scoreMap[row][col] += 300;
+​                            &#125;
+​                        &#125; else if (botNum &gt;= 4) &#123;
+​                            data.scoreMap[row][col] += 30000;
+​                        &#125;
+​                    &#125;
+​                &#125;
+​            &#125;
+​        &#125;
+​    &#125;
+
+​    public static void main(String[] args) &#123;
+​        ChessGame game = new ChessGame();
+​        ChessData data = game.new ChessData();
+​        game.initializeChessData(data);
+
+​        Scanner scanner = new Scanner(System.in);
+
+​        // 游戏主循环
+​        while (true) &#123;
+​            Point point = game.actionByAI(data);
+​            System.out.println(&quot;AI选择下在这里: (&quot; + point.row + &quot;, &quot; + point.col + &quot;)&quot;);
+​            game.updateGameMap(data, point.row, point.col);
+​            if (game.checkWin(data, point.row, point.col)) &#123;
+​                System.out.println(&quot;对不起，你输了，AI获胜&quot;);
+​                break;
+​            &#125;
+
+​            // 玩家输入逻辑
+​            System.out.println(&quot;轮到你下了，请输入坐标 (例如, &#39;3 4&#39;): &quot;);
+​            int playerRow = scanner.nextInt();
+​            int playerCol = scanner.nextInt();
+
+​            if (playerRow &lt; 0 || playerRow &gt;= BOARD_GRAD_SIZE || playerCol &lt; 0 || playerCol &gt;= BOARD_GRAD_SIZE) &#123;
+​                System.out.println(&quot;你不能下在这里，请重新输入！&quot;);
+​                continue;
+​            &#125;
+
+​            if (data.chessMap[playerRow][playerCol] != 0) &#123;
+​                System.out.println(&quot;你不能下在这里，这里已经有棋子了，下在其他地方吧&quot;);
+​                continue;
+​            &#125;
+
+​            game.updateGameMap(data, playerRow, playerCol);
+​            if (game.checkWin(data, playerRow, playerCol)) &#123;
+​                System.out.println(&quot;恭喜你赢了！&quot;);
+​                break;
+​            &#125;
+
+​            // 打印棋盘状态
+​            printChessboard(data);
+​        &#125;
+​    &#125;
+
+​    // 打印棋盘状态
+​    private static void printChessboard(ChessData data) &#123;
+​        for (int row = 0; row &lt; BOARD_GRAD_SIZE; row++) &#123;
+​            for (int col = 0; col &lt; BOARD_GRAD_SIZE; col++) &#123;
+​                if (data.chessMap[row][col] == 1) &#123;
+​                    System.out.print(&quot;X &quot;);
+​                &#125; else if (data.chessMap[row][col] == -1) &#123;
+​                    System.out.print(&quot;O &quot;);
+​                &#125; else &#123;
+​                    System.out.print(&quot;. &quot;);
+​                &#125;
+​            &#125;
+​            System.out.println();
+​        &#125;
+​    &#125;
+&#125;
+
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+-->
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 PHM&#39;s world
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;ailasukasan
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">歡迎來到我的世界</a> &amp;
+            <a href="">站在能分割世界的桥</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>
