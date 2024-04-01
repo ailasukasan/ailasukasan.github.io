@@ -2,8 +2,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+
+
+
+
+    <!-- 爆炸红心效果 -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+
     <meta charset="utf-8" />
-    <title>Archives | PHM&#39;s world</title>
+    <title>Rust学习 | PHM&#39;s world</title>
     <meta name="author" content="ailasukasan" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -36,6 +52,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -149,97 +169,119 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            
-<div id="archives">
-    
-    <div id="timeline-wrap" ref="timeline">
+            <div class="article">
+    <div>
+        <h1>Rust学习</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/3/31
+        </span>
         
-        <div class="timeline" data-title="横渡海峡">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2024/2/27</div>
-                <a href="/2024/02/27/%E6%A8%AA%E6%B8%A1%E6%B5%B7%E5%B3%A1/">
-                    <h3>横渡海峡</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline" data-title="横渡海峡">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2024/2/27</div>
-                <a href="/2024/02/27/%E7%A7%A6%E7%9A%87%E5%B2%9B/">
-                    <h3>横渡海峡</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                    <span class="tags">
-                        <span class="icon">
-                            <i class="fa-solid fa-tags fa-fw"></i>
-                        </span>
-                        
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/%E6%A8%AA%E6%B8%A1%E6%B5%B7%E5%B3%A1-%E6%B8%A4%E6%B5%B7%E6%B5%B7%E5%B3%A1/" style="color: #00a596">横渡海峡--渤海海峡</a>
-                        </span>
-                        
-                    </span>
-                    
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline" data-title="python学习笔记">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2024/3/31</div>
-                <a href="/2024/03/31/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                    <h3>Python学习笔记</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline" data-title="你好，世界">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2024/3/31</div>
-                <a href="/2024/03/31/%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C/">
-                    <h3>你好，世界</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline" data-title="java实现人机对战五子棋游戏">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2024/3/31</div>
-                <a href="/2024/03/31/Java%E5%AE%9E%E7%8E%B0%E4%BA%BA%E6%9C%BA%E5%AF%B9%E6%88%98%E4%BA%94%E5%AD%90%E6%A3%8B%E6%B8%B8%E6%88%8F/">
-                    <h3>Java实现人机对战五子棋游戏</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                </div>
-            </div>
-        </div>
         
     </div>
+    <div class="content" v-pre>
+        <h3><span id="入门rust算是比其他语言要难一些">入门rust算是比其他语言要难一些</span></h3><p>所有权机制明显地区分了rust和C++、Java</p>
+<p>rust实现链表操作简直地狱</p>
+<p>这就不得不提到<a target="_blank" rel="noopener" href="https://course.rs/about-book.html">rust圣经</a>，感谢前辈们的努力！</p>
+<hr>
+<p>附烂梗一则<del>bushi</del></p>
+<pre><code class="xiaochou">今天在网吧看到一个妹妹很可爱，走近一看竟然在写代码。
+我大喜过望，想和她一起写，就坐了过去。
+妹妹人也特别好，一直和我在聊天，讨论各种语言的特点。
+然后她突然要和我一起写代码。
+我才发现这个妹妹写的都是 Rust、Haskell、Lisp 这种高端语言。
+我看着我的 C++ 冷汗直冒，一直不敢新建项目。
+妹妹看到我的窘迫很温柔地问我：
+是不是写的 C，没关系的，语法简单但是上限也不低，
+写 C 的程序员都很懂计算机系统和结构。
+我一听更不敢说话了，
+妹妹看我没说话又说没事没事：
+写 Java 也没什么的，毕竟做大型项目能力不俗。
+见我还没反应，她的表情突然有点尴尬地笑了笑问我：
+该不会是写 Python 的吧，虽然语言一般但是生态很好，
+一起做做数据分析也没什么。
+我只好告诉她我写的是 C++，她的脸色唰一下就变了：
+“我说你怎么不敢说话，原来是写 C++ 的。” 
+她看了我的代码之后，眼神中的鄙视更深了一层。
+“写 C++，还用 C with Class？
+别的语言一个都没用过？
+C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
+</code></pre>
+<p><img src="/../image/420126789964089224.jpg" alt="image"></p>
+
+    </div>
+    
+    
+    
+    
+    
+    
 </div>
 
+
+
+
+
+<!--
+<div class="article">
+    <div>
+        <h1>Rust学习</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/3/31
+        </span>
+        
+        
+    </div>
+    
+    <div class="content" v-pre>
+    <h3><span id="入门rust算是比其他语言要难一些">入门rust算是比其他语言要难一些</span></h3><p>所有权机制明显地区分了rust和C++、Java</p>
+<p>rust实现链表操作简直地狱</p>
+<p>这就不得不提到<a target="_blank" rel="noopener" href="https://course.rs/about-book.html">rust圣经</a>，感谢前辈们的努力！</p>
+<hr>
+<p>附烂梗一则<del>bushi</del></p>
+<pre><code class="xiaochou">今天在网吧看到一个妹妹很可爱，走近一看竟然在写代码。
+我大喜过望，想和她一起写，就坐了过去。
+妹妹人也特别好，一直和我在聊天，讨论各种语言的特点。
+然后她突然要和我一起写代码。
+我才发现这个妹妹写的都是 Rust、Haskell、Lisp 这种高端语言。
+我看着我的 C++ 冷汗直冒，一直不敢新建项目。
+妹妹看到我的窘迫很温柔地问我：
+是不是写的 C，没关系的，语法简单但是上限也不低，
+写 C 的程序员都很懂计算机系统和结构。
+我一听更不敢说话了，
+妹妹看我没说话又说没事没事：
+写 Java 也没什么的，毕竟做大型项目能力不俗。
+见我还没反应，她的表情突然有点尴尬地笑了笑问我：
+该不会是写 Python 的吧，虽然语言一般但是生态很好，
+一起做做数据分析也没什么。
+我只好告诉她我写的是 C++，她的脸色唰一下就变了：
+“我说你怎么不敢说话，原来是写 C++ 的。” 
+她看了我的代码之后，眼神中的鄙视更深了一层。
+“写 C++，还用 C with Class？
+别的语言一个都没用过？
+C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
+</code></pre>
+<p><img src="/../image/420126789964089224.jpg" alt="image"></p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+-->
             <footer id="footer">
     <div id="footer-wrap">
         <div>
@@ -251,7 +293,7 @@
             &commat;ailasukasan
         </div>
         <div>
-            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">歡迎來到我的世界</a> &amp;
+            可以点击一下Try Try <a target="_blank" rel="noopener" href="https://github.com/ailasukasan">歡迎來到我的世界</a> &amp;
             <a href="">站在能分割世界的桥</a>
         </div>
         
@@ -269,5 +311,13 @@
     </div>
     <script src="/js/main.js"></script>
     
+    
+
+
+
+
+    
+
+
 </body>
 </html>
