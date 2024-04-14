@@ -1,12 +1,14 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
-
-
-
-
+<!--
+    <script src="/js/leaves.js"></script>
+-->
     <!-- 爆炸红心效果 -->
 <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
 <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
@@ -14,10 +16,15 @@
 
 <!--动态线条背景-->
 <script type="text/javascript"
-color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
 </script>
-
-
+<!--流星雨背景
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+-->
     <meta charset="utf-8" />
     <title>PHM&#39;s world</title>
     <meta name="author" content="ailasukasan" />
@@ -101,7 +108,7 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com
         
         <a href="/tags">
             <i class="fa-solid fa-tags fa-fw"></i>
-            <span>&ensp;這一排標簽全部沒有開發</span>
+            <span>&ensp;Tags</span>
         </a>
         
     </nav>
@@ -154,7 +161,7 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com
                         <div style="min-width: 20px; max-width: 50px; width: 10%">
                             <i class="fa-solid fa-tags fa-fw"></i>
                         </div>
-                        <div style="min-width: 100px; max-width: 150%; width: 20%">這一排標簽全部沒有開發</div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
                     </div>
                 </a>
                 
@@ -179,9 +186,16 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com
                 <h1>PHM&#39;s world</h1>
                 <h3>Create an Aircraft To Utopia</h3>
                 <h5></h5>
+                                <!-- 这里是在create ...to utopia下方加入文字-->
+                <a target="_blank" rel="noopener" href="https://www.nasa.gov/">To be an Astronaut</a>
+
+                                <!-- 这里是在create ...to utopia下方加入文字-->
+                                <!-- QQ和推特链接模块结束 -->
             </div>
         </span>
+
     </div>
+
 </div>
 <div id="home-posts-wrap" true ref="homePostsWrap">
     <div id="home-posts">
@@ -191,10 +205,24 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com
     <a href="/2024/03/31/Rust/">
         <h2 class="post-title">Rust学习</h2>
     </a>
-            <!--
+
+
+
     <div class="category-and-date">
 
         
+        <span class="category">
+            <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                基础知识
+            </a>
+        </span>
+
+        
+
+
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
@@ -202,9 +230,17 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com
             2024/3/31
         </span>
 
+
+
         
         
     </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+        </div>
+    </div>
+<!--
     <div class="description">
         <div class="content" v-pre>
             
@@ -240,13 +276,14 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
             
         </div>
     </div>
+-->
     <div class="post-tags">
         
         
         
     </div>
-    -->
 
+<!--
     <span class="icon">
         <i class="fa-solid fa-tags fa-fw"></i>
     </span>
@@ -257,7 +294,7 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
         </span>
         2024/3/31
     </span>
-
+-->
     <a href="/2024/03/31/Rust/" class="go-post">阅读全文</a>
 
 </div>
@@ -266,10 +303,24 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
     <a href="/2024/03/31/%E5%AD%A6%E4%B9%A0Java/">
         <h2 class="post-title">Java学习</h2>
     </a>
-            <!--
+
+
+
     <div class="category-and-date">
 
         
+        <span class="category">
+            <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                基础知识
+            </a>
+        </span>
+
+        
+
+
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
@@ -277,9 +328,17 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
             2024/3/31
         </span>
 
+
+
         
         
     </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+        </div>
+    </div>
+<!--
     <div class="description">
         <div class="content" v-pre>
             
@@ -291,13 +350,23 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
             
         </div>
     </div>
+-->
     <div class="post-tags">
         
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
         
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Java/" style="color: #00bcd4">Java</a>
+        </span>
         
     </div>
-    -->
 
+<!--
     <span class="icon">
         <i class="fa-solid fa-tags fa-fw"></i>
     </span>
@@ -308,7 +377,7 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
         </span>
         2024/3/31
     </span>
-
+-->
     <a href="/2024/03/31/%E5%AD%A6%E4%B9%A0Java/" class="go-post">阅读全文</a>
 
 </div>
@@ -317,10 +386,24 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
     <a href="/2024/02/27/%E6%A8%AA%E6%B8%A1%E6%B5%B7%E5%B3%A1/">
         <h2 class="post-title">横渡海峡</h2>
     </a>
-            <!--
+
+
+
     <div class="category-and-date">
 
         
+        <span class="category">
+            <a href="/categories/%E6%97%A5%E8%AE%B0/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                日记
+            </a>
+        </span>
+
+        
+
+
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
@@ -328,9 +411,17 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
             2024/2/27
         </span>
 
+
+
         
         
     </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+        </div>
+    </div>
+<!--
     <div class="description">
         <div class="content" v-pre>
             
@@ -348,13 +439,23 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
             
         </div>
     </div>
+-->
     <div class="post-tags">
         
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
         
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C/" style="color: #ffa2c4">你好世界</a>
+        </span>
         
     </div>
-    -->
 
+<!--
     <span class="icon">
         <i class="fa-solid fa-tags fa-fw"></i>
     </span>
@@ -365,8 +466,302 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
         </span>
         2024/2/27
     </span>
-
+-->
     <a href="/2024/02/27/%E6%A8%AA%E6%B8%A1%E6%B5%B7%E5%B3%A1/" class="go-post">阅读全文</a>
+
+</div>
+
+<div class="post">
+    <a href="/2024/02/01/UI%E4%BA%94%E5%AD%90%E6%A3%8B/">
+        <h2 class="post-title">UI界面的五子棋</h2>
+    </a>
+
+
+
+    <div class="category-and-date">
+
+        
+        <span class="category">
+            <a href="/categories/Java%E9%A1%B9%E7%9B%AE/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                Java项目
+            </a>
+        </span>
+
+        
+
+
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/2/1
+        </span>
+
+
+
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+        </div>
+    </div>
+<!--
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1><span id="具体代码如下所示">具体代码如下所示</span></h1><h2><span id="黑子和白子可以自定义将下方图片路径修改为你的路径即可">黑子和白子可以自定义，将下方图片路径修改为你的路径即可</span></h2><pre><code class="java">import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class GomokuGame extends JFrame &#123;
+    private static final int BOARD_SIZE = 15;
+    private static final int CELL_SIZE = 40;
+    private static final int BOARD_OFFSET = 20;
+
+    private enum Player &#123; BLACK, WHITE &#125;
+
+    private Player currentPlayer;
+    private JButton[][] board;
+
+    private ImageIcon blackIcon;
+    private ImageIcon whiteIcon;
+
+    public GomokuGame() &#123;
+        setTitle(&quot;老杨大战老云，谁将获得版权费用？&quot;);
+        setSize(BOARD_SIZE * CELL_SIZE + BOARD_OFFSET, BOARD_SIZE * CELL_SIZE + BOARD_OFFSET);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        currentPlayer = Player.BLACK;
+
+        blackIcon = new ImageIcon(&quot;在这里输入你的图片路径（黑子）&quot;);
+        blackIcon.setImage(blackIcon.getImage().getScaledInstance(CELL_SIZE, CELL_SIZE, Image.SCALE_DEFAULT));
+
+        whiteIcon = new ImageIcon(&quot;在这里输入你的图片路径（白子）&quot;);
+        whiteIcon.setImage(whiteIcon.getImage().getScaledInstance(CELL_SIZE, CELL_SIZE, Image.SCALE_DEFAULT));
+
+        initializeBoard();
+    &#125;
+
+    private void initializeBoard() &#123;
+        setLayout(new GridLayout(BOARD_SIZE, BOARD_SIZE));
+        board = new JButton[BOARD_SIZE][BOARD_SIZE];
+
+        for (int i = 0; i &lt; BOARD_SIZE; i++) &#123;
+            for (int j = 0; j &lt; BOARD_SIZE; j++) &#123;
+                JButton cell = new JButton();
+                cell.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
+                cell.setBackground(new Color(139, 69, 19));
+                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                cell.addMouseListener(new CellClickListener(i, j));
+                board[i][j] = cell;
+                add(cell);
+            &#125;
+        &#125;
+    &#125;
+
+    private class CellClickListener extends MouseAdapter &#123;
+        private int row, col;
+
+        public CellClickListener(int row, int col) &#123;
+            this.row = row;
+            this.col = col;
+        &#125;
+
+        @Override
+        public void mouseClicked(MouseEvent e) &#123;
+            JButton cell = (JButton) e.getComponent();
+
+            if (cell.getBackground().equals(new Color(139, 69, 19))) &#123;
+                if (currentPlayer == Player.BLACK) &#123;
+                    cell.setIcon(blackIcon);
+                    checkWin(row, col, blackIcon);
+                    currentPlayer = Player.WHITE;
+                &#125; else &#123;
+                    cell.setIcon(whiteIcon);
+                    checkWin(row, col, whiteIcon);
+                    currentPlayer = Player.BLACK;
+                &#125;
+                cell.setBackground(null);
+            &#125;
+        &#125;
+    &#125;
+
+    private boolean checkDirection(int row, int col, int rowIncrement, int colIncrement, ImageIcon icon) &#123;
+        int count = 0;
+
+        for (int i = -4; i &lt;= 4; i++) &#123;
+            int newRow = row + i * rowIncrement;
+            int newCol = col + i * colIncrement;
+
+            if (newRow &gt;= 0 &amp;&amp; newRow &lt; BOARD_SIZE &amp;&amp; newCol &gt;= 0 &amp;&amp; newCol &lt; BOARD_SIZE) &#123;
+                if (board[newRow][newCol].getIcon() == icon) &#123;
+                    count++;
+                    if (count == 5) &#123;
+                        return true;
+                    &#125;
+                &#125; else &#123;
+                    count = 0;
+                &#125;
+            &#125; else &#123;
+                count = 0;
+            &#125;
+        &#125;
+
+        return false;
+    &#125;
+
+    private void checkWin(int row, int col, ImageIcon icon) &#123;
+        if (checkDirection(row, col, 1, 0, icon) ||
+                checkDirection(row, col, 0, 1, icon) ||
+                checkDirection(row, col, 1, 1, icon) ||
+                checkDirection(row, col, 1, -1, icon)) &#123;
+            JOptionPane.showMessageDialog(GomokuGame.this, icon == blackIcon ? &quot;老杨获胜&quot; : &quot;老云获胜&quot;);
+            resetBoard();
+        &#125;
+    &#125;
+
+    private void resetBoard() &#123;
+        for (int i = 0; i &lt; BOARD_SIZE; i++) &#123;
+            for (int j = 0; j &lt; BOARD_SIZE; j++) &#123;
+                board[i][j].setIcon(null);
+                board[i][j].setBackground(new Color(139, 69, 19));
+            &#125;
+        &#125;
+        currentPlayer = Player.BLACK;
+    &#125;
+
+    public static void main(String[] args) &#123;
+        SwingUtilities.invokeLater(() -&gt; &#123;
+            new GomokuGame().setVisible(true);
+        &#125;);
+    &#125;
+&#125;
+</code></pre>
+
+            
+        </div>
+    </div>
+-->
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Java/" style="color: #00bcd4">Java</a>
+        </span>
+        
+    </div>
+
+<!--
+    <span class="icon">
+        <i class="fa-solid fa-tags fa-fw"></i>
+    </span>
+
+    <span class="date">
+        <span class="icon">
+            <i class="fa-solid fa-calendar fa-fw"></i>
+        </span>
+        2024/2/1
+    </span>
+-->
+    <a href="/2024/02/01/UI%E4%BA%94%E5%AD%90%E6%A3%8B/" class="go-post">阅读全文</a>
+
+</div>
+
+<div class="post">
+    <a href="/2023/11/01/C++/">
+        <h2 class="post-title">C++学习笔记</h2>
+    </a>
+
+
+
+    <div class="category-and-date">
+
+        
+        <span class="category">
+            <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                基础知识
+            </a>
+        </span>
+
+        
+
+
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/11/1
+        </span>
+
+
+
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+        </div>
+    </div>
+<!--
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h4><span id="c算是我在计算机领域中的母语了">C++算是我在计算机领域中的母语了</span></h4><p><del>（又想起了被指针和泛型折磨的痛苦）</del></p>
+<p>现在用C++来做算法题</p>
+<p>（做算法的话其实和Java也差不多，C++中有vector，Java里的是ArrayList，大差不差）</p>
+<p>点击<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_51604330/article/details/119535438">这里</a>，我看的这位大佬的笔记，感谢半生瓜大佬！😊</p>
+
+            
+        </div>
+    </div>
+-->
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/C/" style="color: #03a9f4">C++</a>
+        </span>
+        
+    </div>
+
+<!--
+    <span class="icon">
+        <i class="fa-solid fa-tags fa-fw"></i>
+    </span>
+
+    <span class="date">
+        <span class="icon">
+            <i class="fa-solid fa-calendar fa-fw"></i>
+        </span>
+        2023/11/1
+    </span>
+-->
+    <a href="/2023/11/01/C++/" class="go-post">阅读全文</a>
 
 </div>
 
@@ -400,8 +795,10 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
         </div>
         <div class="name">ailasukasan</div>
         <div class="description">
-            <p>你好，我是来自北大软微的一名学生<br>北京大學軟件與微電子學院<br>軟件工程專業<br>こんにちは<br>僕は北大ソフトウェア工学の学生です<br>a student from Peking University of<br>Software and Microelectronics</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/ailasukasan">我的GitHub主页</a><br>虽然啥也没有…</p>
+            <p>你好，我是来自北大软微的一名学生<br><a target="_blank" rel="noopener" href="https://www.ss.pku.edu.cn/">北京大學軟件與微電子學院</a><br>軟件工程專業<br>こんにちは<br>僕は北大ソフトウェア工学の学生です<br>a student from Peking University of<br>Software and Microelectronics</p>
+
+            <hr>
+            <p><a target="_blank" rel="noopener" href="https://github.com/ailasukasan">我的GitHub主页</a><br>虽然啥也没有…万一以后想用呢？</p>
 
         </div>
         
@@ -438,6 +835,8 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
                 <img id="preview-content" ref="previewContent" />
             </div>
         </transition>
+
+
         
     </div>
     <script src="/js/main.js"></script>

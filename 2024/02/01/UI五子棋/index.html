@@ -1,0 +1,399 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!--
+    <script src="/js/leaves.js"></script>
+-->
+    <!-- 爆炸红心效果 -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+<!--流星雨背景
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+-->
+    <meta charset="utf-8" />
+    <title>UI界面的五子棋 | PHM&#39;s world</title>
+    <meta name="author" content="ailasukasan" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.loli.net" />
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>歡迎來到烏托邦的世界</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>PHM&#39;S WORLD</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;PHM</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;PHM&#39;S WORLD</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">PHM</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>UI界面的五子棋</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/2/1
+        </span>
+        
+        <span class="category">
+            <a href="/categories/Java%E9%A1%B9%E7%9B%AE/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                Java项目
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/Java/" style="color: #ffa2c4">Java</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1><span id="具体代码如下所示">具体代码如下所示</span></h1><h2><span id="黑子和白子可以自定义将下方图片路径修改为你的路径即可">黑子和白子可以自定义，将下方图片路径修改为你的路径即可</span></h2><pre><code class="java">import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class GomokuGame extends JFrame &#123;
+    private static final int BOARD_SIZE = 15;
+    private static final int CELL_SIZE = 40;
+    private static final int BOARD_OFFSET = 20;
+
+    private enum Player &#123; BLACK, WHITE &#125;
+
+    private Player currentPlayer;
+    private JButton[][] board;
+
+    private ImageIcon blackIcon;
+    private ImageIcon whiteIcon;
+
+    public GomokuGame() &#123;
+        setTitle(&quot;老杨大战老云，谁将获得版权费用？&quot;);
+        setSize(BOARD_SIZE * CELL_SIZE + BOARD_OFFSET, BOARD_SIZE * CELL_SIZE + BOARD_OFFSET);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        currentPlayer = Player.BLACK;
+
+        blackIcon = new ImageIcon(&quot;在这里输入你的图片路径（黑子）&quot;);
+        blackIcon.setImage(blackIcon.getImage().getScaledInstance(CELL_SIZE, CELL_SIZE, Image.SCALE_DEFAULT));
+
+        whiteIcon = new ImageIcon(&quot;在这里输入你的图片路径（白子）&quot;);
+        whiteIcon.setImage(whiteIcon.getImage().getScaledInstance(CELL_SIZE, CELL_SIZE, Image.SCALE_DEFAULT));
+
+        initializeBoard();
+    &#125;
+
+    private void initializeBoard() &#123;
+        setLayout(new GridLayout(BOARD_SIZE, BOARD_SIZE));
+        board = new JButton[BOARD_SIZE][BOARD_SIZE];
+
+        for (int i = 0; i &lt; BOARD_SIZE; i++) &#123;
+            for (int j = 0; j &lt; BOARD_SIZE; j++) &#123;
+                JButton cell = new JButton();
+                cell.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
+                cell.setBackground(new Color(139, 69, 19));
+                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                cell.addMouseListener(new CellClickListener(i, j));
+                board[i][j] = cell;
+                add(cell);
+            &#125;
+        &#125;
+    &#125;
+
+    private class CellClickListener extends MouseAdapter &#123;
+        private int row, col;
+
+        public CellClickListener(int row, int col) &#123;
+            this.row = row;
+            this.col = col;
+        &#125;
+
+        @Override
+        public void mouseClicked(MouseEvent e) &#123;
+            JButton cell = (JButton) e.getComponent();
+
+            if (cell.getBackground().equals(new Color(139, 69, 19))) &#123;
+                if (currentPlayer == Player.BLACK) &#123;
+                    cell.setIcon(blackIcon);
+                    checkWin(row, col, blackIcon);
+                    currentPlayer = Player.WHITE;
+                &#125; else &#123;
+                    cell.setIcon(whiteIcon);
+                    checkWin(row, col, whiteIcon);
+                    currentPlayer = Player.BLACK;
+                &#125;
+                cell.setBackground(null);
+            &#125;
+        &#125;
+    &#125;
+
+    private boolean checkDirection(int row, int col, int rowIncrement, int colIncrement, ImageIcon icon) &#123;
+        int count = 0;
+
+        for (int i = -4; i &lt;= 4; i++) &#123;
+            int newRow = row + i * rowIncrement;
+            int newCol = col + i * colIncrement;
+
+            if (newRow &gt;= 0 &amp;&amp; newRow &lt; BOARD_SIZE &amp;&amp; newCol &gt;= 0 &amp;&amp; newCol &lt; BOARD_SIZE) &#123;
+                if (board[newRow][newCol].getIcon() == icon) &#123;
+                    count++;
+                    if (count == 5) &#123;
+                        return true;
+                    &#125;
+                &#125; else &#123;
+                    count = 0;
+                &#125;
+            &#125; else &#123;
+                count = 0;
+            &#125;
+        &#125;
+
+        return false;
+    &#125;
+
+    private void checkWin(int row, int col, ImageIcon icon) &#123;
+        if (checkDirection(row, col, 1, 0, icon) ||
+                checkDirection(row, col, 0, 1, icon) ||
+                checkDirection(row, col, 1, 1, icon) ||
+                checkDirection(row, col, 1, -1, icon)) &#123;
+            JOptionPane.showMessageDialog(GomokuGame.this, icon == blackIcon ? &quot;老杨获胜&quot; : &quot;老云获胜&quot;);
+            resetBoard();
+        &#125;
+    &#125;
+
+    private void resetBoard() &#123;
+        for (int i = 0; i &lt; BOARD_SIZE; i++) &#123;
+            for (int j = 0; j &lt; BOARD_SIZE; j++) &#123;
+                board[i][j].setIcon(null);
+                board[i][j].setBackground(new Color(139, 69, 19));
+            &#125;
+        &#125;
+        currentPlayer = Player.BLACK;
+    &#125;
+
+    public static void main(String[] args) &#123;
+        SwingUtilities.invokeLater(() -&gt; &#123;
+            new GomokuGame().setVisible(true);
+        &#125;);
+    &#125;
+&#125;
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 PHM&#39;s world
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;ailasukasan
+        </div>
+        <div>
+            可以点击一下Try Try <a target="_blank" rel="noopener" href="https://github.com/ailasukasan">歡迎來到我的世界</a> &amp;
+            <a href="">站在能分割世界的桥</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+
+
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+
+
+</body>
+</html>

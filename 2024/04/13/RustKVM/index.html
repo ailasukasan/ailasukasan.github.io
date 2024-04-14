@@ -1,0 +1,396 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!--
+    <script src="/js/leaves.js"></script>
+-->
+    <!-- 爆炸红心效果 -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+<!--流星雨背景
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+-->
+    <meta charset="utf-8" />
+    <title>内核定时器 | PHM&#39;s world</title>
+    <meta name="author" content="ailasukasan" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.loli.net" />
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>歡迎來到烏托邦的世界</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>PHM&#39;S WORLD</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;PHM</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;PHM&#39;S WORLD</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">PHM</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>内核定时器</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/4/14
+        </span>
+        
+        <span class="category">
+            <a href="/categories/Linux%E5%86%85%E6%A0%B8%E7%BC%96%E7%A8%8B/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                Linux内核编程
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/LikeX/" style="color: #00bcd4">LikeX</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1><span id="任务">任务</span></h1><p>写一个内核模块，在内核模块中实现<br>1.一个定时器，定期读取内存信息，并记录到一个日志文件<br>2.日志文件包含完整的时间戳</p>
+<p>（提示：使用<code>hrtimer</code>一系列接口）</p>
+<h1><span id="思路">思路：</span></h1><p>​		关于定时器的解决：Linux中主要有两种解决方案：简单的<code>timer_list</code>和更精确的<code>hrtimer</code>。由于需求中没有特别指出对定时精度的要求，但使用<code>hrtimer</code>可以提供更高的精度和灵活性，所以我决定使用<code>hrtimer</code>接口。</p>
+<p>​		然后是获取内存信息：经过查找可知，Linux内核提供了获取系统内存信息的接口<code>si_meminfo</code>，它可以填充一个<code>sysinfo</code>结构体，这个结构体包含了系统当前的内存使用情况。</p>
+<p>​		文件的操作：内核空间处理文件和用户态中处理文件使用的接口不同，经过网上查找，在内核空间中写文件，需要使用<code>vfs_write</code>等函数，并且要小心处理文件系统的状态改变（比如，需要使用<code>set_fs</code>来临时改变内核的地址限制）。找到并引入以下头文件：&lt;linux&#x2F;fs.h&gt;包含了对文件系统进行操作的函数原型和相关的结构体定义、&lt;linux&#x2F;uaccess.h&gt;：包含了对用户空间和内核空间数据交互的函数原型和宏定义、&lt;linux&#x2F;kernel.h&gt;：包含了内核编程中常用的一些宏定义和函数原型。</p>
+<p>​		基于上述的工具和接口选择，我设计出了模块的大体结构，包括初始化部分、定时器回调函数以及清理部分：</p>
+<p>1.<strong>初始化部分</strong> (<code>my_init</code>)：打开or创建日志文件，初始化定时器，然后启动。</p>
+<p>2.<strong>定时器回调函数</strong> (<code>timer_callback</code>)：这个函数是定时器到期时调用的，它会读取内存信息，获取当前时间，并将这些信息写入之前打开的日志文件。</p>
+<p>3.<strong>模块清理部分</strong> (<code>my_exit</code>)：在卸载模块时，需要取消定时器（如果它还在运行），并且关闭打开的日志文件。</p>
+<h1><span id="代码">代码</span></h1><h2><span id="kernel_timer_filec">kernel_timer_file.c</span></h2><pre><code class="c">#include &lt;linux/module.h&gt;
+#include &lt;linux/hrtimer.h&gt;
+#include &lt;linux/ktime.h&gt;
+#include &lt;linux/fs.h&gt;
+#include &lt;linux/slab.h&gt;
+#include &lt;asm/uaccess.h&gt;
+#include &lt;linux/mm.h&gt; // 用于si_meminfo存储内存信息
+#include &lt;linux/timekeeping.h&gt; // 用于获取内存时间 current_kernel_time64
+
+#define TIMER_INTERVAL_NS 1e9 // 时间间隔 1秒
+
+static struct hrtimer hr_timer;
+struct file *file = NULL;
+mm_segment_t old_fs;
+
+// 定时器回调函数，周期性获取系统内存信息
+static enum hrtimer_restart timer_callback(struct hrtimer *timer) &#123;
+    struct sysinfo si;
+    char buf[128];
+    int bytes;
+    struct timespec64 ts;
+
+    // 获取系统内存信息和当前时间
+    si_meminfo(&amp;si);
+    ktime_get_real_ts64(&amp;ts);
+
+    /* 准备带有时间戳和内存信息的消息
+    并格式化为字符串存在buf缓冲区中*/
+    bytes = snprintf(buf, sizeof(buf), &quot;[%lld.%09ld] Total RAM: %lu, Free RAM: %lu\n&quot;,
+                     (long long)ts.tv_sec, ts.tv_nsec, si.totalram * si.mem_unit / 1024, si.freeram * si.mem_unit / 1024);
+
+    // 在内核空间中写入文件 
+    if (file) &#123;
+        old_fs = get_fs();
+        set_fs(get_ds());
+        vfs_write(file, buf, bytes, &amp;file-&gt;f_pos);
+        set_fs(old_fs);
+    &#125;
+
+    // 重启定时器
+    hrtimer_forward_now(timer, ns_to_ktime(TIMER_INTERVAL_NS));
+    return HRTIMER_RESTART;
+&#125;
+
+// 模块初始化函数
+static int __init my_init(void) &#123;
+    ktime_t ktime;
+
+    // 以写入模式打开文件，将输出的内存信息打印到当前目录下的kernel_memory_log.txt
+    file = filp_open(&quot;./kernel_memory_log.txt&quot;, O_CREAT | O_WRONLY | O_APPEND, 0644);
+    if (IS_ERR(file)) &#123;
+        file = NULL;
+        pr_alert(&quot;无法打开文件\n&quot;);
+        return -EFAULT;
+    &#125;
+    
+    ktime = ktime_set(0, TIMER_INTERVAL_NS);
+    hrtimer_init(&amp;hr_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
+    hr_timer.function = &amp;timer_callback;
+    hrtimer_start(&amp;hr_timer, ktime, HRTIMER_MODE_REL);
+
+    return 0;
+&#125;
+
+// 模块退出函数，在模块被卸载时调用
+static void __exit my_exit(void) &#123;
+    int ret;
+
+    ret = hrtimer_cancel(&amp;hr_timer);
+    if (ret)
+        pr_info(&quot;定时器仍在使用...\n&quot;);
+
+    if (file) &#123;
+        filp_close(file, NULL);
+    &#125;
+
+    pr_info(&quot;HR定时器模块已卸载\n&quot;);
+&#125;
+
+module_init(my_init);
+module_exit(my_exit);
+
+MODULE_LICENSE(&quot;GPL&quot;);
+MODULE_AUTHOR(&quot;PHM&quot;);
+MODULE_DESCRIPTION(&quot;在内核空间中记录内存信息到文件的HR(高精度定时器)定时器模块&quot;);
+</code></pre>
+<h2><span id="makefile">Makefile</span></h2><pre><code class="makefile">obj-m += kernel_timer_file.o
+
+all:
+    make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+
+clean:
+    make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+</code></pre>
+<h1><span id="操作步骤">操作步骤</span></h1><p>将两个文件上传到服务器上。</p>
+<h2><span id="准备">准备</span></h2><p>在服务器上安装必要的模块：</p>
+<pre><code class="bash">sudo yum groupinstall &quot;Development Tools&quot;
+sudo yum install gcc
+sudo yum install kernel-devel
+</code></pre>
+<p>我遇到了版本不匹配的问题，升级：</p>
+<pre><code class="bash">sudo yum update
+</code></pre>
+<p>内核开发包：</p>
+<pre><code class="bash">sudo yum install kernel-devel-$(uname -r)
+</code></pre>
+<p>切换到root用户：</p>
+<pre><code>su -
+</code></pre>
+<h2><span id="操作流程">操作流程</span></h2><h3><span id="1编译模块">1.编译模块</span></h3><p>在包含<code>kernel_timer_file.c</code>源代码和<code>Makefile</code>的目录中运行<code>make</code>命令。生成<code>.ko</code>文件，即可加载的内核模块。</p>
+<h3><span id="2加载模块">2.加载模块</span></h3><p>编译完成后，使用<code>insmod</code>命令加载模块到内核：</p>
+<pre><code class="bash">sudo insmod kernel_timer_file.ko
+</code></pre>
+<p>可以使用<code>modinfo</code>查看模块信息，使用<code>lsmod</code>查看已加载的模块。</p>
+<h3><span id="3验证和监控">3.验证和监控</span></h3><p>加载模块后，可以通过<code>dmesg</code>命令查看内核日志，验证模块是否按预期工作。</p>
+<pre><code class="bash">dmesg | tail #查看最后几行 
+</code></pre>
+<h3><span id="4卸载模块">4.卸载模块</span></h3><p>使用<code>rmmod</code>命令：</p>
+<pre><code class="bash">sudo rmmod kernel_timer_file
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 PHM&#39;s world
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;ailasukasan
+        </div>
+        <div>
+            可以点击一下Try Try <a target="_blank" rel="noopener" href="https://github.com/ailasukasan">歡迎來到我的世界</a> &amp;
+            <a href="">站在能分割世界的桥</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+
+
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+
+
+</body>
+</html>

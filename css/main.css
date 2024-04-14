@@ -975,26 +975,3 @@ ol li {
 }
 
  
-.menu_label {
-    float: left;
-    border: 1px rgb(67, 150, 202) solid;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 3px;
-    padding-top: 1px;
-    border-radius: 15px;
-    font-size: 10px;
-    margin-left: 15px;
-    margin-top: 8px;
-    color: rgb(67, 150, 202);
-    /* font-weight: bold; */
-    margin-bottom: 7px;
-  }
-  .menu_label:active {
-    background-color: rgb(67, 150, 202);
-    color: white;
-  }
-  .menu_label:focus {
-    background-color: rgb(67, 150, 202);
-    color: white;
-  }

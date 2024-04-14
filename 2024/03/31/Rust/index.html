@@ -1,12 +1,14 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
-
-
-
-
+<!--
+    <script src="/js/leaves.js"></script>
+-->
     <!-- 爆炸红心效果 -->
 <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
 <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
@@ -14,10 +16,15 @@
 
 <!--动态线条背景-->
 <script type="text/javascript"
-color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
 </script>
-
-
+<!--流星雨背景
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+-->
     <meta charset="utf-8" />
     <title>Rust学习 | PHM&#39;s world</title>
     <meta name="author" content="ailasukasan" />
@@ -103,7 +110,7 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com
         
         <a href="/tags">
             <i class="fa-solid fa-tags fa-fw"></i>
-            <span>&ensp;這一排標簽全部沒有開發</span>
+            <span>&ensp;Tags</span>
         </a>
         
     </nav>
@@ -156,7 +163,7 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com
                         <div style="min-width: 20px; max-width: 50px; width: 10%">
                             <i class="fa-solid fa-tags fa-fw"></i>
                         </div>
-                        <div style="min-width: 100px; max-width: 150%; width: 20%">這一排標簽全部沒有開發</div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
                     </div>
                 </a>
                 
@@ -181,8 +188,18 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com
             2024/3/31
         </span>
         
+        <span class="category">
+            <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                基础知识
+            </a>
+        </span>
+        
         
     </div>
+    
     <div class="content" v-pre>
         <h3><span id="入门rust算是比其他语言要难一些">入门rust算是比其他语言要难一些</span></h3><p>所有权机制明显地区分了rust和C++、Java</p>
 <p>rust实现链表操作简直地狱</p>
@@ -220,68 +237,8 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
     
     
     
-</div>
-
-
-
-
-
-<!--
-<div class="article">
-    <div>
-        <h1>Rust学习</h1>
-    </div>
-    <div class="info">
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/3/31
-        </span>
-        
-        
-    </div>
-    
-    <div class="content" v-pre>
-    <h3><span id="入门rust算是比其他语言要难一些">入门rust算是比其他语言要难一些</span></h3><p>所有权机制明显地区分了rust和C++、Java</p>
-<p>rust实现链表操作简直地狱</p>
-<p>这就不得不提到<a target="_blank" rel="noopener" href="https://course.rs/about-book.html">rust圣经</a>，感谢前辈们的努力！</p>
-<hr>
-<p>附烂梗一则<del>bushi</del></p>
-<pre><code class="xiaochou">今天在网吧看到一个妹妹很可爱，走近一看竟然在写代码。
-我大喜过望，想和她一起写，就坐了过去。
-妹妹人也特别好，一直和我在聊天，讨论各种语言的特点。
-然后她突然要和我一起写代码。
-我才发现这个妹妹写的都是 Rust、Haskell、Lisp 这种高端语言。
-我看着我的 C++ 冷汗直冒，一直不敢新建项目。
-妹妹看到我的窘迫很温柔地问我：
-是不是写的 C，没关系的，语法简单但是上限也不低，
-写 C 的程序员都很懂计算机系统和结构。
-我一听更不敢说话了，
-妹妹看我没说话又说没事没事：
-写 Java 也没什么的，毕竟做大型项目能力不俗。
-见我还没反应，她的表情突然有点尴尬地笑了笑问我：
-该不会是写 Python 的吧，虽然语言一般但是生态很好，
-一起做做数据分析也没什么。
-我只好告诉她我写的是 C++，她的脸色唰一下就变了：
-“我说你怎么不敢说话，原来是写 C++ 的。” 
-她看了我的代码之后，眼神中的鄙视更深了一层。
-“写 C++，还用 C with Class？
-别的语言一个都没用过？
-C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
-</code></pre>
-<p><img src="/../image/420126789964089224.jpg" alt="image"></p>
-
-    </div>
-    
-    
-    
-    
-    
-    
     
 </div>
--->
             <footer id="footer">
     <div id="footer-wrap">
         <div>
@@ -307,6 +264,8 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
                 <img id="preview-content" ref="previewContent" />
             </div>
         </transition>
+
+
         
     </div>
     <script src="/js/main.js"></script>

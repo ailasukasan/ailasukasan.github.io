@@ -1,12 +1,14 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 
-
-
-
-
+<!--
+    <script src="/js/leaves.js"></script>
+-->
     <!-- 爆炸红心效果 -->
 <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
 <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
@@ -14,10 +16,15 @@
 
 <!--动态线条背景-->
 <script type="text/javascript"
-color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
 </script>
-
-
+<!--流星雨背景
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+-->
     <meta charset="utf-8" />
     <title>Java学习 | PHM&#39;s world</title>
     <meta name="author" content="ailasukasan" />
@@ -103,7 +110,7 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com
         
         <a href="/tags">
             <i class="fa-solid fa-tags fa-fw"></i>
-            <span>&ensp;這一排標簽全部沒有開發</span>
+            <span>&ensp;Tags</span>
         </a>
         
     </nav>
@@ -156,7 +163,7 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com
                         <div style="min-width: 20px; max-width: 50px; width: 10%">
                             <i class="fa-solid fa-tags fa-fw"></i>
                         </div>
-                        <div style="min-width: 100px; max-width: 150%; width: 20%">這一排標簽全部沒有開發</div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
                     </div>
                 </a>
                 
@@ -181,8 +188,31 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com
             2024/3/31
         </span>
         
+        <span class="category">
+            <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                基础知识
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/Java/" style="color: #00bcd4">Java</a>
+            </span>
+            
+        </span>
         
     </div>
+    
     <div class="content" v-pre>
         <h4><span id="去吧皮卡丘">去吧，皮卡丘</span></h4><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1DJ411B7cG/?spm_id_from=333.337.search-card.all.click">入门</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41701956/article/details/116375749">笔记</a></p>
@@ -196,44 +226,8 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com
     
     
     
-</div>
-
-
-
-
-
-<!--
-<div class="article">
-    <div>
-        <h1>Java学习</h1>
-    </div>
-    <div class="info">
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/3/31
-        </span>
-        
-        
-    </div>
-    
-    <div class="content" v-pre>
-    <h4><span id="去吧皮卡丘">去吧，皮卡丘</span></h4><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1DJ411B7cG/?spm_id_from=333.337.search-card.all.click">入门</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41701956/article/details/116375749">笔记</a></p>
-<p><a target="_blank" rel="noopener" href="https://springdoc.cn/spring-boot/"><strong>springboot</strong></a></p>
-<p><a target="_blank" rel="noopener" href="https://javaguide.cn/">八股文</a></p>
-
-    </div>
-    
-    
-    
-    
-    
-    
     
 </div>
--->
             <footer id="footer">
     <div id="footer-wrap">
         <div>
@@ -259,6 +253,8 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="800" src="//cdn.bootcss.com
                 <img id="preview-content" ref="previewContent" />
             </div>
         </transition>
+
+
         
     </div>
     <script src="/js/main.js"></script>
