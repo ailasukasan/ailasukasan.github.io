@@ -1,0 +1,582 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!--
+    <script src="/js/leaves.js"></script>
+-->
+    <!-- 爆炸红心效果 -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+<!--流星雨背景
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+-->
+    <meta charset="utf-8" />
+    <title>虚拟机内核寄存器 | PHM&#39;s world</title>
+    <meta name="author" content="ailasukasan" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.loli.net" />
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>歡迎來到烏托邦的世界</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>PHM&#39;S WORLD</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;PHM</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;PHM&#39;S WORLD</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">PHM</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>虚拟机内核寄存器</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/4/15
+        </span>
+        
+        <span class="category">
+            <a href="/categories/Linux%E5%86%85%E6%A0%B8%E7%BC%96%E7%A8%8B/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                Linux内核编程
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/LikeX/" style="color: #00a596">LikeX</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1><span id="vmx相关寄存器-vmcs相关寄存器">VMX相关寄存器、VMCS相关寄存器</span></h1><p>与VMX (虚拟机扩展) 相关的寄存器主要分为两类：VMX操作寄存器和VMCS（虚拟机控制结构）相关的字段。</p>
+<p>VMX操作寄存器是用于控制和管理虚拟机执行的特殊CPU寄存器。</p>
+<p>VMCS字段则用于在虚拟机执行期间存储和管理虚拟机的状态以及控制信息。</p>
+<h3><span id="vmx操作寄存器">VMX操作寄存器</span></h3><p><img src="/..%5Cimage%5Cimage-20240409110250915.jpg" alt="image-20240409110250915"></p>
+<h4><span id="cr0-控制寄存器0"><strong>CR0</strong>: 控制寄存器0</span></h4><p>​		CR0 寄存器是英特尔 x86 架构中的一个控制寄存器，用于<strong>控制处理器的运行模式和部分系统的基本行为</strong>。以下是 CR0 寄存器的一些重要位和功能：</p>
+<ol>
+<li><p><strong>PE (Protection Enable)</strong>: 第 0 位。当 PE 位被设置为 1 时，处理器处于保护模式，这是一种较高特权级别的工作模式，允许操作系统保护和隔离不同的应用程序和内核。在保护模式下，CR0 的其他控制位才会生效。</p>
+</li>
+<li><p><strong>MP (Monitor Coprocessor)</strong>: 第 1 位。在较早的处理器中，MP 位用于控制协处理器（如浮点处理器）的监视。在现代处理器中，这一位已经不再使用。</p>
+</li>
+<li><p><strong>EM (Emulation)</strong>: 第 2 位。当 EM 位被设置为 1 时，处理器进入仿真模式，用于在不支持指定指令的处理器上模拟运行特定的指令。在现代处理器中，这一位已经不再使用。</p>
+</li>
+<li><p><strong>TS (Task Switched)</strong>: 第 3 位。当 TS 位被设置为 1 时，表示处理器处于任务切换状态，这是由任务门（Task Gate）触发的，用于任务切换时保存处理器状态。</p>
+</li>
+<li><p><strong>ET (Extension Type)</strong>: 第 4 位。在 386 以上的处理器中，ET 位用于指示处理器是否支持处理器扩展。在现代处理器中，这一位已经不再使用。</p>
+</li>
+<li><p><strong>NE (Numeric Error)</strong>: 第 5 位。当 NE 位被设置为 1 时，处理器在发生浮点数运算错误时会引发异常。</p>
+</li>
+<li><p><strong>WP (Write Protect)</strong>: 第 16 位。当 WP 位被设置为 1 时，对于只读页面（Read-Only Page）进行写操作将导致发生异常。</p>
+</li>
+<li><p><strong>AM (Alignment Mask)</strong>: 第 18 位。当 AM 位被设置为 1 时，处理器会执行内存地址对齐检查。如果检查失败，将引发异常。</p>
+</li>
+<li><p><strong>NW (Not Write-Through)</strong>: 第 29 位。当 NW 位被设置为 1 时，处理器将禁用写穿透缓存策略。</p>
+</li>
+<li><p><strong>CD (Cache Disable)</strong>: 第 30 位。当 CD 位被设置为 1 时，处理器将禁用数据缓存。</p>
+</li>
+<li><p><strong>PG (Paging)</strong>: 第 31 位。当 PG 位被设置为 1 时，处理器启用分页机制，允许操作系统使用虚拟内存。</p>
+</li>
+</ol>
+<p>CR0 寄存器的控制位可以通过编程在保护模式下设置或清除，以控制处理器的不同行为和特性。</p>
+<p>功能总结：</p>
+<ul>
+<li>控制处理器的工作模式，如实模式、保护模式等。</li>
+<li>控制内存管理特性，如分页、页面保护等。</li>
+<li>控制缓存设置，如启用或禁用数据缓存、写穿透缓存等。</li>
+</ul>
+<h4><span id="cr3-控制寄存器3"><strong>CR3</strong>: 控制寄存器3</span></h4><p>​		用于<strong>页表的基址</strong>，虚拟化时对其进行特殊管理。</p>
+<p><strong>概述</strong>：</p>
+<ul>
+<li>CR3 寄存器存储着页目录表（Page Directory Table）的基地址，它是虚拟内存管理的关键组成部分。</li>
+<li>页目录表用于将虚拟地址映射到物理地址，其中包含了一组页表项（Page Directory Entries），每个页表项对应着一个页表（Page Table）的基地址。</li>
+</ul>
+<p><strong>虚拟内存管理</strong>：</p>
+<ul>
+<li>当 CPU 执行涉及虚拟内存的指令时，会使用 CR3 寄存器中的页目录表基地址来查找虚拟地址对应的物理地址。</li>
+<li>操作系统可以通过修改 CR3 寄存器的值来切换不同的页目录表，从而实现进程间的内存隔离和虚拟地址空间的切换。</li>
+</ul>
+<p><strong>进程切换</strong>：</p>
+<ul>
+<li>在多任务操作系统中，当 CPU 切换到不同的进程时，操作系统会根据当前执行的进程，将该进程的页目录表基地址加载到 CR3 寄存器中。</li>
+<li>这样可以确保每个进程拥有自己独立的虚拟地址空间，提高了系统的安全性和隔离性。</li>
+</ul>
+<p><strong>虚拟化环境</strong>：</p>
+<ul>
+<li>在虚拟化环境中，每个虚拟机通常都有自己的页目录表，用于将虚拟地址映射到物理地址。</li>
+<li>虚拟机监控器（hypervisor）可以通过修改 CR3 寄存器的值，实现虚拟机之间的内存隔离和切换。</li>
+</ul>
+<p><strong>控制位</strong>：</p>
+<ul>
+<li>CR3 寄存器中的一些位被保留用于未来的扩展，例如对大页（Large Page）和超大页（Huge Page）的支持。</li>
+</ul>
+<p><strong>功能总结：</strong></p>
+<p>CR3 寄存器，它存储着页目录表的基地址，通过修改 CR3 寄存器的值，可以实现不同进程或虚拟机之间的内存隔离和切换。</p>
+<h4><span id="cr4-控制寄存器4"><strong>CR4</strong>: 控制寄存器4</span></h4><p>​		用于控制处理器的<strong>高级特性和扩展功能</strong>。它包含了一系列控制位，用于控制处理器的高级特性和扩展功能，如虚拟化支持、大页面支持、物理地址扩展、性能监控等。通过设置和清除 CR4 寄存器中的控制位，可以调整处理器的行为和功能，以满足不同应用场景的需求。</p>
+<p>​		还有：支持大页面和物理地址扩展，以提高内存管理的灵活性和性能。支持性能监控计数器，用于性能分析和调优。支持安全模式扩展（SMX）、虚拟机扩展（VMX）等。</p>
+<p>有以下的<strong>控制位</strong>：</p>
+<ol>
+<li><strong>VME (Virtual 8086 Mode Extensions)</strong>: 第 0 位。启用虚拟 8086 模式的扩展。</li>
+<li><strong>PVI (Protected-Mode Virtual Interrupts)</strong>: 第 1 位。启用保护模式下的虚拟中断（VP）。</li>
+<li><strong>TSD (Time Stamp Disable)</strong>: 第 2 位。禁用时间戳计数器（TSC）。</li>
+<li><strong>DE (Debugging Extensions)</strong>: 第 3 位。启用处理器的调试扩展功能。</li>
+<li><strong>PSE (Page Size Extensions)</strong>: 第 4 位。启用大页面（4MB）的支持。</li>
+<li><strong>PAE (Physical Address Extensions)</strong>: 第 5 位。启用物理地址扩展，支持大于 4GB 的物理内存。</li>
+<li><strong>MCE (Machine Check Exception)</strong>: 第 6 位。启用机器检查异常。</li>
+<li><strong>PGE (Page Global Enable)</strong>: 第 7 位。启用页全局位（PGE）。</li>
+<li><strong>PCE (Performance Monitoring Counter Enable)</strong>: 第 8 位。启用性能监控计数器。</li>
+<li><strong>OSFXSR (OS Support for FXSAVE and FXRSTOR instructions)</strong>: 第 9 位。启用对 FXSAVE 和 FXRSTOR 指令的支持。</li>
+<li><strong>OSXMMEXCPT (OS Support for Unmasked SIMD Floating-Point Exceptions)</strong>: 第 10 位。启用对未屏蔽的 SIMD 浮点异常的支持。</li>
+<li><strong>UMIP (User-Mode Instruction Prevention)</strong>: 第 11 位。启用用户模式指令防止。</li>
+<li><strong>VMXE (VMX-Enable)</strong>: 第 13 位。启用虚拟机扩展支持。</li>
+<li><strong>SMXE (SMX-Enable)</strong>: 第 14 位。启用安全模式扩展支持。</li>
+<li><strong>FSGSBASE (FS&#x2F;GS Base Access)</strong>: 第 16 位。启用 FS 和 GS 寄存器基址访问的指令。</li>
+<li><strong>PCIDE (PCID Enable)</strong>: 第 17 位。启用进程上下文标识符（PCID）支持。</li>
+<li><strong>OSXSAVE (OS Support for XSAVE and Processor Extended States)</strong>: 第 18 位。启用对 XSAVE 和处理器扩展状态的支持。</li>
+<li><strong>SMEP (Supervisor Mode Execution Protection)</strong>: 第 20 位。启用监管模式执行保护。</li>
+<li><strong>SMAP (Supervisor Mode Access Protection)</strong>: 第 21 位。启用监管模式访问保护。</li>
+</ol>
+<p>功能总结：</p>
+<p>CR4 寄存器控制处理器的高级特性和扩展功能，包括虚拟化支持、大页面支持、物理地址扩展、性能监控等。</p>
+<h4><span id="cr8-控制寄存器8"><strong>CR8</strong>: 控制寄存器8</span></h4><p>用于任务优先级寄存器，用于控制<strong>当前任务的本地中断优先级</strong>。</p>
+<p>CR8 寄存器用于控制当前任务的本地中断优先级，即处理器处理中断请求的优先级。</p>
+<p>在 x86 架构中，中断分为两种类型：外部中断（例如，来自外部设备的中断请求）和内部中断（例如，来自处理器内部的异常或故障）。CR8 寄存器主要用于控制内部中断的优先级。</p>
+<ul>
+<li><p><strong>功能</strong>：</p>
+<p> 控制当前任务的本地中断优先级，即确定是否允许更高优先级的中断中断当前正在执行的任务。</p>
+<p> CR8 寄存器的值越小，表示中断优先级越高，即处理器更容易被更高优先级的中断打断当前任务的执行。</p>
+<p> CR8 寄存器的值范围通常是从 0 到 255，其中 0 表示最高优先级，255 表示最低优先级。</p>
+</li>
+<li><p><strong>使用场景</strong>：</p>
+<p> 操作系统内核通常会使用 CR8 寄存器来控制任务的中断优先级，以实现对中断的管理和调度。</p>
+<p> 当操作系统需要保护关键代码区域不被中断打断时，可以临时提高当前任务的中断优先级，从而禁止更高优先级的中断发生。</p>
+<p> 直接修改 CR8 寄存器的值可能会影响系统的稳定性和安全性，因此通常只有操作系统内核有权限访问和修改 CR8 寄存器。</p>
+<p> 不同的处理器和操作系统可能会对 CR8 寄存器的使用和行为有所差异，因此在编写涉及 CR8 寄存器的代码时需要注意平台的兼容性和规范性。</p>
+</li>
+</ul>
+<p>功能总结：</p>
+<p>CR8用于控制当前任务的本地中断优先级的关键寄存器，通过调整 CR8 寄存器的值，操作系统可以实现对中断的管理和调度，以确保系统的稳定性和安全性。</p>
+<h3><span id="vmx特定控制寄存器和vmcs直接相关的寄存器">VMX特定控制寄存器（和**<u>VMCS</u>**直接相关的寄存器）</span></h3><p>本部分是和**<u>VMCS</u>**直接相关的寄存器：</p>
+<ol>
+<li><h4><span id="vmcs-link-pointer"><strong>VMCS Link Pointer</strong>:</span></h4><p>用于支持VMCS的链接操作。</p>
+<p>用于构建和管理虚拟机控制结构。</p>
+<h5><span id="功能"><strong>功能</strong>：</span></h5><ul>
+<li><p>VMCS Link Pointer 寄存器用于构建虚拟机控制结构（VMCS）链表，实现虚拟机的嵌套运行和管理。</p>
+</li>
+<li><p>在虚拟化环境中，虚拟机监控器（hypervisor）可能会创建多个虚拟机，这些虚拟机的 VMCS 需要进行有效的管理和组织，以实现虚拟机的正确切换和执行。</p>
+</li>
+<li><p>VMCS Link Pointer 寄存器存储了指向当前虚拟机控制结构（VMCS）链表中下一个 VMCS 的指针。</p>
+</li>
+<li><p>当处理器执行 VMREAD 或 VMWRITE 指令时，可以通过 VMCS Link Pointer 寄存器来指定需要读取或写入的 VMCS 的位置。</p>
+</li>
+<li><p>VMCS Link Pointer 寄存器的值通常是一个指向下一个 VMCS 的物理地址或者索引。</p>
+</li>
+</ul>
+<h5><span id="使用场景"><strong>使用场景</strong>：</span></h5><ul>
+<li><p>在虚拟化环境中，当虚拟机监控器需要切换到另一个虚拟机时，会使用 VMCS Link Pointer 寄存器来指定下一个要加载的 VMCS。</p>
+</li>
+<li><p>当虚拟机监控器需要保存当前虚拟机的状态并执行另一个虚拟机时，可以使用 VMCS Link Pointer 寄存器来管理不同虚拟机的 VMCS。</p>
+</li>
+<li><p>对 VMCS Link Pointer 寄存器的访问通常需要特权级别较高的权限，只有虚拟机监控器或者操作系统内核才能够访问和修改这个寄存器。</p>
+</li>
+<li><p>在虚拟化软件的开发中，需要特别注意正确管理 VMCS Link Pointer 寄存器的值，以确保虚拟机的正确切换和执行。</p>
+</li>
+</ul>
+<p>总之，VMCS Link Pointer 寄存器是虚拟化环境中用于管理虚拟机控制结构链表的关键寄存器，它存储了指向下一个 VMCS 的指针，通过它可以实现虚拟机的正确切换和执行。</p>
+</li>
+<li><h4><span id="vmcs-revision-identifier"><strong>VMCS Revision Identifier</strong>:</span></h4><p>识别VMCS结构的版本。</p>
+<p>VMCS Revision Identifier 寄存器是用于虚拟化环境中的一个特殊寄存器，用于存储当前 CPU 支持的 VMCS（Virtual Machine Control Structure）结构的版本标识。以下是对 VMCS Revision Identifier 寄存器的详细介绍：</p>
+<h5><span id="功能"><strong>功能</strong>：</span></h5><ul>
+<li><p>VMCS Revision Identifier 寄存器存储的值用于识别处理器支持的 VMCS 结构的版本。</p>
+</li>
+<li><p>虚拟机监控器可以读取这个寄存器的值，从而了解当前处理器支持的 VMCS 结构的特性和限制。</p>
+</li>
+<li><p>当创建 VMCS 结构时，虚拟机监控器可以使用 VMCS Revision Identifier 寄存器的值来确定要使用的 VMCS 结构的格式和配置。</p>
+</li>
+<li><p>VMCS Revision Identifier 寄存器存储了当前处理器支持的 VMCS 结构的版本标识。</p>
+</li>
+<li><p>这个版本标识是一个唯一的标识符，用于确定当前处理器支持的 VMCS 结构的格式和功能，以便与虚拟机监控器或其他虚拟化软件进行通信和协调。</p>
+</li>
+</ul>
+<h5><span id="使用场景"><strong>使用场景</strong>：</span></h5><ul>
+<li><p>在虚拟化环境中，虚拟机监控器通常会在创建虚拟机时使用 VMCS Revision Identifier 寄存器来确定要使用的 VMCS 结构的版本。</p>
+</li>
+<li><p>虚拟机监控器可以根据 VMCS Revision Identifier 寄存器的值来进行适当的配置和管理，以确保虚拟机的正常运行和性能优化。</p>
+</li>
+<li><p>VMCS Revision Identifier 寄存器的值是只读的，只能由处理器硬件自动设置，虚拟机监控器无法修改这个值。</p>
+</li>
+<li><p>虚拟机监控器需要确保与处理器支持的 VMCS 结构版本相匹配，以避免因版本不匹配而导致的兼容性问题或错误。</p>
+</li>
+<li><p>总之，VMCS Revision Identifier 寄存器是虚拟化环境中用于存储当前处理器支持的 VMCS 结构版本标识的特殊寄存器。它的值用于确定处理器支持的 VMCS 结构的特性和限制，以便虚拟机监控器进行适当的配置和管理。</p>
+</li>
+</ul>
+</li>
+<li><h4><span id="vmxon-pointer"><strong>VMXON Pointer</strong>:</span></h4><p>指向启用VMX操作的VMXON区域的物理地址。</p>
+<p>VMXON Pointer 寄存器是用于虚拟化环境中的一个特殊寄存器，用于存储指向 VMXON 区域的物理地址。以下是对 VMXON Pointer 寄存器的详细介绍：</p>
+<h5><span id="功能"><strong>功能</strong>：</span></h5><ul>
+<li>VMXON Pointer 寄存器用于存储指向 VMXON 区域的物理地址。</li>
+<li>VMXON 区域是用于启用虚拟机扩展（VMX）功能的一块内存区域，其中包含了虚拟机扩展的控制结构和配置信息。</li>
+<li>VMXON Pointer 寄存器的值用于确定 VMXON 区域的位置，以便虚拟机监控器执行 VMXON 指令来启用虚拟机扩展功能。</li>
+<li>虚拟机监控器在启用虚拟机扩展功能之前，必须使用 VMXON 指令将 VMXON 区域加载到内存，并将 VMXON Pointer 寄存器设置为指向该区域的物理地址。</li>
+<li>VMXON 区域中存储了一些关键的控制位和配置信息，用于控制和管理虚拟机扩展功能的运行。</li>
+</ul>
+<h5><span id="使用场景"><strong>使用场景</strong>：</span></h5><ul>
+<li><p>在虚拟化环境中，当虚拟机监控器需要启用虚拟机扩展功能时，会使用 VMXON Pointer 寄存器来指定 VMXON 区域的位置。</p>
+</li>
+<li><p>虚拟机监控器会首先检查处理器是否支持虚拟机扩展功能，然后通过 VMXON 指令将 VMXON 区域加载到内存，并将 VMXON Pointer 寄存器设置为指向该区域的物理地址。</p>
+</li>
+<li><p>VMXON Pointer 寄存器的值通常由虚拟机监控器在启动虚拟化环境时设置，并且一旦设置后就不应该被修改。</p>
+</li>
+<li><p>虚拟机监控器需要确保 VMXON Pointer 寄存器的值有效，并且指向正确的 VMXON 区域，以确保虚拟机扩展功能能够正确启用。</p>
+</li>
+</ul>
+<p>总之，VMXON Pointer 寄存器是虚拟化环境中用于存储指向 VMXON 区域的物理地址的特殊寄存器。它的值用于确定 VMXON 区域的位置，以便虚拟机监控器执行 VMXON 指令来启用虚拟机扩展功能。</p>
+</li>
+</ol>
+<h3><span id="vmcs相关的字段">VMCS相关的字段</span></h3><p>本部分不是寄存器。是和vmcs相关的字段。</p>
+<p>VMCS内部结构非常复杂，包含多个字段，主要分为四大类：</p>
+<ol>
+<li><p><strong>Guest-State Area</strong>: </p>
+<p>存储虚拟机客户操作系统的状态。</p>
+<p>包括但不限于各种寄存器（如RIP, RFLAGS, 控制寄存器CR0-CR4，段寄存器等）的值。</p>
+</li>
+<li><p><strong>Host-State Area</strong>: </p>
+<p>存储宿主机状态，当VM退出时，处理器使用这些信息来恢复宿主机的状态。</p>
+<p>包含宿主机的寄存器和其他状态信息。</p>
+</li>
+<li><p><strong>VM-Execution Control Fields</strong>: </p>
+<p>控制VM执行的各种设置。</p>
+<p>包括处理器执行控制、中断和异常的控制等。</p>
+</li>
+<li><p><strong>VM-Exit Control Fields</strong>: </p>
+<p>控制VM退出的行为。</p>
+<p>包括退出时哪些信息被保存以及如何保存。</p>
+</li>
+<li><p><strong>VM-Entry Control Fields</strong>: </p>
+<p>控制VM进入的行为。</p>
+<p>定义进入VM时应用的各种控制策略。</p>
+</li>
+</ol>
+<h3><span id="其他vmx相关的msr模型特定寄存器">其他VMX相关的MSR（模型特定寄存器）</span></h3><ol>
+<li><p><strong>IA32_FEATURE_CONTROL</strong>: </p>
+<p>用于启用VMX操作。</p>
+<p>IA32_FEATURE_CONTROL是Intel CPU中的一个特殊寄存器，用于控制虚拟化相关功能的启用和禁用。这个寄存器通常用于管理虚拟化技术，比如Intel VT-x（虚拟化技术）和Intel VT-d（直接内存访问）。</p>
+<p>IA32_FEATURE_CONTROL寄存器的具体位字段含义如下：</p>
+<ol>
+<li><p><strong>Bit 0 (Lock)</strong>: 这个位用于锁定VT-x和VT-d的相关功能。当这个位被设置为1时，其他位的写入操作将被锁定，防止对虚拟化相关功能的意外更改。通常，在启用虚拟化功能后，将此位设置为1来保护虚拟化配置不被修改。</p>
+</li>
+<li><p><strong>Bit 2 (VMXON Enabled)</strong>: 这个位用于启用或禁用VT-x（虚拟化技术）。当这个位被设置为1时，VT-x功能被启用。如果这个位被清零，那么VT-x功能将被禁用，虚拟化软件将无法运行虚拟机。</p>
+</li>
+<li><p><strong>Bit 18 (VMXON Lock)</strong>: 这个位用于锁定VMXON的相关功能。VMXON是一个用于开启VMX操作（即VT-x）的指令，它的功能可以通过这个位来锁定，防止对VMX操作的意外更改。</p>
+</li>
+</ol>
+<p>在操作系统或虚拟化软件中，通常会通过读取和写入IA32_FEATURE_CONTROL寄存器来控制虚拟化功能的启用和禁用。然而，需要注意的是，这个寄存器的访问可能受到特权级别的限制，需要在特权级别较高的代码中进行访问。</p>
+<p>总的来说，IA32_FEATURE_CONTROL寄存器在Intel CPU中，用于管理和控制虚拟化相关功能的状态。</p>
+</li>
+<li><p><strong>IA32_VMX_BASIC</strong>: </p>
+<p>报告基本的VMX支持信息。</p>
+<p>IA32_VMX_BASIC 寄存器是 Intel CPU 中的一个特殊寄存器，用于存储虚拟机扩展（VMX）的基本信息。</p>
+<p>IA32_VMX_BASIC 寄存器中包含了一系列有关 VMX 功能的基本信息，包括虚拟机控制结构（VMCS）的大小限制、VMX 指令集的支持信息、VMX 支持的最大虚拟机数目等。</p>
+<p>下面是 IA32_VMX_BASIC 寄存器的一些重要字段：</p>
+<ol>
+<li><p><strong>VMCS 大小限制（VMCS Size）</strong>：该字段指示了 VMCS 结构的最大大小限制。VMCS 是用于存储和管理虚拟机执行状态的数据结构，包括了控制字段、状态字段等。VMCS 大小的限制可能因不同的 CPU 而异，通常情况下是不超过某个特定值的。这个字段可以帮助虚拟化软件确定 VMCS 的合适大小。</p>
+</li>
+<li><p><strong>VMX 支持的最大虚拟机数目（Maximum Number of VMX Virtual Machines）</strong>：这个字段指示了 CPU 支持的最大同时运行的虚拟机数量。虚拟化软件可以根据这个值来规划虚拟机的数量，以保证性能和资源的合理分配。</p>
+</li>
+<li><p><strong>VMX 指令集支持信息（VMX Instructions Supported）</strong>：这个字段指示了 CPU 是否支持 VMX 指令集。VMX 指令集包括了一系列用于虚拟化的指令，如 VMXON、VMCLEAR、VMPTRLD 等。如果这个字段为 1，则表示 CPU 支持 VMX 指令集，可以执行虚拟化操作。</p>
+</li>
+<li><p><strong>VMCS Revision Identifier（VMCS 修订标识符）</strong>：该字段包含一个唯一的标识符，用于标识 VMCS 结构的版本。虚拟化软件可以使用这个标识符来区分不同版本的 VMCS 结构。</p>
+</li>
+</ol>
+<p>IA32_VMX_BASIC 寄存器的内容通常在系统启动时被初始化，并且不允许被操作系统直接修改。虚拟化软件可以通过读取 IA32_VMX_BASIC 寄存器来获取 VMX 相关功能的基本信息，并据此进行虚拟机的创建和管理。</p>
+<p>总的来说，IA32_VMX_BASIC 寄存器提供了关于 VMX 功能的重要基本信息，对于虚拟化软件来说是一个重要的参考。</p>
+</li>
+<li><p><strong>IA32_VMX_PINBASED_CTLS</strong>: </p>
+<p>控制VM执行时的固定操作。</p>
+<p>IA32_VMX_PINBASED_CTLS 寄存器是 Intel CPU 中的一个特殊寄存器，用于配置虚拟机扩展（VMX）中的 PIN-based 控制功能。</p>
+<p>IA32_VMX_PINBASED_CTLS 寄存器的内容控制着处理器在虚拟化模式下如何处理来自虚拟机的外部中断和 NMI（非屏蔽中断）。该寄存器的位字段定义了一系列功能控制位，这些位可用于启用或禁用处理器在虚拟化模式下对外部中断和 NMI 的响应。具体的位字段含义如下：</p>
+<ol>
+<li><p>**External Interrupt Exiting (External-Interrupt Exiting Bit)**：当此位被设置为 1 时，处理器在 VMX 非根操作模式下执行时，会在外部中断到达时退出虚拟机。换句话说，虚拟机将被挂起，处理器会跳回 VMX 根操作模式。</p>
+</li>
+<li><p>**NMI Exiting (NMI Exiting Bit)**：当此位被设置为 1 时，处理器在 VMX 非根操作模式下执行时，会在 NMI 到达时退出虚拟机。类似地，虚拟机将被挂起，处理器会跳回 VMX 根操作模式。</p>
+</li>
+<li><p>**Virtual NMIs (Virtual NMI Control Bit)**：这个位用于控制虚拟化环境下的虚拟 NMI 的行为。当设置为 1 时，允许虚拟化软件发出虚拟 NMI；当设置为 0 时，禁用虚拟 NMI。</p>
+</li>
+</ol>
+<p>IA32_VMX_PINBASED_CTLS 寄存器的具体设置是由虚拟化软件来决定的，通常在虚拟机启动时被设置。这些设置可以影响处理器对外部中断和 NMI 的处理行为，从而影响虚拟机的运行和响应性能。</p>
+<p>总的来说，IA32_VMX_PINBASED_CTLS 寄存器控制着处理器在虚拟化模式下对外部中断和 NMI 的处理方式，提供了灵活的配置选项，以满足不同虚拟化环境的需求。</p>
+</li>
+<li><p><strong>IA32_VMX_PROCBASED_CTLS</strong>:</p>
+<p> 控制VM执行时的处理器相关操作。</p>
+<p>IA32_VMX_PROCBASED_CTLS 寄存器是 Intel CPU 中的一个特殊寄存器，用于配置虚拟机扩展中的处理器相关的控制功能。</p>
+<p>IA32_VMX_PROCBASED_CTLS 寄存器的内容控制着处理器在虚拟化模式下如何处理虚拟机的执行。该寄存器的位字段定义了一系列功能控制位，这些位可用于启用或禁用处理器在虚拟化模式下对虚拟机执行的不同方面的支持。具体的位字段含义如下：</p>
+<ol>
+<li><p>**External Interrupt Exiting (External-Interrupt Exiting Bit)**：当此位被设置为 1 时，处理器在 VMX 非根操作模式下执行时，会在外部中断到达时退出虚拟机。换句话说，虚拟机将被挂起，处理器会跳回 VMX 根操作模式。</p>
+</li>
+<li><p>**NMI Exiting (NMI Exiting Bit)**：当此位被设置为 1 时，处理器在 VMX 非根操作模式下执行时，会在 NMI 到达时退出虚拟机。类似地，虚拟机将被挂起，处理器会跳回 VMX 根操作模式。</p>
+</li>
+<li><p>**Virtualize APIC Accesses (Virtualize APIC Accesses Bit)**：此位控制处理器是否虚拟化对 APIC 寄存器的访问。当设置为 1 时，处理器将对虚拟机的 APIC 访问进行拦截，并将其重定向到虚拟化环境。</p>
+</li>
+<li><p>**Activate VMX Preemption Timer (Activate VMX Preemption Timer Bit)**：当此位被设置为 1 时，处理器将激活 VMX 抢占定时器功能。这个定时器可以用来实现虚拟机的时间分片，允许虚拟化软件控制虚拟机的执行时间。</p>
+</li>
+<li><p>**Secondary Controls (Secondary Controls Bit)**：此位用于指示是否存在次级控制位，以扩展对 VMX 功能的更精细的控制。如果设置了此位，处理器将检查 MSR_IA32_VMX_PROCBASED_CTLS2 寄存器中的次级控制位。</p>
+</li>
+</ol>
+<p>IA32_VMX_PROCBASED_CTLS 寄存器的设置通常由虚拟化软件在虚拟机启动时进行配置。这些设置可以影响处理器对虚拟机执行的方式，包括如何响应外部中断、NMI，以及是否虚拟化特定的处理器功能等。</p>
+<p>总的来说，IA32_VMX_PROCBASED_CTLS 寄存器控制着处理器在虚拟化模式下对虚拟机执行的行为，提供了灵活的配置选项，以满足不同虚拟化环境的需求。</p>
+</li>
+<li><p><strong>IA32_VMX_EXIT_CTLS</strong>: </p>
+<p>控制VM退出时的操作。</p>
+<p>IA32_VMX_EXIT_CTLS 寄存器是 Intel CPU 中的一个特殊寄存器，用于配置虚拟机扩展（VMX）中的虚拟机退出控制功能。</p>
+<p>IA32_VMX_EXIT_CTLS 寄存器的内容控制着处理器在虚拟化模式下虚拟机退出时的行为。该寄存器的位字段定义了一系列功能控制位，这些位可用于启用或禁用处理器在虚拟机退出时的不同方面的处理。具体的位字段含义如下：</p>
+<ol>
+<li><p>**Save Debug Controls (Save Debug Controls Bit)**：当此位被设置为 1 时，处理器会保存调试控制寄存器（DR7）的值。调试控制寄存器用于调试器在程序执行时监视调试事件。</p>
+</li>
+<li><p>**Save IA32_EFER (Save IA32_EFER Bit)**：当此位被设置为 1 时，处理器会保存扩展标志寄存器（IA32_EFER）的值。扩展标志寄存器包含了一些与处理器扩展功能相关的控制标志，如 SYSCALL&#x2F;SYSRET、NX 等。</p>
+</li>
+<li><p>**Save IA32_PAT (Save IA32_PAT Bit)**：当此位被设置为 1 时，处理器会保存页属性表（IA32_PAT）的值。页属性表用于定义物理页的属性，如缓存类型、内存类型等。</p>
+</li>
+<li><p>**Host Address Space Size (Host Address Space Size Bit)**：此位用于指示虚拟机退出时处理器是否会在退出信息中包含宿主地址空间大小。宿主地址空间大小指示了处理器所运行的宿主操作系统的地址空间大小，如 32 位或 64 位。</p>
+</li>
+<li><p>**IA-32e Mode Guest (IA-32e Mode Guest Bit)**：此位用于指示虚拟机退出时处理器是否会在退出信息中包含虚拟机运行时的模式。如果虚拟机运行在 IA-32e 模式（64 位模式），则设置此位为 1。</p>
+</li>
+</ol>
+<p>IA32_VMX_EXIT_CTLS 寄存器的设置通常由虚拟化软件在虚拟机启动时进行配置。这些设置可以影响处理器在虚拟机退出时的行为，包括是否保存特定寄存器的值以及是否包含特定的退出信息。</p>
+<p>总的来说，IA32_VMX_EXIT_CTLS 寄存器控制着处理器在虚拟化模式下对虚拟机退出时的处理方式，提供了灵活的配置选项，以满足不同虚拟化环境的需求。</p>
+</li>
+<li><p><strong>IA32_VMX_ENTRY_CTLS</strong>: </p>
+<p>控制VM入口时的操作。</p>
+<p>IA32_VMX_ENTRY_CTLS 寄存器是 Intel CPU 中的一个特殊寄存器，用于配置虚拟机扩展（VMX）中的虚拟机进入控制功能。</p>
+<p>IA32_VMX_ENTRY_CTLS 寄存器的作用是控制处理器在虚拟化模式下虚拟机进入时的行为。具体来说，该寄存器的位字段定义了一系列功能控制位，这些位可用于启用或禁用处理器在虚拟机进入时的不同方面的处理。以下是常见的位字段及其含义：</p>
+<ol>
+<li><p>**Load Debug Controls (调试控制加载位)**：当此位被设置为 1 时，处理器会加载调试控制寄存器（DR7）的值。调试控制寄存器用于调试器在程序执行时监视调试事件。</p>
+</li>
+<li><p>**IA-32e Mode Guest (IA-32e 模式虚拟机位)**：此位用于指示处理器是否会加载虚拟机状态为 IA-32e 模式（64 位模式）。如果虚拟机运行在 IA-32e 模式，则设置此位为 1。</p>
+</li>
+<li><p>**Load IA32_EFER (IA32_EFER 寄存器加载位)**：当此位被设置为 1 时，处理器会加载扩展标志寄存器（IA32_EFER）的值。扩展标志寄存器包含了一些与处理器扩展功能相关的控制标志，如 SYSCALL&#x2F;SYSRET、NX 等。</p>
+</li>
+<li><p>**Load IA32_PAT (IA32_PAT 寄存器加载位)**：当此位被设置为 1 时，处理器会加载页属性表（IA32_PAT）的值。页属性表用于定义物理页的属性，如缓存类型、内存类型等。</p>
+</li>
+<li><p><strong>Load CET state (CET 状态加载位)</strong>: 当此位被设置为 1 时，处理器会加载CET（Control-flow Enforcement Technology）的状态。CET是一种硬件支持的技术，用于保护程序的控制流不受恶意劫持。</p>
+</li>
+</ol>
+<p>虚拟化软件通常在虚拟机启动时配置 IA32_VMX_ENTRY_CTLS 寄存器，以控制处理器在虚拟机进入时的行为。这些设置可以影响处理器对虚拟机状态的加载，包括是否加载特定寄存器的值以及是否加载特定的状态信息。</p>
+<p>总的来说，IA32_VMX_ENTRY_CTLS 寄存器提供了一种灵活的方式来控制处理器在虚拟机进入时的行为，以满足不同虚拟化环境的需求。</p>
+</li>
+</ol>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 PHM&#39;s world
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;ailasukasan
+        </div>
+        <div>
+            可以点击一下Try Try <a target="_blank" rel="noopener" href="https://github.com/ailasukasan">歡迎來到我的世界</a> &amp;
+            <a href="">站在能分割世界的桥</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+
+
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+
+
+</body>
+</html>

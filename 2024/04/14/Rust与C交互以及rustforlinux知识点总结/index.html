@@ -1,0 +1,564 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!--
+    <script src="/js/leaves.js"></script>
+-->
+    <!-- 爆炸红心效果 -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+<!--流星雨背景
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+-->
+    <meta charset="utf-8" />
+    <title>Rust内核编程 | PHM&#39;s world</title>
+    <meta name="author" content="ailasukasan" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.loli.net" />
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>歡迎來到烏托邦的世界</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>PHM&#39;S WORLD</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;PHM</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;PHM&#39;S WORLD</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">PHM</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>Rust内核编程</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/4/15
+        </span>
+        
+        <span class="category">
+            <a href="/categories/Linux%E5%86%85%E6%A0%B8%E7%BC%96%E7%A8%8B/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                Linux内核编程
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/LikeX/" style="color: #00a596">LikeX</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1><span id="rust与c的交互-rust-for-linux知识点总结">Rust与C的交互、Rust-for-linux知识点总结</span></h1><p>在内核编程中，rust经常会调用到C语言的函数，以下是使用的步骤，以及一些常用接口的总结：</p>
+<h2><span id="1-链接-c-库到-rust-项目">1. 链接 C 库到 Rust 项目</span></h2><h3><span id="rust与c语言的交互ffi示例">Rust与C语言的交互（FFI）示例</span></h3><p>Rust通过外部函数接口（Foreign Function Interface，FFI）与C语言进行交互。使用<code>extern</code>关键字声明C语言的函数和数据结构，使得可以在Rust代码中安全地调用C语言编写的代码。例如：</p>
+<pre><code class="rust">rustCopy codeextern &quot;C&quot; &#123;
+    fn c_function(arg: i32) -&gt; i32;
+&#125;
+
+fn main() &#123;
+    unsafe &#123;
+        let result = c_function(5);
+        println!(&quot;Result from C function: &#123;&#125;&quot;, result);
+    &#125;
+&#125;
+</code></pre>
+<p>在这个例子中，<code>c_function</code>是在C语言中实现的，Rust通过声明<code>extern &quot;C&quot;</code>来调用它。</p>
+<p><strong><u>注意！！！</u>所有的C函数调用都需要在<code>unsafe</code>块中进行，因为Rust无法保证C函数的内存安全性。</strong></p>
+<p>在 Rust 中调用 C 语言的函数时，需要使用 <code>extern &quot;C&quot;</code> 关键字来声明。这个关键字告诉 Rust 编译器这些函数是按照 C 语言的调用约定来实现的，这有助于正确地进行函数调用。<code>extern &quot;C&quot;</code> 也可以用来在 C 代码中调用 Rust 函数，前提是这些 Rust 函数也遵循 C 的调用约定。</p>
+<h3><span id="链接-c-库到-rust-项目">链接 C 库到 Rust 项目</span></h3><p><code>c_function</code> 应该是在某个地方用 C 语言定义过的。</p>
+<ul>
+<li><strong>确保 C 函数已经定义并且可用</strong>：这可能意味着你需要有一个 C 语言写的库文件。</li>
+<li><strong>在 Rust 项目中链接这个 C 库</strong>：你可以通过 <code>build.rs</code> 脚本或者直接在 <code>Cargo.toml</code> 中配置链接器设置，确保 C 库被正确链接到你的 Rust 项目中。</li>
+</ul>
+<h4><span id="使用-buildrs-脚本"><strong>使用 <code>build.rs</code> 脚本：</strong></span></h4><p><code>build.rs</code> 是一个在你的包构建之前运行的构建脚本。它用来处理编译前的任务，比如构建或配置C库。以下是如何设置 <code>build.rs</code> 来链接 C 库的一个简单例子：</p>
+<pre><code class="rust">rustCopy codeextern crate cc;
+
+fn main() &#123;
+    // 告诉 cargo 如何链接系统中的 C 库
+    println!(&quot;cargo:rustc-link-lib=dylib=name_of_library&quot;);
+
+    // 告诉 cargo 查找 C 库的位置
+    println!(&quot;cargo:rustc-link-search=native=/path/to/library&quot;);
+
+    // 可以使用 cc crate 来编译 C 代码
+    cc::Build::new()
+        .file(&quot;src/c_code.c&quot;)
+        .compile(&quot;libname_of_library.a&quot;);
+&#125;
+</code></pre>
+<p>这个脚本使用了 <code>cc</code> crate 来编译 C 代码，并告诉 Cargo 如何找到并链接这个库。</p>
+<h4><span id="在-cargotoml-中配置"><strong>在 <code>Cargo.toml</code> 中配置：</strong></span></h4><p>直接在 <code>Cargo.toml</code> 中配置用于链接的设置较为简单，通常用于链接系统中已有的库：</p>
+<pre><code class="toml">tomlCopy code[package]
+name = &quot;your_package&quot;
+version = &quot;0.1.0&quot;
+edition = &quot;2018&quot;
+
+[build-dependencies]
+cc = &quot;1.0&quot;
+
+[dependencies]
+
+# 添加链接器指令
+[lib]
+crate-type = [&quot;cdylib&quot;, &quot;rlib&quot;]
+
+[profile.release]
+lto = true
+</code></pre>
+<p>在这里没有直接指定链接指令，因为通常这些是通过 <code>build.rs</code> 或者特定的环境配置来完成的。但可以通过 <code>cargo:rustc-link-lib</code> 和 <code>cargo:rustc-link-search</code> 指令在 <code>build.rs</code> 中进行更具体的配置。</p>
+<h3><span id="注意rust与c的兼容问题">注意Rust与C的兼容问题</span></h3><p>常见的问题包括：</p>
+<ul>
+<li><strong>数据类型不匹配</strong>：C 语言和 Rust 在数据类型上有些差异，例如，C 语言的 <code>int</code> 可能与 Rust 的 <code>i32</code> 在某些平台上不等价。</li>
+<li><strong>内存管理不一致</strong>：Rust 自动管理内存，而 C 需要手动管理。在 Rust 调用 C 函数时，如果涉及到内存分配和释放，需要小心处理这些差异。</li>
+<li><strong>调用约定</strong>：虽然 <code>extern &quot;C&quot;</code> 指定了使用 C 的调用约定，但某些特定的编译器行为或优化可能导致问题。</li>
+</ul>
+<h4><span id="特别注意调用c时内存管理">特别注意调用C时内存管理：</span></h4><p><strong>Rust 的内存管理：</strong></p>
+<ul>
+<li><strong>分配内存：</strong> Rust 通常不需要你直接操作内存分配，因为所有权和生命周期系统会自动处理。但如果需要，可以使用 <code>Box&lt;T&gt;</code> 来在堆上分配内存，或者使用 <code>Vec&lt;T&gt;</code> 等集合。</li>
+<li><strong>释放内存：</strong> Rust 使用 RAII（资源获取即初始化）模式，当对象的生命周期结束时，内存会自动释放。例如，<code>Box&lt;T&gt;</code> 在离开作用域时会自动释放堆内存。</li>
+</ul>
+<p><strong>C 的内存管理：</strong></p>
+<ul>
+<li><strong>分配内存：</strong> 使用 <code>malloc</code>, <code>calloc</code>, 或 <code>realloc</code> 来手动分配堆内存。</li>
+<li><strong>释放内存：</strong> 使用 <code>free</code> 来释放先前分配的内存。</li>
+</ul>
+<p>当在 Rust 中调用 C 函数进行内存操作时，需要格外注意，因为 Rust 无法自动管理通过 C 函数分配的内存。通常，你需要确保在适当的时候调用 <code>free</code> 来避免内存泄漏。此外，当将内存从 C 传递到 Rust 时，也应确保使用正确的类型和生命周期，以便 Rust 编译器可以帮助管理这些资源。这通常涉及到使用 <code>unsafe</code> 代码块，因为 Rust 无法保证外部代码的安全性。</p>
+<h2><span id="2rust-for-linux常用接口总结">2.rust-for-linux常用接口总结</span></h2><p>我这里总结的知识点总结来源于以下：</p>
+<p><a target="_blank" rel="noopener" href="https://rust-for-linux.com/">https://rust-for-linux.com/</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Rust-for-Linux/">https://github.com/Rust-for-Linux/</a></p>
+<p><code>rust-for-linux</code> 项目的目标是利用 Rust 的安全特性来增强 Linux 内核的安全性和稳定性，同时为内核编程提供现代化的语言支持。随着项目的发展，预计将有更多的内核功能被 Rust 支持，为内核开发者提供更多的安全和便利。</p>
+<h3><span id="特点就是很多都要在unsafe中进行">特点就是！很多都要在unsafe中进行！</span></h3><p>具体的总结如下：</p>
+<h3><span id="1-内存管理接口">1. <strong>内存管理接口</strong></span></h3><p>Rust-for-Linux 提供了若干用于内存管理的接口，如分配和释放内存的函数。这些接口通常是 Rust 封装的 Linux 内核中的内存管理功能，确保安全性和效率。</p>
+<ul>
+<li>**<code>alloc</code> 和 <code>dealloc</code>**：用于分配和释放内存，类似于 C 的 <code>kmalloc</code> 和 <code>kfree</code>。</li>
+<li>**<code>Box</code>**：Rust 的 <code>Box</code> 在内核模块中被用来在堆上分配内存。</li>
+</ul>
+<h3><span id="2-锁和同步机制">2. <strong>锁和同步机制</strong></span></h3><p>考虑到多核处理和并发执行的需求，Rust-for-Linux 提供了多种同步机制。</p>
+<ul>
+<li>**<code>Mutex</code>**：提供互斥锁的 Rust 接口。</li>
+<li>**<code>SpinLock</code>**：为内核操作提供自旋锁支持，适用于短时间的锁定。</li>
+</ul>
+<h3><span id="3-文件操作和设备驱动接口">3. <strong>文件操作和设备驱动接口</strong></span></h3><p>Rust-for-Linux 尝试将 Rust 的类型安全和内存安全特性应用于文件操作和设备驱动开发。</p>
+<ul>
+<li>**<code>FileOperations</code>**：封装了文件操作的方法，比如 <code>open</code>、<code>read</code>、<code>write</code> 和 <code>close</code>。</li>
+<li>**<code>DeviceDriver</code>**：用于定义设备驱动，提供初始化和清理的钩子。</li>
+</ul>
+<h3><span id="4-网络功能">4. <strong>网络功能</strong></span></h3><p>网络相关的接口允许 Rust 代码参与到网络堆栈的处理中。</p>
+<ul>
+<li>**<code>NetDevice</code>**：这是对网络设备的抽象，允许管理和配置网络接口。</li>
+<li>**<code>Socket</code>**：处理网络套接字的功能。</li>
+</ul>
+<h3><span id="5-系统服务和进程管理">5. <strong>系统服务和进程管理</strong></span></h3><p>系统服务接口允许 Rust 代码与进程调度和系统管理任务交互。</p>
+<ul>
+<li>**<code>Task</code>**：代表一个内核任务或进程，提供管理其生命周期的方法。</li>
+<li>**<code>Scheduler</code>**：调度器接口，允许对任务的执行进行更细粒度的控制。</li>
+</ul>
+<h3><span id="6-模块生命周期管理">6. <strong>模块生命周期管理</strong></span></h3><p>模块生命周期管理是内核模块必须处理的基本问题，Rust-for-Linux 提供了相关的支持。</p>
+<ul>
+<li><strong><code>module!</code> 宏</strong>：用于定义模块的初始化和退出函数，是模块生命周期管理的关键部分。</li>
+</ul>
+<p>主要接口的使用示例：</p>
+<p>目前，由于 <code>rust-for-linux</code> 项目正在持续开发中，所提供的接口和功能在不断地扩展和改进。此外，它是一个相对新的尝试，许多接口可能还在实验阶段或尚未完全公开。下面，我会基于目前理解的常见接口，给出每个接口的简单使用示例。</p>
+<p>这些示例提供了各个接口基本用法的简要概述。每个接口的详细使用和可能的扩展依赖于具体项目的需求以及内核的版本和配置。</p>
+<h3><span id="1-内存管理alloc-和-dealloc">1. 内存管理：<code>alloc</code> 和 <code>dealloc</code></span></h3><p>这些函数通常用于直接的内存管理操作。在 Rust 中，可以通过特定的内核函数进行内存分配和释放：</p>
+<pre><code class="rust">use kernel::alloc::&#123;alloc, dealloc, Layout&#125;;
+
+fn example_alloc_dealloc() &#123;
+    unsafe &#123;
+        let layout = Layout::from_size_align(1024, 1).unwrap();
+        let ptr = alloc(layout);
+        if !ptr.is_null() &#123;
+            // 使用分配的内存
+
+            // 释放内存
+            dealloc(ptr, layout);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>这段代码展示了如何分配和释放内存。注意，这些操作都需要在 <code>unsafe</code> 块中进行。</p>
+<h3><span id="2-锁和同步机制mutex-和-spinlock">2. 锁和同步机制：<code>Mutex</code> 和 <code>SpinLock</code></span></h3><p>锁是并发控制中非常重要的工具，用于保护共享数据。</p>
+<pre><code class="rust">use kernel::sync::Mutex;
+
+static MY_MUTEX: Mutex&lt;u32&gt; = Mutex::new(0);
+
+fn example_mutex() &#123;
+    let mut guard = MY_MUTEX.lock();
+    *guard += 1;
+    println!(&quot;Value: &#123;&#125;&quot;, *guard);
+&#125;
+</code></pre>
+<p>这个示例使用 <code>Mutex</code> 来保护一个整数。通过锁来同步对整数的访问。</p>
+<h3><span id="3-文件操作fileoperations">3. 文件操作：<code>FileOperations</code></span></h3><p><code>FileOperations</code> 是对文件操作的封装，使得操作文件变得更加安全和方便。</p>
+<pre><code class="rust">use kernel::fs::&#123;File, FileOperations&#125;;
+
+struct SimpleFileOps;
+
+impl FileOperations for SimpleFileOps &#123;
+    fn read(&amp;self, file: &amp;File, data: &amp;mut [u8], offset: u64) -&gt; Result&lt;usize&gt; &#123;
+        // 在这里实现读操作的逻辑
+        Ok(0)
+    &#125;
+&#125;
+
+fn example_file_operations() &#123;
+    let ops = SimpleFileOps;
+    let mut data = [0u8; 1024];
+    let file = File::default();  // 仅示例，实际用法不同
+    let _result = ops.read(&amp;file, &amp;mut data, 0);
+&#125;
+</code></pre>
+<p>这个例子展示了如何定义一个简单的文件操作接口。</p>
+<h3><span id="4-网络功能netdevice">4. 网络功能：<code>NetDevice</code></span></h3><p>网络设备的抽象可以管理和配置网络接口。</p>
+<pre><code class="rust">use kernel::net::NetDevice;
+
+fn example_net_device() &#123;
+    let dev = NetDevice::new();
+    // 配置网络设备
+    dev.up();
+&#125;
+</code></pre>
+<p>示例显示了如何实例化和操作一个网络设备。</p>
+<h3><span id="5-系统服务和进程管理task">5. 系统服务和进程管理：<code>Task</code></span></h3><p>任务和进程管理接口可以用来控制系统中的进程。</p>
+<pre><code class="rust">use kernel::task::Task;
+
+fn example_task() &#123;
+    let current = Task::current();
+    println!(&quot;Current task PID: &#123;&#125;&quot;, current.pid());
+&#125;
+</code></pre>
+<p>这个示例获取并打印当前任务的 PID。</p>
+<h3><span id="6-模块生命周期管理module-宏">6. 模块生命周期管理：<code>module!</code> 宏</span></h3><p>用于定义模块的加载和卸载时执行的操作。</p>
+<p>这段代码再次展示了如何定义一个内核模块的基本框架。</p>
+<pre><code class="rust">mod kernel_module &#123;
+    use kernel::prelude::*;
+
+    module! &#123;
+        type: MyKernelModule,
+        name: &quot;my_kernel_module&quot;,
+        author: &quot;PHM&quot;,
+        description: &quot;Description of the module&quot;,
+        license: &quot;GPL&quot;
+    &#125;
+
+    struct MyKernelModule;
+
+    impl kernel::Module for MyKernelModule &#123;
+        fn init() -&gt; Result&lt;Self&gt; &#123;
+            println!(&quot;Module loaded&quot;);
+            Ok(MyKernelModule)
+        &#125;
+
+        fn exit() &#123;
+            println!(&quot;Module unloaded&quot;);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>这段代码定义了一个简单的内核模块，使用了 <code>module!</code> 宏来指定模块的元数据和生命周期方法。这演示了如何在 Rust 中创建和管理 Linux 内核模块的基本框架。</p>
+<h2><span id="写完总结后我自己存在一些问题">写完总结后，我自己存在一些问题：</span></h2><p>这些疑问非常核心，特别是在深入理解 Rust 在系统编程中的应用时。下面我会逐一解答这些问题。</p>
+<h3><span id="1-为什么在-rust-for-linux-中需要手动分配内存的函数">1. 为什么在 <code>rust-for-linux</code> 中，需要手动分配内存的函数？</span></h3><p>虽然 Rust 通常会自动管理内存，通过所有权、借用和生命周期的概念来确保内存安全，但在系统级编程，尤其是内核编程中，情况稍有不同：</p>
+<ul>
+<li><strong>性能和控制</strong>：内核编程需要对性能有极高的要求，同时需要精细控制内存的使用。自动内存管理（例如 Rust 的标准库中的垃圾收集）可能会引入不可预测的延迟。因此，直接控制内存分配和释放可以优化性能，尤其是在资源受限的环境下。</li>
+<li><strong>兼容性和集成</strong>：Linux 内核有自己的内存管理机制和API，这些API经过优化以适应内核的需求。<code>rust-for-linux</code> 需要使用这些现有的内核内存管理功能来确保与内核其余部分的兼容性。</li>
+<li><strong>安全性和错误处理</strong>：内核级别的错误处理通常需要在低级别上进行精确控制，包括如何响应内存分配失败。这种控制在使用自动内存管理时可能无法实现。</li>
+</ul>
+<p>即使 Rust 提供了自动内存管理的高级功能，<code>rust-for-linux</code> 中仍需手动管理内存，以适应内核编程的特殊需求和约束。</p>
+<h3><span id="2-rust-有自己的-core-库这个-core-库和-rust-for-linux-的关联">2. Rust 有自己的 core 库，这个 core 库和 <code>rust-for-linux</code> 的关联：</span></h3><p><strong>Rust 的 <code>core</code> 库</strong>：</p>
+<ul>
+<li>Rust 的 <code>core</code> 库是 Rust 标准库 (<code>std</code>) 的一个子集，它是为无标准库环境（如裸机或操作系统内核）设计的。<code>core</code> 库提供了 Rust 编程语言的核心部分，如迭代器、基本类型和其他核心trait，但不依赖于操作系统的功能，如文件系统访问、线程和网络功能等。</li>
+<li><code>core</code> 库适用于需要 “无标准库” 环境的开发，这种环境通常称为 “裸金属编程”，在这种环境下，程序不能依赖任何操作系统提供的功能。</li>
+</ul>
+<p><strong><code>core</code> 库与 <code>rust-for-linux</code> 的关联</strong>：</p>
+<ul>
+<li><code>rust-for-linux</code> 旨在让 Rust 能够用于 Linux 内核模块开发，这通常意味着在无标准库的环境中工作。因此，<code>rust-for-linux</code> 依赖于 <code>core</code> 库而不是完整的 <code>std</code> 库，因为后者包含了很多依赖操作系统的功能。</li>
+<li><code>rust-for-linux</code> 可能还扩展了 <code>core</code> 库的功能，提供了专门用于内核编程的额外接口和抽象，这些是在 <code>core</code> 库的基础上，为满足内核级别编程的特殊需求而设计的。</li>
+</ul>
+<p>总的来说，<code>core</code> 库提供了在无操作系统环境中运行 Rust 代码所需的基础设施，而 <code>rust-for-linux</code> 则构建在这一基础上，添加了必要的内核特定扩展和接口。这样的设计使得 Rust 代码可以在高度受限和关键的内核环境中高效、安全地运行。</p>
+<h3><span id="3core库的总结">3.core库的总结：</span></h3><p>基础，参考于rust圣经：</p>
+<p><a target="_blank" rel="noopener" href="https://course.rs/">https://course.rs/</a></p>
+<p>Rust 的 <code>core</code> 库是 Rust 生态中非常基础的一个库，它为无标准库（<code>std</code>）环境提供了核心的功能。<code>core</code> 库包括了 Rust 语言的基本构建块，比如基本数据类型、宏、迭代器、基本的宏和一些实用的trait。<code>core</code> 库特别适合用在“裸金属”编程、嵌入式系统、操作系统内核开发等场合，因为它不依赖任何操作系统层面的功能。</p>
+<h3><span id="1-基本数据类型">1. 基本数据类型</span></h3><p><code>core</code> 库提供了 Rust 的所有基本数据类型，如整数类型（<code>i32</code>、<code>u64</code>等）、浮点类型（<code>f32</code>、<code>f64</code>）、布尔类型（<code>bool</code>）、字符类型（<code>char</code>）以及元组和数组。</p>
+<p><strong>示例：使用整数和布尔类型</strong></p>
+<pre><code class="rust">fn basic_types() &#123;
+    let x: i32 = 10;
+    let y: f64 = 3.14;
+    let is_active: bool = true;
+
+    if is_active &#123;
+        println!(&quot;x: &#123;&#125;, y: &#123;&#125;&quot;, x, y);
+    &#125;
+&#125;
+
+basic_types();
+</code></pre>
+<h3><span id="2-核心trait和功能">2. 核心Trait和功能</span></h3><p><code>core</code> 提供了很多 Rust 编程的核心traits，比如 <code>Copy</code>, <code>Clone</code>, <code>Debug</code>, <code>Default</code> 等。</p>
+<p><strong>示例：实现 <code>Debug</code> Trait</strong></p>
+<pre><code class="rust">use core::fmt;
+
+struct Point &#123;
+    x: i32,
+    y: i32,
+&#125;
+
+impl fmt::Debug for Point &#123;
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result &#123;
+        write!(f, &quot;Point &#123;&#123; x: &#123;&#125;, y: &#123;&#125; &#125;&#125;&quot;, self.x, self.y)
+    &#125;
+&#125;
+
+fn debug_trait() &#123;
+    let point = Point &#123; x: 10, y: 20 &#125;;
+    println!(&quot;&#123;:?&#125;&quot;, point);
+&#125;
+
+debug_trait();
+</code></pre>
+<h3><span id="3-迭代器">3. 迭代器</span></h3><p>迭代器是 Rust 中非常重要的一个概念，<code>core</code> 库提供了迭代器的核心功能，包括 <code>Iterator</code> Trait 和与之相关的方法。</p>
+<p><strong>示例：使用迭代器处理数据</strong></p>
+<pre><code class="rust">fn iterator_example() &#123;
+    let numbers = [1, 2, 3, 4, 5];
+    let sum: i32 = numbers.iter().sum();
+    println!(&quot;Sum: &#123;&#125;&quot;, sum);
+&#125;
+
+iterator_example();
+</code></pre>
+<h3><span id="4-错误处理">4. 错误处理</span></h3><p>虽然 <code>core</code> 不包括 <code>Result</code> 和 <code>Option</code> 的完整错误处理功能（这部分主要在 <code>std</code> 库中），但它提供了基本的定义和操作。</p>
+<p><strong>示例：使用 <code>Option</code></strong></p>
+<pre><code class="rust">fn option_example() &#123;
+    let some_number = Some(42);
+    match some_number &#123;
+        Some(value) =&gt; println!(&quot;We have a value: &#123;&#125;&quot;, value),
+        None =&gt; println!(&quot;We have no value&quot;),
+    &#125;
+&#125;
+
+option_example();
+</code></pre>
+<h3><span id="5-宏">5. 宏</span></h3><p><code>core</code> 库提供了很多用于基本编程的宏，比如 <code>assert!</code>、<code>debug_assert!</code>、<code>unreachable!</code> 等。</p>
+<p><strong>示例：使用 <code>assert!</code> 宏</strong></p>
+<pre><code class="rust">fn assert_example() &#123;
+    let x = 5;
+    assert!(x != 0, &quot;x should not be zero!&quot;);
+&#125;
+
+assert_example();
+</code></pre>
+<h3><span id="总结">总结</span></h3><p><code>core</code> 库作为 Rust 编程的基础，提供了运行在无标准库环境中所需的最基本的功能。通过上述示例，可以看到即使在没有标准库支持的情况下，如何使用 <code>core</code> 库进行有效的Rust编程。在实际的使用场景中，可以根据具体的环境需求选择使用 <code>core</code> 库中的各种功能来构建高效、安全的系统级应用程序。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 PHM&#39;s world
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;ailasukasan
+        </div>
+        <div>
+            可以点击一下Try Try <a target="_blank" rel="noopener" href="https://github.com/ailasukasan">歡迎來到我的世界</a> &amp;
+            <a href="">站在能分割世界的桥</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+
+
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+
+
+</body>
+</html>
