@@ -1,0 +1,468 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!--
+    <script src="/js/leaves.js"></script>
+-->
+    <!-- 爆炸红心效果 -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+<!--流星雨背景
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+-->
+    <meta charset="utf-8" />
+    <title>ftlog阅读报告 | PHM&#39;s world</title>
+    <meta name="author" content="ailasukasan" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.loli.net" />
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>歡迎來到烏托邦的世界</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>PHM&#39;S WORLD</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;PHM</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;PHM&#39;S WORLD</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">PHM</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>ftlog阅读报告</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/5/14
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E9%98%85%E8%AF%BB%E6%8A%A5%E5%91%8A/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                阅读报告
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/%E5%BC%82%E6%AD%A5%E6%97%A5%E5%BF%97/" style="color: #03a9f4">异步日志</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1><span id="ftlog异步日志阅读报告1">ftlog异步日志阅读报告（1）</span></h1><p>ftlog是GitHub上的一个由非凸科技开源的异步日志项目。</p>
+<p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/nonconvextech/ftlog">https://github.com/nonconvextech/ftlog</a></p>
+<p>我对其阅读加深理解。</p>
+<p>异步的实现：<code>ftlog</code> 库通过使用一个专用的日志记录线程和异步消息通道来实现异步日志记录。这种方式可以将日志记录操作从主线程或工作线程中分离出来，从而减少主线程的阻塞，提高日志记录的性能。</p>
+<h3><span id="异步实现">异步实现</span></h3><ol>
+<li><p><strong>日志记录线程</strong></p>
+<ul>
+<li><code>ftlog</code> 启动了一个专用的日志记录线程，该线程负责接收和处理来自主线程或工作线程的日志消息。</li>
+</ul>
+</li>
+<li><p><strong>消息通道</strong></p>
+<ul>
+<li><p><code>ftlog</code> 使用了 <code>crossbeam_channel</code> 库提供的有界或无界通道（bounded or unbounded channel）来在主线程和日志记录线程之间传递日志消息。</p>
+</li>
+<li><p>注：<code>crossbeam_channel</code> 是 Rust 语言中的一个高性能、跨线程的消息传递库。</p>
+<p>分为有界通道和无界通道：</p>
+<ul>
+<li><p><strong>有界通道（bounded channel）</strong>：创建一个固定大小的缓冲区，当缓冲区满时发送操作将阻塞。</p>
+</li>
+<li><p><strong>无界通道（unbounded channel）</strong>：缓冲区大小动态增长，不会阻塞发送操作，但可能导致内存消耗较大。</p>
+<p>使用示例：</p>
+<pre><code class="rust">use crossbeam_channel::bounded;
+use std::thread;
+
+fn main() &#123;
+    // 创建一个有界通道，容量为5
+    let (sender, receiver) = bounded(5);
+
+    // 创建一个发送线程
+    let sender_thread = thread::spawn(move || &#123;
+        for i in 0..10 &#123;
+            sender.send(i).unwrap();
+            println!(&quot;Sent: &#123;&#125;&quot;, i);
+        &#125;
+    &#125;);
+
+    // 创建一个接收线程
+    let receiver_thread = thread::spawn(move || &#123;
+        for i in receiver &#123;
+            println!(&quot;Received: &#123;&#125;&quot;, i);
+        &#125;
+    &#125;);
+
+    sender_thread.join().unwrap();
+    receiver_thread.join().unwrap();
+&#125;
+
+
+fn main() &#123;
+    // 创建一个无界通道
+    let (sender, receiver) = unbounded();
+
+    // 创建一个发送线程
+    let sender_thread = thread::spawn(move || &#123;
+        for i in 0..10 &#123;
+            sender.send(i).unwrap();
+            println!(&quot;Sent: &#123;&#125;&quot;, i);
+        &#125;
+    &#125;);
+
+    // 创建一个接收线程
+    let receiver_thread = thread::spawn(move || &#123;
+        for i in receiver &#123;
+            println!(&quot;Received: &#123;&#125;&quot;, i);
+        &#125;
+    &#125;);
+
+    sender_thread.join().unwrap();
+    receiver_thread.join().unwrap();
+&#125;
+
+//使用选择操作
+fn main() &#123;
+    let (s1, r1) = bounded(1);
+    let (s2, r2) = bounded(1);
+
+    thread::spawn(move || s1.send(&quot;message from s1&quot;).unwrap());
+    thread::spawn(move || s2.send(&quot;message from s2&quot;).unwrap());
+
+    select! &#123;
+        recv(r1) -&gt; msg =&gt; println!(&quot;Received: &#123;&#125;&quot;, msg.unwrap()),
+        recv(r2) -&gt; msg =&gt; println!(&quot;Received: &#123;&#125;&quot;, msg.unwrap()),
+    &#125;
+&#125;
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>异步消息传递</strong></p>
+<ul>
+<li>主线程通过发送日志消息到通道来将日志消息传递给日志记录线程。</li>
+<li>日志记录线程从通道中接收消息并进行处理（如格式化、写入文件等）。</li>
+</ul>
+</li>
+</ol>
+<h3><span id="具体代码">具体代码</span></h3><p>以下是 <code>ftlog</code> 异步实现的关键部分：</p>
+<ol>
+<li><p><strong>消息通道的创建</strong></p>
+<pre><code class="rust">let (sync_sender, receiver) = match &amp;self.bounded_channel_option &#123;
+    None =&gt; unbounded(),
+    Some(option) =&gt; bounded(option.size),
+&#125;;
+let (notification_sender, notification_receiver) = bounded(1);
+</code></pre>
+<p>根据配置，创建有界或无界的消息通道，用于在主线程和日志记录线程之间传递日志消息。</p>
+</li>
+<li><p><strong>日志记录线程的启动</strong></p>
+<pre><code class="rust">std::thread::Builder::new()
+    .name(&quot;logger&quot;.to_string())
+    .spawn(move || &#123;
+        // 日志处理逻辑
+        loop &#123;
+            match receiver.recv_timeout(timeout) &#123;
+                Ok(LoggerInput::LogMsg(log_msg)) =&gt; &#123;
+                    // 处理日志消息
+                &#125;
+                Ok(LoggerInput::Flush) =&gt; &#123;
+                    // 刷新日志
+                &#125;
+                Err(RecvTimeoutError::Timeout) =&gt; &#123;
+                    // 处理超时
+                &#125;
+                Err(e) =&gt; &#123;
+                    eprintln!(&quot;sender closed without sending a Quit first, this is a bug, &#123;&#125;&quot;, e);
+                &#125;
+            &#125;
+        &#125;
+    &#125;)?;
+</code></pre>
+<p>使用 <code>std::thread::Builder</code> 创建并启动一个日志记录线程，该线程在循环中从通道中接收日志消息并进行处理。</p>
+</li>
+<li><p><strong>日志消息的发送</strong></p>
+<pre><code class="rust">impl Log for Logger &#123;
+    fn log(&amp;self, record: &amp;Record) &#123;
+        let msg = self.format.msg(record);
+        let log_msg = LoggerInput::LogMsg(LogMsg &#123;
+            time: now(),
+            msg: msg,
+            target: record.target().to_owned(),
+            level: record.level(),
+            limit: record.key_values().get(Key::from_str(&quot;limit&quot;)).and_then(|x| x.to_u64()).unwrap_or(0) as u32,
+            limit_key,
+        &#125;);
+        if self.block &#123;
+            if let Err(_) = self.queue.send(log_msg) &#123;
+                eprintln!(&quot;logger queue closed when logging, this is a bug&quot;);
+            &#125;
+        &#125; else &#123;
+            match self.queue.try_send(log_msg) &#123;
+                Err(TrySendError::Full(_)) =&gt; &#123;
+                    if let Some(s) = &amp;self.discard_state &#123;
+                        let count = s.count.fetch_add(1, Ordering::SeqCst);
+                        if s.last.load().elapsed().as_secs() &gt;= 5 &#123;
+                            eprintln!(&quot;Excessive log messages. Log omitted: &#123;&#125;&quot;, count);
+                            s.last.store(Arc::new(Instant::now()));
+                        &#125;
+                    &#125;
+                &#125;
+                Err(TrySendError::Disconnected(_)) =&gt; &#123;
+                    eprintln!(&quot;logger queue closed when logging, this is a bug&quot;);
+                &#125;
+                _ =&gt; (),
+            &#125;
+        &#125;
+    &#125;
+
+    fn flush(&amp;self) &#123;
+        self.queue.send(LoggerInput::Flush).expect(&quot;logger queue closed when flushing, this is a bug&quot;);
+        if let LoggerOutput::FlushError(err) = self.notification.recv().expect(&quot;logger notification closed, this is a bug&quot;) &#123;
+            eprintln!(&quot;Fail to flush: &#123;&#125;&quot;, err);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>主线程在调用日志记录宏（如 <code>info!</code>、<code>debug!</code> 等）时，会将日志消息打包为 <code>LoggerInput::LogMsg</code> 并发送到消息通道。日志记录线程会从通道中接收这些消息并进行处理。</p>
+</li>
+<li><p><strong>消息处理</strong></p>
+<p>日志记录线程在循环中从通道接收消息并处理：</p>
+<pre><code class="rust">loop &#123;
+    match receiver.recv_timeout(timeout) &#123;
+        Ok(LoggerInput::LogMsg(log_msg)) =&gt; &#123;
+            log_msg.write(&amp;filters, &amp;mut appenders, &amp;mut root, root_level, &amp;mut missed_log, &amp;mut last_log, offset, &amp;time_format);
+        &#125;
+        Ok(LoggerInput::Flush) =&gt; &#123;
+            // 刷新日志
+        &#125;
+        Err(RecvTimeoutError::Timeout) =&gt; &#123;
+            // 处理超时
+        &#125;
+        Err(e) =&gt; &#123;
+            eprintln!(&quot;sender closed without sending a Quit first, this is a bug, &#123;&#125;&quot;, e);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>处理日志消息包括格式化日志、写入到目标输出（如文件）、处理超时和刷新操作等。</p>
+</li>
+</ol>
+<p>​	<code>ftlog</code> 通过使用一个专用的日志记录线程和异步消息通道实现了异步日志记录。这种方式将日志记录操作从主线程中分离出来，提高了日志记录的性能，并减少了主线程的阻塞。开发者可以通过配置 <code>ftlog</code> 来定制日志记录的行为和输出目标，以满足不同的性能和功能需求。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 PHM&#39;s world
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;ailasukasan
+        </div>
+        <div>
+            可以点击一下Try Try <a target="_blank" rel="noopener" href="https://github.com/ailasukasan">歡迎來到我的世界</a> &amp;
+            <a href="">站在能分割世界的桥</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+
+
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+
+
+</body>
+</html>
