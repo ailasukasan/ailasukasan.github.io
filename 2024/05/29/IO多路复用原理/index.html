@@ -206,7 +206,7 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com
             
             <span class="tag">
                 
-                <a href="/tags/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" style="color: #ffa2c4">IO多路复用</a>
+                <a href="/tags/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" style="color: #00a596">IO多路复用</a>
             </span>
             
         </span>
@@ -644,29 +644,64 @@ int select(
     ((set)-&gt;fds_bits[(fd)/NFDBITS] &amp;= ~(1UL &lt;&lt; ((fd) % NFDBITS)))
 </code></pre>
 <ol>
-<li>**<code>fd_set</code>**：<ul>
+<li><code>fd_set</code>：<ul>
 <li>使用一个位图数组<code>fds_bits</code>来表示文件描述符的集合。每个文件描述符对应一个位。</li>
 </ul>
 </li>
-<li>**<code>FD_ZERO(fd_set \*set)</code>**：<ul>
+<li><code>FD_ZERO(fd_set \*set)</code>：<ul>
 <li>清空文件描述符集合，将所有位设为0。</li>
 </ul>
 </li>
-<li>**<code>FD_SET(int fd, fd_set \*set)</code>**：<ul>
+<li><code>FD_SET(int fd, fd_set \*set)</code>：<ul>
 <li>将文件描述符<code>fd</code>添加到集合中，将对应的位设为1。</li>
 </ul>
 </li>
-<li>**<code>FD_ISSET(int fd, fd_set \*set)</code>**：<ul>
+<li><code>FD_ISSET(int fd, fd_set \*set)</code>：<ul>
 <li>检查文件描述符<code>fd</code>是否在集合中，检查对应的位是否为1。</li>
 </ul>
 </li>
-<li>**<code>FD_CLR(int fd, fd_set \*set)</code>**：<ul>
+<li><code>FD_CLR(int fd, fd_set \*set)</code>：<ul>
 <li>从集合中删除文件描述符<code>fd</code>，将对应的位清零。</li>
 </ul>
 </li>
 </ol>
 <p>使用示例：</p>
-<pre><code class="cpp">
+<pre><code class="cpp">int main() &#123;
+  /*
+   * 这里进行一些初始化的设置，
+   * 包括socket建立，地址的设置等,
+   */
+
+  fd_set read_fs, write_fs;
+  struct timeval timeout;
+  int max = 0;  // 用于记录最大的fd，在轮询中时刻更新即可
+
+  // 初始化比特位
+  FD_ZERO(&amp;read_fs);
+  FD_ZERO(&amp;write_fs);
+
+  int nfds = 0; // 记录就绪的事件，可以减少遍历的次数
+  while (1) &#123;
+    // 阻塞获取
+    // 每次需要把fd从用户态拷贝到内核态
+    nfds = select(max + 1, &amp;read_fd, &amp;write_fd, NULL, &amp;timeout);
+    // 每次需要遍历所有fd，判断有无读写事件发生
+    for (int i = 0; i &lt;= max &amp;&amp; nfds; ++i) &#123;
+      if (i == listenfd) &#123;
+         --nfds;
+         // 这里处理accept事件
+         FD_SET(i, &amp;read_fd);//将客户端socket加入到集合中
+      &#125;
+      if (FD_ISSET(i, &amp;read_fd)) &#123;
+        --nfds;
+        // 这里处理read事件
+      &#125;
+      if (FD_ISSET(i, &amp;write_fd)) &#123;
+         --nfds;
+        // 这里处理write事件
+      &#125;
+    &#125;
+  &#125;
 </code></pre>
 <h4><span id="2poll">2.poll</span></h4><p>poll本质上和select没有区别，它将用户传入的数组拷贝到内核空间，然后查询每个fd对应的设备状态， <strong>但是它没有最大连接数的限制</strong>，原因是它是基于链表来存储的.</p>
 <p>函数API：</p>
