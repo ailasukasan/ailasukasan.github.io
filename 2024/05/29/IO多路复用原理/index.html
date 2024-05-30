@@ -1,0 +1,893 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!--
+    <script src="/js/leaves.js"></script>
+-->
+    <!-- 爆炸红心效果 -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+<!--流星雨背景
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+-->
+    <meta charset="utf-8" />
+    <title>IO多路复用原理 | PHM&#39;s world</title>
+    <meta name="author" content="ailasukasan" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.loli.net" />
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>歡迎來到烏托邦的世界</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>PHM&#39;S WORLD</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;PHM</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;PHM&#39;S WORLD</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">PHM</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>IO多路复用原理</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/5/30
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E5%9F%BA%E7%A1%80/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                基础
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" style="color: #ffa2c4">IO多路复用</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1><span id="io多路复用的原理">IO多路复用的原理</span></h1><p><strong>定义</strong></p>
+<p>IO多路复用是指操作系统提供了一种机制，可以同时监控多个IO流的状态，从而实现对多个IO流的异步处理。其原理是利用操作系统提供的select、poll、epoll等系统调用，通过将多个IO流的文件描述符（fd）添加到一个等待队列中，让操作系统在IO流有数据到达时通知应用程序进行读写操作，避免了应用程序在等待IO操作完成时的阻塞。</p>
+<p><strong>理解上来说</strong>：</p>
+<ul>
+<li>IO 多路复用是一种同步IO模型，实现一个线程可以监视多个文件句柄；</li>
+<li>一旦某个文件句柄就绪，就能够通知应用程序进行相应的读写操作；</li>
+<li>没有文件句柄就绪就会阻塞应用程序，交出CPU。</li>
+</ul>
+<p>（注：多路是指网络连接，复用指的是同一个线程）</p>
+<p>需要预先知道以下的基础概念：</p>
+<ul>
+<li>用户空间和内核空间</li>
+<li>进程切换</li>
+<li>进程的阻塞<ul>
+<li>进程的阻塞是进程自身的一种主动行为，也因此只有处于运行态的进程（获得了CPU资源），才可能将其转为阻塞状态。当进程进入阻塞状态，是不占用CPU资源的。正在执行的进程，由于期待的某些事件未发生，如请求系统资源失败、等待某种操作的完成、新数据尚未到达或无新工作做等，则由系统自动执行阻塞原语。</li>
+</ul>
+</li>
+<li>文件描述符<ul>
+<li>一个非负整数，一个索引值。指向内核为每一个进程所维护的该进程打开文件的记录表。当程序打开一个现有文件或者创建一个新文件时，内核向进程返回一个文件描述符。在程序设计中，一些涉及底层的程序编写往往会围绕着文件描述符展开。</li>
+</ul>
+</li>
+<li>缓存 I&#x2F;O<ul>
+<li>称为标准I&#x2F;O，大多数文件系统的默认I&#x2F;O操作都是缓存I&#x2F;O。在Linux的缓存I&#x2F;O机制中，操作系统会将I&#x2F;O的数据缓存在文件系统的页缓存中，即数据会先被拷贝到操作系统内核的缓冲区中，然后才会从操作系统内核的缓冲区拷贝到应用程序的地址空间。</li>
+</ul>
+</li>
+</ul>
+<p>没有IO多路复用的情况下，有两种实现方式：BIO（同步阻塞）、NIO（非同步阻塞）</p>
+<h3><span id="bio同步阻塞代码示例">BIO同步阻塞代码示例：</span></h3><p>一个简单的服务器程序，该程序使用阻塞的套接字来接受客户端连接并回显客户端发送的消息</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;netinet/in.h&gt;
+#include &lt;unistd.h&gt;
+
+#define PORT 8080
+#define BUFFER_SIZE 1024
+
+int main() &#123;
+    int server_fd, new_socket;
+    struct sockaddr_in address;
+    int addrlen = sizeof(address);
+    char buffer[BUFFER_SIZE] = &#123;0&#125;;
+
+    // 创建套接字文件描述符
+    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) &#123;
+        perror(&quot;socket failed&quot;);
+        exit(EXIT_FAILURE);
+    &#125;
+
+    // 为服务器地址结构体赋值
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(PORT);
+
+    // 绑定套接字到端口
+    if (bind(server_fd, (struct sockaddr *)&amp;address, sizeof(address)) &lt; 0) &#123;
+        perror(&quot;bind failed&quot;);
+        close(server_fd);
+        exit(EXIT_FAILURE);
+    &#125;
+
+    // 监听端口
+    if (listen(server_fd, 3) &lt; 0) &#123;
+        perror(&quot;listen failed&quot;);
+        close(server_fd);
+        exit(EXIT_FAILURE);
+    &#125;
+
+    std::cout &lt;&lt; &quot;Server listening on port &quot; &lt;&lt; PORT &lt;&lt; std::endl;
+
+    while (true) &#123;
+        // 接受客户端连接
+        if ((new_socket = accept(server_fd, (struct sockaddr *)&amp;address, (socklen_t*)&amp;addrlen)) &lt; 0) &#123;
+            perror(&quot;accept failed&quot;);
+            close(server_fd);
+            exit(EXIT_FAILURE);
+        &#125;
+
+        std::cout &lt;&lt; &quot;Connection established&quot; &lt;&lt; std::endl;
+
+        // 读取客户端发送的数据
+        int valread = read(new_socket, buffer, BUFFER_SIZE);
+        if (valread &lt; 0) &#123;
+            perror(&quot;read failed&quot;);
+            close(new_socket);
+            continue;
+        &#125;
+
+        std::cout &lt;&lt; &quot;Received: &quot; &lt;&lt; buffer &lt;&lt; std::endl;
+
+        // 将数据回显给客户端
+        send(new_socket, buffer, valread, 0);
+
+        std::cout &lt;&lt; &quot;Echo message sent&quot; &lt;&lt; std::endl;
+
+        // 关闭连接
+        close(new_socket);
+    &#125;
+
+    // 关闭服务器套接字
+    close(server_fd);
+    return0;
+&#125;
+</code></pre>
+<p>主要过程是：</p>
+<ol>
+<li><strong>创建套接字</strong>： 使用<code>socket()</code>函数创建一个套接字，使用IPv4（<code>AF_INET</code>）和面向连接的TCP协议（<code>SOCK_STREAM</code>）。</li>
+<li><strong>绑定套接字</strong>： 将创建的套接字绑定到指定的端口（<code>PORT</code>），以便服务器可以接收该端口上的连接。</li>
+<li><strong>监听连接</strong>： 使用<code>listen()</code>函数将套接字设置为监听模式，允许最多3个待处理连接（<code>3</code>）。</li>
+<li><strong>接受连接</strong>： 使用<code>accept()</code>函数阻塞并等待客户端连接。当一个客户端连接到来时，<code>accept()</code>返回一个新的套接字描述符，用于与该客户端通信。</li>
+<li><strong>读取和回显数据</strong>： 使用<code>read()</code>函数从客户端套接字中读取数据，并使用<code>send()</code>函数将数据回显给客户端。</li>
+<li><strong>关闭连接</strong>： 每次处理完客户端请求后，关闭客户端套接字。</li>
+</ol>
+<h3><span id="nio非同阻塞示例">NIO非同阻塞示例：</span></h3><p>一个简单的服务器程序，该程序使用非阻塞的套接字和<code>select</code>系统调用来处理多个客户端连接。</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;netinet/in.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;sys/select.h&gt;
+
+#define PORT 8080
+#define BUFFER_SIZE 1024
+
+// 设置套接字为非阻塞模式
+void setNonBlocking(int sockfd) &#123;
+    int flags = fcntl(sockfd, F_GETFL, 0);
+    fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
+&#125;
+
+int main() &#123;
+    int server_fd, new_socket, max_sd;
+    struct sockaddr_in address;
+    int addrlen = sizeof(address);
+    char buffer[BUFFER_SIZE];
+    fd_set readfds;
+
+    // 创建套接字文件描述符
+    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) &#123;
+        perror(&quot;socket failed&quot;);
+        exit(EXIT_FAILURE);
+    &#125;
+
+    // 为服务器地址结构体赋值
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(PORT);
+
+    // 绑定套接字到端口
+    if (bind(server_fd, (struct sockaddr *)&amp;address, sizeof(address)) &lt; 0) &#123;
+        perror(&quot;bind failed&quot;);
+        close(server_fd);
+        exit(EXIT_FAILURE);
+    &#125;
+
+    // 监听端口
+    if (listen(server_fd, 3) &lt; 0) &#123;
+        perror(&quot;listen failed&quot;);
+        close(server_fd);
+        exit(EXIT_FAILURE);
+    &#125;
+
+    // 设置服务器套接字为非阻塞模式
+    setNonBlocking(server_fd);
+
+    std::cout &lt;&lt; &quot;Server listening on port &quot; &lt;&lt; PORT &lt;&lt; std::endl;
+
+    // 清空读文件描述符集合
+    FD_ZERO(&amp;readfds);
+    FD_SET(server_fd, &amp;readfds);
+    max_sd = server_fd;
+
+    while (true) &#123;
+        fd_set copy_fds = readfds;
+
+        // 使用select来监视文件描述符集合
+        int activity = select(max_sd + 1, &amp;copy_fds, nullptr, nullptr, nullptr);
+
+        if (activity &lt; 0 &amp;&amp; errno != EINTR) &#123;
+            perror(&quot;select error&quot;);
+        &#125;
+
+        // 检查是否有新的连接
+        if (FD_ISSET(server_fd, &amp;copy_fds)) &#123;
+            if ((new_socket = accept(server_fd, (struct sockaddr *)&amp;address, (socklen_t*)&amp;addrlen)) &lt; 0) &#123;
+                perror(&quot;accept failed&quot;);
+                exit(EXIT_FAILURE);
+            &#125;
+
+            std::cout &lt;&lt; &quot;New connection, socket fd is &quot; &lt;&lt; new_socket &lt;&lt; std::endl;
+
+            // 添加新的套接字到集合中
+            setNonBlocking(new_socket);
+            FD_SET(new_socket, &amp;readfds);
+            if (new_socket &gt; max_sd) &#123;
+                max_sd = new_socket;
+            &#125;
+        &#125;
+
+        // 处理现有连接的数据
+        for (int i = 0; i &lt;= max_sd; ++i) &#123;
+            if (FD_ISSET(i, &amp;copy_fds) &amp;&amp; i != server_fd) &#123;
+                int valread = read(i, buffer, BUFFER_SIZE);
+                if (valread == 0) &#123;
+                    // 客户端关闭连接
+                    std::cout &lt;&lt; &quot;Host disconnected, socket fd is &quot; &lt;&lt; i &lt;&lt; std::endl;
+                    close(i);
+                    FD_CLR(i, &amp;readfds);
+                &#125; else if (valread &gt; 0) &#123;
+                    buffer[valread] = &#39;\0&#39;;
+                    std::cout &lt;&lt; &quot;Received: &quot; &lt;&lt; buffer &lt;&lt; &quot; from socket fd &quot; &lt;&lt; i &lt;&lt; std::endl;
+                    send(i, buffer, valread, 0);
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+
+    // 关闭服务器套接字
+    close(server_fd);
+    return 0;
+&#125;
+</code></pre>
+<p>说明：</p>
+<ol>
+<li><strong>设置非阻塞模式</strong>： 使用<code>fcntl()</code>函数将套接字设置为非阻塞模式，这样<code>accept()</code>和<code>read()</code>调用将不会阻塞。</li>
+<li><strong>创建套接字</strong>： 使用<code>socket()</code>函数创建一个套接字，使用IPv4（<code>AF_INET</code>）和面向连接的TCP协议（<code>SOCK_STREAM</code>）。</li>
+<li><strong>绑定套接字</strong>： 将创建的套接字绑定到指定的端口（<code>PORT</code>），以便服务器可以接收该端口上的连接。</li>
+<li><strong>监听连接</strong>： 使用<code>listen()</code>函数将套接字设置为监听模式，允许最多3个待处理连接（<code>3</code>）。</li>
+<li><strong>使用select监视文件描述符</strong>： 使用<code>select()</code>系统调用来监视多个文件描述符，以便处理多个客户端连接而不会阻塞。将服务器套接字和所有客户端套接字添加到文件描述符集合中。</li>
+<li><strong>接受新连接</strong>： 如果服务器套接字变为可读，意味着有新的客户端连接到来，使用<code>accept()</code>接受连接并将其套接字设置为非阻塞模式，然后添加到文件描述符集合中。</li>
+<li><strong>处理客户端数据</strong>： 如果客户端套接字变为可读，使用<code>read()</code>读取数据，并将数据回显给客户端。</li>
+<li><strong>关闭连接</strong>： 当客户端关闭连接时，从文件描述符集合中移除相应的套接字并关闭它。</li>
+</ol>
+<p>（编译运行）</p>
+<pre><code class="txt">g++ -o nio_server nio_server.cpp
+./nio_server
+</code></pre>
+<h3><span id="io多路复用">IO多路复用</span></h3><p>服务器端采用单线程通过 <code>select/poll/epoll</code> 等系统调用获取 fd 列表，遍历有事件的 fd 进行 <code>accept/recv/send</code> ，使其能支持更多的并发连接请求。</p>
+<p>大致的伪代码如下所示：</p>
+<pre><code class="cpp">// 初始化服务器套接字
+server_fd = socket(AF_INET, SOCK_STREAM, 0)
+bind(server_fd, server_address, port)
+listen(server_fd, backlog)
+setNonBlocking(server_fd)
+
+// 初始化文件描述符集合
+FD_ZERO(&amp;readfds)
+FD_SET(server_fd, &amp;readfds)
+max_sd = server_fd
+
+while true do
+    copy_fds = readfds
+
+    // 使用select监视文件描述符集合
+    activity = select(max_sd + 1, &amp;copy_fds, NULL, NULL, timeout)
+
+    if activity &lt; 0 and errno != EINTR then
+        print(&quot;select error&quot;)
+        exit()
+
+    // 检查是否有新的连接
+    if FD_ISSET(server_fd, &amp;copy_fds) then
+        new_socket = accept(server_fd, address, addrlen)
+        setNonBlocking(new_socket)
+        FD_SET(new_socket, &amp;readfds)
+        if new_socket &gt; max_sd then
+            max_sd = new_socket
+        end if
+        print(&quot;New connection, socket fd is &quot;, new_socket)
+    end if
+
+    // 处理现有连接的数据
+    for i from 0 to max_sd do
+        if FD_ISSET(i, &amp;copy_fds) and i != server_fd then
+            valread = read(i, buffer, BUFFER_SIZE)
+            if valread == 0 then
+                // 客户端关闭连接
+                print(&quot;Host disconnected, socket fd is &quot;, i)
+                close(i)
+                FD_CLR(i, &amp;readfds)
+            else if valread &gt; 0 then
+                buffer[valread] = &#39;\0&#39;
+                print(&quot;Received: &quot;, buffer, &quot; from socket fd &quot;, i)
+                send(i, buffer, valread, 0)
+            end if
+        end if
+    end for
+end while
+
+// 关闭服务器套接字
+close(server_fd)
+</code></pre>
+<h3><span id="io多路复用实现的三种方式">IO多路复用实现的三种方式</span></h3><h4><span id="1select">1.select</span></h4><p>特点：<br>它仅仅知道有I&#x2F;O事件发生了，却并不知道是哪那几个流（可能有一个，多个，甚至全部），我们只能无差别轮询所有流，找出能读出数据，或者写入数据的流，对他们进行操作。所以<strong>select具有O(n)的无差别轮询复杂度</strong>，同时处理的流越多，无差别轮询时间就越长。</p>
+<p>select调用过程</p>
+<pre><code class="txt">+--------------------+
+|  Initialize server |
+|  socket            |
++----------+---------+
+           |
+           v
++----------+---------------------------+
+| Initialize fd_set                    |
+| - FD_ZERO(&amp;readfds)                  |
+| - FD_SET(server_fd, &amp;readfds)        |
+| - max_fd = server_fd                 |
++----------+---------------------------+
+           |
+           v
++----------+----------------------------+
+| Main loop                             |
+|                                        |
+| while (true) &#123;                         |
+|   fd_set copy_fds = readfds;           |
+|                                        |
+|   // Call select                       |
+|   int activity = select(max_fd + 1,    |
+|                         &amp;copy_fds,     |
+|                         NULL,          |
+|                         NULL,          |
+|                         NULL);         |
+|                                        |
+|   if (activity &lt; 0 &amp;&amp; errno != EINTR)  |
+|       error(&quot;select error&quot;);           |
+|                                        |
+|   // Check for new connections         |
+|   if (FD_ISSET(server_fd, &amp;copy_fds)) &#123;|
+|       int new_socket = accept(server_fd, |
+|                               &amp;address,  |
+|                               &amp;addrlen); |
+|       setNonBlocking(new_socket);      |
+|       FD_SET(new_socket, &amp;readfds);    |
+|       if (new_socket &gt; max_fd) &#123;       |
+|           max_fd = new_socket;         |
+|       &#125;                                |
+|       print(&quot;New connection&quot;);         |
+|   &#125;                                    |
+|                                        |
+|   // Check all clients for data        |
+|   for (int i = 0; i &lt;= max_fd; ++i) &#123;  |
+|       if (FD_ISSET(i, &amp;copy_fds) &amp;&amp; i != server_fd) &#123; |
+|           int valread = read(i, buffer, BUFFER_SIZE);  |
+|           if (valread == 0) &#123;          |
+|               // Client disconnected   |
+|               close(i);                |
+|               FD_CLR(i, &amp;readfds);     |
+|           &#125; else if (valread &gt; 0) &#123;    |
+|               buffer[valread] = &#39;\0&#39;;  |
+|               send(i, buffer, valread, 0); |
+|           &#125;                            |
+|       &#125;                                |
+|   &#125;                                    |
+| &#125;                                      |
++----------------------------------------+
+</code></pre>
+<ol>
+<li><strong>初始化服务器套接字</strong>：<ul>
+<li>创建服务器套接字并将其绑定到指定端口。</li>
+<li>使服务器套接字进入监听模式。</li>
+<li><em>Socket</em>(套接字) 可以看成是两个网络应用程序进行通信时，各自通信连接中的端点，这是一个逻辑上的概念。</li>
+</ul>
+</li>
+<li><strong>初始化文件描述符集合</strong>：<ul>
+<li>使用<code>FD_ZERO</code>宏初始化文件描述符集合。</li>
+<li>将服务器套接字文件描述符添加到集合中。</li>
+<li>记录最大文件描述符，以便<code>select</code>调用时使用。</li>
+</ul>
+</li>
+<li><strong>主循环</strong>：<ul>
+<li>复制文件描述符集合，以便传递给<code>select</code>调用。这样可以保留原始集合。</li>
+<li>调用<code>select</code>，等待至少一个文件描述符变为可读、可写或发生异常。</li>
+</ul>
+</li>
+<li><strong>检查新连接</strong>：<ul>
+<li>如果服务器套接字变为可读，意味着有新的客户端连接到来。</li>
+<li>接受新的连接，并将新连接的套接字设置为非阻塞模式。</li>
+<li>将新连接的套接字添加到文件描述符集合中，并更新最大文件描述符。</li>
+</ul>
+</li>
+<li><strong>检查客户端数据</strong>：<ul>
+<li>遍历所有文件描述符，检查哪些变为可读。</li>
+<li>对于每个可读的客户端套接字，读取数据并将其回显给客户端。</li>
+<li>如果读取返回0，表示客户端关闭连接，关闭套接字并从文件描述符集合中移除。</li>
+</ul>
+</li>
+</ol>
+<p><code>select</code>是一个阻塞调用，直到有文件描述符变为就绪或超时。使用非阻塞模式可以防止<code>accept</code>和<code>read</code>调用阻塞服务器进程。每次调用<code>select</code>时都需要传入文件描述符集合的副本，因为<code>select</code>调用会修改传入的集合。</p>
+<p>select的函数接口如下：</p>
+<pre><code class="cpp">#include &lt;sys/select.h&gt;
+#include &lt;sys/time.h&gt;
+
+#define FD_SETSIZE 1024
+#define NFDBITS (8 * sizeof(unsigned long))
+#define __FDSET_LONGS (FD_SETSIZE/NFDBITS)
+
+// 数据结构 (bitmap)
+typedef struct &#123;
+    unsigned long fds_bits[__FDSET_LONGS];
+&#125; fd_set;
+
+// API 函数声明
+int select(
+    int max_fd, 
+    fd_set *readset, 
+    fd_set *writeset, 
+    fd_set *exceptset, 
+    struct timeval *timeout
+);
+
+// 宏定义
+#define FD_ZERO(set) \
+    do &#123; \
+        unsigned long *__fds_bits = (set)-&gt;fds_bits; \
+        for (int i = 0; i &lt; __FDSET_LONGS; i++) &#123; \
+            __fds_bits[i] = 0; \
+        &#125; \
+    &#125; while (0)
+
+#define FD_SET(fd, set) \
+    ((set)-&gt;fds_bits[(fd)/NFDBITS] |= (1UL &lt;&lt; ((fd) % NFDBITS)))
+
+#define FD_ISSET(fd, set) \
+    ((set)-&gt;fds_bits[(fd)/NFDBITS] &amp; (1UL &lt;&lt; ((fd) % NFDBITS)))
+
+#define FD_CLR(fd, set) \
+    ((set)-&gt;fds_bits[(fd)/NFDBITS] &amp;= ~(1UL &lt;&lt; ((fd) % NFDBITS)))
+</code></pre>
+<ol>
+<li>**<code>fd_set</code>**：<ul>
+<li>使用一个位图数组<code>fds_bits</code>来表示文件描述符的集合。每个文件描述符对应一个位。</li>
+</ul>
+</li>
+<li>**<code>FD_ZERO(fd_set \*set)</code>**：<ul>
+<li>清空文件描述符集合，将所有位设为0。</li>
+</ul>
+</li>
+<li>**<code>FD_SET(int fd, fd_set \*set)</code>**：<ul>
+<li>将文件描述符<code>fd</code>添加到集合中，将对应的位设为1。</li>
+</ul>
+</li>
+<li>**<code>FD_ISSET(int fd, fd_set \*set)</code>**：<ul>
+<li>检查文件描述符<code>fd</code>是否在集合中，检查对应的位是否为1。</li>
+</ul>
+</li>
+<li>**<code>FD_CLR(int fd, fd_set \*set)</code>**：<ul>
+<li>从集合中删除文件描述符<code>fd</code>，将对应的位清零。</li>
+</ul>
+</li>
+</ol>
+<p>使用示例：</p>
+<pre><code class="cpp">
+</code></pre>
+<h4><span id="2poll">2.poll</span></h4><p>poll本质上和select没有区别，它将用户传入的数组拷贝到内核空间，然后查询每个fd对应的设备状态， <strong>但是它没有最大连接数的限制</strong>，原因是它是基于链表来存储的.</p>
+<p>函数API：</p>
+<pre><code class="cpp">#include &lt;poll.h&gt;
+// 数据结构
+struct pollfd &#123;
+    int fd;                         // 需要监视的文件描述符
+    short events;                   // 需要内核监视的事件
+    short revents;                  // 实际发生的事件
+&#125;;
+
+// API
+int poll(struct pollfd fds[], 
+         nfds_t nfds,
+         int timeout);
+</code></pre>
+<p>使用示例：</p>
+<pre><code class="cpp">// 先宏定义长度
+#define MAX_POLLFD_LEN 4096  
+
+int main() &#123;
+  /*
+   * 在这里进行一些初始化的操作，
+   * 比如初始化数据和socket等。
+   */
+
+  int nfds = 0;
+  pollfd fds[MAX_POLLFD_LEN];
+  memset(fds, 0, sizeof(fds));
+  fds[0].fd = listenfd;
+  fds[0].events = POLLRDNORM;
+  int max  = 0;  // 队列的实际长度，是一个随时更新的，也可以自定义其他的
+  int timeout = 0;
+
+  int current_size = max;
+  while (1) &#123;
+    // 阻塞获取
+    // 每次需要把fd从用户态拷贝到内核态
+    nfds = poll(fds, max+1, timeout);
+    if (fds[0].revents &amp; POLLRDNORM) &#123;
+        // 这里处理accept事件
+        connfd = accept(listenfd);
+        //将新的描述符添加到读描述符集合中
+    &#125;
+    // 每次需要遍历所有fd，判断有无读写事件发生
+    for (int i = 1; i &lt; max; ++i) &#123;     
+      if (fds[i].revents &amp; POLLRDNORM) &#123; 
+         sockfd = fds[i].fd
+         if ((n = read(sockfd, buf, MAXLINE)) &lt;= 0) &#123;
+            // 这里处理read事件
+            if (n == 0) &#123;
+                close(sockfd);
+                fds[i].fd = -1;
+            &#125;
+         &#125; else &#123;
+             // 这里处理write事件     
+         &#125;
+         if (--nfds &lt;= 0) &#123;
+            break;       
+         &#125;   
+      &#125;
+    &#125;
+  &#125;
+</code></pre>
+<p>注意：</p>
+<p>poll<strong>它没有最大连接数的限制</strong>，原因是它是基于链表来存储的，但是同样有缺点：</p>
+<ul>
+<li>每次调用 poll ，都需要把 fd 集合从用户态拷贝到内核态，这个开销在 fd 很多时会很大；</li>
+<li>对 socket 扫描是线性扫描，采用轮询的方法，效率较低（高并发时）</li>
+</ul>
+<h4><span id="3epoll">3.epoll</span></h4><p><strong>epoll可以理解为event poll</strong>，不同于忙轮询和无差别轮询，epoll会把哪个流发生了怎样的I&#x2F;O事件通知我们。所以我们说epoll实际上是<strong>事件驱动（每个事件关联上fd）</strong>的，此时我们对这些流的操作都是有意义的。（复杂度降低到了O(1)）</p>
+<h4><span id="epoll函数接口">epoll函数接口</span></h4><p>当某一进程调用epoll_create方法时，Linux内核会创建一个eventpoll结构体，这个结构体中有两个成员与epoll的使用方式密切相关。eventpoll结构体如下所示：</p>
+<pre><code class="cpp">#include &lt;sys/epoll.h&gt;
+
+// 数据结构
+// 每一个epoll对象都有一个独立的eventpoll结构体
+// 用于存放通过epoll_ctl方法向epoll对象中添加进来的事件
+// epoll_wait检查是否有事件发生时，只需要检查eventpoll对象中的rdlist双链表中是否有epitem元素即可
+struct eventpoll &#123;
+    /*红黑树的根节点，这颗树中存储着所有添加到epoll中的需要监控的事件*/
+    struct rb_root  rbr;
+    /*双链表中则存放着将要通过epoll_wait返回给用户的满足条件的事件*/
+    struct list_head rdlist;
+&#125;;
+
+// API
+int epoll_create(int size); // 内核中间加一个 ep 对象，把所有需要监听的 socket 都放到 ep 对象中
+int epoll_ctl(int epfd, 
+              int op, 
+              int fd, 
+              struct epoll_event *event); // epoll_ctl 负责把 socket 增加、删除到内核红黑树
+int epoll_wait(int epfd,
+               struct epoll_event * events, 
+               int maxevents, 
+               int timeout);// epoll_wait 负责检测可读队列，没有可读 socket 则阻塞进程
+</code></pre>
+<p>每一个epoll对象都有一个独立的eventpoll结构体，用于存放通过epoll_ctl方法向epoll对象中添加进来的事件。这些事件都会挂载在红黑树中，如此，重复添加的事件就可以通过红黑树而高效的识别出来(红黑树的插入时间效率是lgn，其中n为红黑树元素个数)。</p>
+<p>而所有添加到epoll中的事件都会与设备(网卡)驱动程序建立回调关系，也就是说，当相应的事件发生时会调用这个回调方法。这个回调方法在内核中叫ep_poll_callback,它会将发生的事件添加到rdlist双链表中。</p>
+<p>在epoll中，对于每一个事件，都会建立一个epitem结构体，如下所示：</p>
+<pre><code class="cpp">struct epitem&#123;
+    struct rb_node  rbn;//红黑树节点
+    struct list_head    rdllink;//双向链表节点
+    struct epoll_filefd  ffd;  //事件句柄信息
+    struct eventpoll *ep;    //指向其所属的eventpoll对象
+    struct epoll_event event; //期待发生的事件类型
+&#125;
+</code></pre>
+<h4><span id="epoll的优点">epoll的优点</span></h4><ul>
+<li><p>没有最大并发连接的限制，能打开的FD的上限远大于1024（1G的内存上能监听约10万个端口）；</p>
+</li>
+<li><p>效率提升，不是轮询的方式，不会随着FD数目的增加效率下降。只有活跃可用的FD才会调用callback函数；即Epoll最大的优点就在于它只管你“活跃”的连接，而跟连接总数无关，因此在实际的网络环境中，Epoll的效率就会远远高于select和poll；</p>
+</li>
+<li><p>内存拷贝，利用mmap()文件映射内存加速与内核空间的消息传递；即epoll使用mmap减少复制开销。</p>
+</li>
+<li><p>epoll只能工作在 linux 下，是epoll的唯一缺点</p>
+</li>
+</ul>
+<h3><span id="总结">总结：</span></h3><h3><span id="select"><code>select</code></span></h3><h4><span id="特点">特点</span></h4><ol>
+<li><strong>接口</strong>：POSIX 标准的一部分，在大多数操作系统中都可用。</li>
+<li><strong>实现</strong>：使用固定大小的位图表示文件描述符集合，最大文件描述符数量受 <code>FD_SETSIZE</code> 限制，通常为 1024。</li>
+<li><strong>调用</strong>：每次调用 <code>select</code> 时都需要重新初始化文件描述符集合，并从用户态拷贝到内核态。返回后，还需要重新遍历文件描述符集合以确定哪个文件描述符就绪。</li>
+<li><strong>性能</strong>：当监视大量文件描述符时，性能下降明显，因为每次都需要遍历整个文件描述符集合。</li>
+</ol>
+<h4><span id="优缺点">优缺点</span></h4><ul>
+<li><strong>优点</strong>：简单、广泛支持。</li>
+<li><strong>缺点</strong>：受限于文件描述符数量，效率低。</li>
+</ul>
+<h3><span id="poll"><code>poll</code></span></h3><h4><span id="特点">特点</span></h4><ol>
+<li><strong>接口</strong>：POSIX 标准的一部分，在大多数操作系统中都可用。</li>
+<li><strong>实现</strong>：使用一个链表或数组来存储文件描述符及其事件，支持的文件描述符数量没有限制。</li>
+<li><strong>调用</strong>：每次调用 <code>poll</code> 时都需要将文件描述符集合从用户态拷贝到内核态。返回后，需要遍历数组以确定哪个文件描述符就绪。</li>
+<li><strong>性能</strong>：当监视大量文件描述符时，性能也会下降，但不像 <code>select</code> 那样显著。</li>
+</ol>
+<h4><span id="优缺点">优缺点</span></h4><ul>
+<li><strong>优点</strong>：不受文件描述符数量限制，接口灵活。</li>
+<li><strong>缺点</strong>：每次调用都需要遍历文件描述符集合，效率不高。</li>
+</ul>
+<h3><span id="epoll"><code>epoll</code></span></h3><h4><span id="特点">特点</span></h4><ol>
+<li><strong>接口</strong>：Linux 特有，不是 POSIX 标准的一部分。</li>
+<li><strong>实现</strong>：使用红黑树管理文件描述符和事件，使用就绪链表保存就绪事件。通过 <code>epoll_create</code> 创建一个 <code>epoll</code> 实例，通过 <code>epoll_ctl</code> 添加、删除或修改监视的文件描述符，通过 <code>epoll_wait</code> 等待事件。</li>
+<li><strong>调用</strong>：文件描述符只需注册一次，后续操作在内核中进行，无需每次都从用户态拷贝到内核态。返回时，只需遍历就绪链表。</li>
+<li><strong>性能</strong>：适用于大量并发连接，性能高效。</li>
+</ol>
+<h4><span id="优缺点">优缺点</span></h4><ul>
+<li><strong>优点</strong>：支持大规模文件描述符，效率高。</li>
+<li><strong>缺点</strong>：仅在 Linux 上可用，接口较复杂。</li>
+</ul>
+<h3><span id="区别总结">区别总结</span></h3><ol>
+<li><strong>文件描述符数量</strong>：<ul>
+<li><code>select</code>：受限于 <code>FD_SETSIZE</code>，通常为 1024。</li>
+<li><code>poll</code>：无数量限制。</li>
+<li><code>epoll</code>：无数量限制。</li>
+</ul>
+</li>
+<li><strong>性能</strong>：<ul>
+<li><code>select</code>：每次调用都需要遍历整个文件描述符集合，性能较低。</li>
+<li><code>poll</code>：每次调用都需要遍历文件描述符数组，性能较低，但比 <code>select</code> 好。</li>
+<li><code>epoll</code>：使用就绪链表，性能高效，适用于大规模并发连接。</li>
+</ul>
+</li>
+<li><strong>接口复杂度</strong>：<ul>
+<li><code>select</code>：接口简单，容易使用。</li>
+<li><code>poll</code>：接口灵活，但每次调用需要重新设置。</li>
+<li><code>epoll</code>：接口较复杂，但性能最优。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>**<code>select</code>**：简单易用，但性能和文件描述符数量有限。</li>
+<li>**<code>poll</code>**：比 <code>select</code> 更灵活，无文件描述符数量限制，但性能较低。</li>
+<li>**<code>epoll</code>**：Linux 特有，性能高效，适用于大规模并发连接，但接口较复杂。</li>
+</ul>
+<p>根据具体需求选择合适的 I&#x2F;O 多路复用机制。对于高并发的应用，推荐使用 <code>epoll</code>。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 PHM&#39;s world
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;ailasukasan
+        </div>
+        <div>
+            可以点击一下Try Try <a target="_blank" rel="noopener" href="https://github.com/ailasukasan">歡迎來到我的世界</a> &amp;
+            <a href="">站在能分割世界的桥</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+
+
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+
+
+</body>
+</html>
