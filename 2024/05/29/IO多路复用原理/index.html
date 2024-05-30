@@ -206,7 +206,7 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com
             
             <span class="tag">
                 
-                <a href="/tags/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" style="color: #00a596">IO多路复用</a>
+                <a href="/tags/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" style="color: #03a9f4">IO多路复用</a>
             </span>
             
         </span>
@@ -870,9 +870,9 @@ int epoll_wait(int epfd,
 </li>
 </ol>
 <ul>
-<li>**<code>select</code>**：简单易用，但性能和文件描述符数量有限。</li>
-<li>**<code>poll</code>**：比 <code>select</code> 更灵活，无文件描述符数量限制，但性能较低。</li>
-<li>**<code>epoll</code>**：Linux 特有，性能高效，适用于大规模并发连接，但接口较复杂。</li>
+<li><code>select</code>：简单易用，但性能和文件描述符数量有限。</li>
+<li><code>poll</code>：比 <code>select</code> 更灵活，无文件描述符数量限制，但性能较低。</li>
+<li><code>epoll</code>：Linux 特有，性能高效，适用于大规模并发连接，但接口较复杂。</li>
 </ul>
 <p>根据具体需求选择合适的 I&#x2F;O 多路复用机制。对于高并发的应用，推荐使用 <code>epoll</code>。</p>
 
