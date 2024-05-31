@@ -214,7 +214,321 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com
     </div>
     
     <div class="content" v-pre>
+        <p>用Rust实现了一个Transformer模型的一个变种——GPT-2模型。GPT-2 是基于 Transformer 架构的生成式预训练语言模型。</p>
+<p><strong>学习项目</strong></p>
+<p>原项目地址：<a target="_blank" rel="noopener" href="https://github.com/code-cp/pico-gpt">code-cp&#x2F;pico-gpt (github.com)</a></p>
+<p><strong><u>前言：</u></strong></p>
+<p>实现一个完整的Transformer模型通常需要以下几个关键组件和步骤：</p>
+<h3><span id="1-输入嵌入input-embeddings">1. 输入嵌入（Input Embeddings）</span></h3><p>将输入序列中的每个token转换为向量表示。这个过程包括词嵌入和位置嵌入。</p>
+<ul>
+<li><strong>词嵌入（Token Embeddings）</strong>：将每个词或token转换为固定维度的向量。</li>
+<li><strong>位置嵌入（Position Embeddings）</strong>：添加位置信息，因为Transformer模型本身没有序列信息，需要通过位置嵌入将位置信息引入。</li>
+</ul>
+<h3><span id="2-自注意力机制self-attention-mechanism">2. 自注意力机制（Self-Attention Mechanism）</span></h3><p>核心组件，用于捕捉序列中不同位置之间的依赖关系。</p>
+<ul>
+<li><strong>计算查询（Q）、键（K）、值（V）</strong>：通过线性变换得到查询矩阵、键矩阵和值矩阵。</li>
+<li><strong>计算注意力权重</strong>：通过查询和键的点积，应用softmax函数得到注意力权重。</li>
+<li><strong>加权求和</strong>：使用注意力权重对值进行加权求和。</li>
+</ul>
+<h3><span id="3-多头注意力机制multi-head-attention-mechanism">3. 多头注意力机制（Multi-Head Attention Mechanism）</span></h3><p>将多个自注意力机制并行执行，每个头捕捉不同的子空间信息，然后将结果拼接起来，再进行线性变换。</p>
+<h3><span id="4-前馈神经网络feedforward-neural-network">4. 前馈神经网络（Feedforward Neural Network）</span></h3><p>对每个位置的表示进行独立的非线性变换。</p>
+<h3><span id="5-加和归一化add-amp-normalize">5. 加和归一化（Add &amp; Normalize）</span></h3><p>在自注意力层和前馈层之后，分别进行残差连接和层归一化。</p>
+<h3><span id="6-编码器和解码器堆叠stacked-encoders-and-decoders">6. 编码器和解码器堆叠（Stacked Encoders and Decoders）</span></h3><p>Transformer模型通常由多个编码器层和解码器层堆叠而成。编码器处理输入序列，解码器生成输出序列。</p>
+<h3><span id="7-输出层output-layer">7. 输出层（Output Layer）</span></h3><p>将解码器的输出映射到目标词汇表的概率分布上，通常通过一个线性层和softmax函数实现。</p>
+<h3><span id="代码实现示例">代码实现示例</span></h3><p>以下是各个组件的实现示例，基于Rust语言：</p>
+<h4><span id="输入嵌入">输入嵌入</span></h4><pre><code class="rust">pub struct Embeddings&lt;B: Backend&gt; &#123;
+    pub token_embedding: Tensor&lt;B, 2&gt;,
+    pub position_embedding: Tensor&lt;B, 2&gt;,
+&#125;
+
+impl&lt;B: Backend&gt; Embeddings&lt;B&gt; &#123;
+    pub fn new(token_embedding: Tensor&lt;B, 2&gt;, position_embedding: Tensor&lt;B, 2&gt;) -&gt; Self &#123;
+        Self &#123;
+            token_embedding,
+            position_embedding,
+        &#125;
+    &#125;
+
+    pub fn forward(&amp;self, input_ids: &amp;Tensor&lt;B, 2&gt;) -&gt; Tensor&lt;B, 2&gt; &#123;
+        let token_embeddings = self.token_embedding.clone().select(0, input_ids);
+        let position_ids = (0..input_ids.shape()[1]).collect::&lt;Vec&lt;_&gt;&gt;();
+        let position_embeddings = self.position_embedding.clone().select(0, &amp;position_ids);
+        token_embeddings + position_embeddings
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="自注意力机制">自注意力机制</span></h4><pre><code class="rust">pub struct SelfAttention&lt;B: Backend&gt; &#123;
+    pub query_weight: Tensor&lt;B, 2&gt;,
+    pub key_weight: Tensor&lt;B, 2&gt;,
+    pub value_weight: Tensor&lt;B, 2&gt;,
+    pub output_weight: Tensor&lt;B, 2&gt;,
+    pub num_heads: usize,
+&#125;
+
+impl&lt;B: Backend&gt; SelfAttention&lt;B&gt; &#123;
+    pub fn new(query_weight: Tensor&lt;B, 2&gt;, key_weight: Tensor&lt;B, 2&gt;, value_weight: Tensor&lt;B, 2&gt;, output_weight: Tensor&lt;B, 2&gt;, num_heads: usize) -&gt; Self &#123;
+        Self &#123;
+            query_weight,
+            key_weight,
+            value_weight,
+            output_weight,
+            num_heads,
+        &#125;
+    &#125;
+
+    pub fn forward(&amp;self, x: Tensor&lt;B, 2&gt;) -&gt; Tensor&lt;B, 2&gt; &#123;
+        let q = x.matmul(self.query_weight.clone());
+        let k = x.matmul(self.key_weight.clone());
+        let v = x.matmul(self.value_weight.clone());
+
+        let d_k = k.dims()[1] as f32;
+        let scores = q.matmul(k.transpose()) / d_k.sqrt();
+        let attention_weights = activation::softmax(scores, -1);
+
+        let context = attention_weights.matmul(v);
+        context.matmul(self.output_weight.clone())
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="多头注意力机制">多头注意力机制</span></h4><pre><code class="rust">pub struct MultiHeadAttention&lt;B: Backend&gt; &#123;
+    pub heads: Vec&lt;SelfAttention&lt;B&gt;&gt;,
+    pub output_weight: Tensor&lt;B, 2&gt;,
+&#125;
+
+impl&lt;B: Backend&gt; MultiHeadAttention&lt;B&gt; &#123;
+    pub fn new(heads: Vec&lt;SelfAttention&lt;B&gt;&gt;, output_weight: Tensor&lt;B, 2&gt;) -&gt; Self &#123;
+        Self &#123; heads, output_weight &#125;
+    &#125;
+
+    pub fn forward(&amp;self, x: Tensor&lt;B, 2&gt;) -&gt; Tensor&lt;B, 2&gt; &#123;
+        let head_outputs: Vec&lt;_&gt; = self.heads.iter().map(|head| head.forward(x.clone())).collect();
+        let concatenated = Tensor::cat(head_outputs, 1);
+        concatenated.matmul(self.output_weight.clone())
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="前馈神经网络">前馈神经网络</span></h4><pre><code class="rust">pub struct FeedForward&lt;B: Backend&gt; &#123;
+    pub linear1: Tensor&lt;B, 2&gt;,
+    pub linear2: Tensor&lt;B, 2&gt;,
+&#125;
+
+impl&lt;B: Backend&gt; FeedForward&lt;B&gt; &#123;
+    pub fn new(linear1: Tensor&lt;B, 2&gt;, linear2: Tensor&lt;B, 2&gt;) -&gt; Self &#123;
+        Self &#123; linear1, linear2 &#125;
+    &#125;
+
+    pub fn forward(&amp;self, x: Tensor&lt;B, 2&gt;) -&gt; Tensor&lt;B, 2&gt; &#123;
+        let x = activation::gelu(x.matmul(self.linear1.clone()));
+        x.matmul(self.linear2.clone())
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="加和归一化">加和归一化</span></h4><pre><code class="rust">pub struct AddNorm&lt;B: Backend&gt; &#123;
+    pub layer_norm: LayerNorm&lt;B&gt;,
+&#125;
+
+impl&lt;B: Backend&gt; AddNorm&lt;B&gt; &#123;
+    pub fn new(layer_norm: LayerNorm&lt;B&gt;) -&gt; Self &#123;
+        Self &#123; layer_norm &#125;
+    &#125;
+
+    pub fn forward(&amp;self, x: Tensor&lt;B, 2&gt;, sublayer_output: Tensor&lt;B, 2&gt;) -&gt; Tensor&lt;B, 2&gt; &#123;
+        self.layer_norm.forward(x + sublayer_output)
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="编码器层">编码器层</span></h4><pre><code class="rust">pub struct EncoderLayer&lt;B: Backend&gt; &#123;
+    pub self_attention: MultiHeadAttention&lt;B&gt;,
+    pub feed_forward: FeedForward&lt;B&gt;,
+    pub add_norm1: AddNorm&lt;B&gt;,
+    pub add_norm2: AddNorm&lt;B&gt;,
+&#125;
+
+impl&lt;B: Backend&gt; EncoderLayer&lt;B&gt; &#123;
+    pub fn forward(&amp;self, x: Tensor&lt;B, 2&gt;) -&gt; Tensor&lt;B, 2&gt; &#123;
+        let attn_output = self.self_attention.forward(x.clone());
+        let x = self.add_norm1.forward(x, attn_output);
+        let ff_output = self.feed_forward.forward(x.clone());
+        self.add_norm2.forward(x, ff_output)
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="编码器">编码器</span></h4><pre><code class="rust">pub struct Encoder&lt;B: Backend&gt; &#123;
+    pub layers: Vec&lt;EncoderLayer&lt;B&gt;&gt;,
+&#125;
+
+impl&lt;B: Backend&gt; Encoder&lt;B&gt; &#123;
+    pub fn forward(&amp;self, x: Tensor&lt;B, 2&gt;) -&gt; Tensor&lt;B, 2&gt; &#123;
+        self.layers.iter().fold(x, |x, layer| layer.forward(x))
+    &#125;
+&#125;
+</code></pre>
+<h3><span id="代码结构和关键组件">代码结构和关键组件</span></h3><h4><span id="1-模型配置modelconfig">1. 模型配置（ModelConfig）</span></h4><p>该部分定义了模型的配置参数，包括词汇大小、上下文长度、注意力头的数量、嵌入维度和层数。</p>
+<pre><code class="rust">#[derive(Config)]
+pub struct ModelConfig &#123;
+    pub n_vocab: usize,
+    pub n_ctx: usize,
+    pub n_head: usize,
+    pub n_embd: usize,
+    pub n_layer: usize,
+&#125;
+</code></pre>
+<h4><span id="2-模型初始化init方法">2. 模型初始化（init方法）</span></h4><p>该方法从文件系统中加载预训练的权重，并初始化模型的各个部分，包括嵌入层和多个Transformer块。</p>
+<pre><code class="rust">impl ModelConfig &#123;
+    pub fn init&lt;B: Backend&gt;(&amp;self, model_dir: PathBuf, device: &amp;B::Device) -&gt; Model&lt;B&gt; &#123;
+        let token_embedding_arr: Array2&lt;f32&gt; = ndarray_npy::read_npy(model_dir.join(&quot;wte.npy&quot;)).expect(&quot;should load wte&quot;);
+        let token_embedding_vec: Vec&lt;f32&gt; = token_embedding_arr.iter().copied().collect();
         
+        let position_embedding_arr: Array2&lt;f32&gt; = ndarray_npy::read_npy(model_dir.join(&quot;wpe.npy&quot;)).expect(&quot;should load wpe&quot;);
+        let position_embedding_vec: Vec&lt;f32&gt; = position_embedding_arr.iter().copied().collect();
+        
+        let token_embedding: Tensor&lt;B, 2&gt; = Tensor::&lt;B, 2&gt;::from_data(
+            Data::new(
+                token_embedding_vec.clone(),
+                Shape::new([
+                    token_embedding_arr.shape()[0],
+                    token_embedding_arr.shape()[1],
+                ]),
+            ).convert(),
+            device,
+        );
+
+        let position_embedding: Tensor&lt;B, 2&gt; = Tensor::&lt;B, 2&gt;::from_data(
+            Data::new(
+                position_embedding_vec.clone(),
+                Shape::new([
+                    position_embedding_arr.shape()[0],
+                    position_embedding_arr.shape()[1],
+                ]),
+            ).convert(),
+            device,
+        );
+
+        let layer_norm_config = Gpt2LayerNormConfig &#123;
+            layer_norm_dir: model_dir.join(&quot;ln_f&quot;),
+        &#125;;
+
+        let block_config = BlockConfig &#123;
+            model_dir: model_dir.to_owned(),
+            num_heads: self.n_head,
+            depth: self.n_layer,
+        &#125;;
+
+        Model &#123;
+            token_embedding,
+            position_embedding,
+            blocks: block_config.init(device),
+            layer_norm: layer_norm_config.init(device),
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="3-transformer-块block">3. Transformer 块（Block）</span></h4><p>一个块包含一个注意力层和一个前馈层。每个块通过前向传播函数处理输入，并生成输出。</p>
+<pre><code class="rust">#[derive(Module, Debug)]
+pub struct Block&lt;B: Backend&gt; &#123;
+    pub attention: Attention&lt;B&gt;,
+    pub feedforward: FeedForward&lt;B&gt;,
+&#125;
+
+impl&lt;B: Backend&gt; Block&lt;B&gt; &#123;
+    pub fn forward(&amp;self, x: Tensor&lt;B, 2&gt;) -&gt; Tensor&lt;B, 2&gt; &#123;
+        let x = x.clone() + self.attention.forward(x);
+        let x = x.clone() + self.feedforward.forward(x);
+        x
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="4-注意力层attention">4. 注意力层（Attention）</span></h4><p>注意力层实现了多头自注意力机制，包括查询（Q）、键（K）、值（V）的计算，以及使用softmax函数计算注意力权重。</p>
+<pre><code class="rust">#[derive(Module, Debug)]
+pub struct Attention&lt;B: Backend&gt; &#123;
+    pub layer_norm: Gpt2LayerNorm&lt;B&gt;,
+    pub expand: Gpt2LinearLayer&lt;B&gt;,
+    pub contract: Gpt2LinearLayer&lt;B&gt;,
+    pub num_heads: usize,
+&#125;
+
+impl&lt;B: Backend&gt; Attention&lt;B&gt; &#123;
+    fn attention(
+        q: &amp;Tensor&lt;B, 2&gt;,
+        k: &amp;Tensor&lt;B, 2&gt;,
+        v: &amp;Tensor&lt;B, 2&gt;,
+        causal_mask: &amp;Tensor&lt;B, 2&gt;,
+    ) -&gt; Tensor&lt;B, 2&gt; &#123;
+        let d = (k.dims()[1] as f32).sqrt();
+        let kt = k.clone().transpose();
+        let qk = q.clone().matmul(kt) / d + causal_mask.clone();
+        let probs = activation::softmax(qk, 1);
+        let v = probs.matmul(v.clone());
+        v
+    &#125;
+
+    pub fn forward(&amp;self, x: Tensor&lt;B, 2&gt;) -&gt; Tensor&lt;B, 2&gt; &#123;
+        let x = self.layer_norm.forward(x);
+        let x = self.expand.forward(x.clone());
+        let qkv = x.clone().chunk(3, 1);
+        let qkv_heads = qkv
+            .iter()
+            .map(|v| v.clone().chunk(self.num_heads, 1))
+            .collect::&lt;Vec&lt;_&gt;&gt;();
+
+        let device = B::Device::default();
+        let head_shape = x.dims()[0];
+        let causal_mask = (Tensor::ones(Shape::new([head_shape, head_shape]), &amp;device)
+            - Tensor::ones(Shape::new([head_shape, head_shape]), &amp;device).tril(0))
+            * -1.0e4;
+
+        let out_heads = std::iter::zip(std::iter::zip(&amp;qkv_heads[0], &amp;qkv_heads[1]), &amp;qkv_heads[2])
+            .map(|((q, k), v)| Self::attention(q, k, v, &amp;causal_mask))
+            .collect();
+        let out_heads_concat = Tensor::cat(out_heads, 1);
+        let x = self.contract.forward(out_heads_concat);
+        x
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="5-前馈层feedforward">5. 前馈层（FeedForward）</span></h4><p>前馈层由两层线性变换组成，中间使用GELU激活函数。</p>
+<pre><code class="rust">#[derive(Module, Debug)]
+pub struct FeedForward&lt;B: Backend&gt; &#123;
+    pub layer_norm: Gpt2LayerNorm&lt;B&gt;,
+    pub expand: Gpt2LinearLayer&lt;B&gt;,
+    pub contract: Gpt2LinearLayer&lt;B&gt;,
+    pub activation: Gelu,
+&#125;
+
+impl&lt;B: Backend&gt; FeedForward&lt;B&gt; &#123;
+    pub fn forward(&amp;self, x: Tensor&lt;B, 2&gt;) -&gt; Tensor&lt;B, 2&gt; &#123;
+        let x = self.layer_norm.forward(x);
+        let x = self.expand.forward(x);
+        let x = self.activation.forward(x);
+        let output = self.contract.forward(x);
+        output
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="6-层归一化layer-normalization">6. 层归一化（Layer Normalization）</span></h4><p>对输入进行归一化处理，使其均值为0，方差为1，然后进行缩放和平移。</p>
+<pre><code class="rust">#[derive(Module, Debug)]
+pub struct Gpt2LayerNorm&lt;B: Backend&gt; &#123;
+    pub beta: Tensor&lt;B, 1&gt;,
+    pub gamma: Tensor&lt;B, 1&gt;,
+&#125;
+
+impl&lt;B: Backend&gt; Gpt2LayerNorm&lt;B&gt; &#123;
+    pub fn forward(&amp;self, x: Tensor&lt;B, 2&gt;) -&gt; Tensor&lt;B, 2&gt; &#123;
+        let eps = 1e-5;
+        let mean = x.clone().mean_dim(1);
+        let var = x.clone().var(1);
+        let x = (x - mean) / (var + eps).sqrt();
+        let gamma = self.gamma.clone().unsqueeze::&lt;2&gt;();
+        let gamma = gamma.repeat(0, x.dims()[0]);
+        let beta: Tensor&lt;B, 2&gt; = self.beta.clone().unsqueeze::&lt;2&gt;();
+        let beta = beta.repeat(0, x.dims()[0]);
+        let output = gamma * x + beta;
+        output
+    &#125;
+&#125;
+</code></pre>
+<p>实现了GPT-2模型的主要组件，使用Rust语言构建，并且包含了从文件加载模型参数、初始化模型、执行前向传播和生成文本的功能。</p>
+
     </div>
     
     

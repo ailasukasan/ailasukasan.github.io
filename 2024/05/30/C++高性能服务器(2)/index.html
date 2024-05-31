@@ -1,0 +1,816 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!--
+    <script src="/js/leaves.js"></script>
+-->
+    <!-- 爆炸红心效果 -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+<!--流星雨背景
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+-->
+    <meta charset="utf-8" />
+    <title>C++实现高性能服务器(2) | PHM&#39;s world</title>
+    <meta name="author" content="ailasukasan" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.loli.net" />
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>歡迎來到烏托邦的世界</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>PHM&#39;S WORLD</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;PHM</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;PHM&#39;S WORLD</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">PHM</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>C++实现高性能服务器(2)</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/5/31
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%8F%91/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                服务器开发
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/C/" style="color: #ffa2c4">C++</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1><span id="c实现高性能服务器2-环境变量模块">C++实现高性能服务器（2）—-环境变量模块</span></h1><p>配置模块采用约定优于配置的设计思想，让程序所依赖的配置项都有一个默认值，就不需要每次都指定了，这样既简单又灵活。例如通过以下方式设置默认端口号，名称：<code>system.port</code>，值：<code>8080</code>，描述：<code>system port</code></p>
+<pre><code class="php">php复制代码sylar::ConfigVar&lt;int&gt;::ptr g_int_value_config =
+    sylar::Config::Lookup(&quot;system.port&quot;, (int)8080, &quot;system port&quot;);
+</code></pre>
+<p>当对<code>YAML</code>文件配置项做出改变时，也会改变相应的配置参数，此时端口号被修改为5050</p>
+<pre><code class="yaml">yaml复制代码system:
+    port: 5050      
+</code></pre>
+<h3><span id="1-主要功能">1. 主要功能</span></h3><ul>
+<li>支持yaml格式的配置文件解析</li>
+<li>使用模板完成基础类型，复杂类型（vector、map、set等），自定义类型的序列化与反序列化</li>
+<li>利用回调机制，在加载配置时，完成配置的更新</li>
+<li>使用yaml-cpp库，实现配置文件读取</li>
+<li>约定大于配置</li>
+</ul>
+<p>配置模块主要有以下几个类：</p>
+<ul>
+<li><strong>class ConfigVarBase</strong>：配置变量的基类</li>
+<li><strong>class ConfigVar</strong>：配置参数模板子类，保存对应类型的参数值，通过仿函数实现<code>string</code>和<code>T类型</code>之间的相互转化</li>
+<li><strong>class Config</strong>： ConfigVar的管理类</li>
+</ul>
+<p>最后将日志模块与配置模块整合起来，当配置文件相应参数做出改变时，能够通过回调函数改变相应的参数</p>
+<h2><span id="class-configvarbase配置变量的基类"><em>class</em> ConfigVarBase（配置变量的基类）</span></h2><p>该类为抽象函数，提供三个纯虚函数供子类<code>ConfigVar</code>实现</p>
+<pre><code class="csharp">csharp复制代码virtual std::string toString() = 0; //转化为string
+virtual bool fromString(const std::string&amp; val) = 0;    //从string转化为相应类型
+virtual std::string getTypeName() const = 0;    //获得该类型的名称
+</code></pre>
+<h4><span id="mumber成员变量">mumber（成员变量）</span></h4><pre><code class="c">c复制代码    // 名字
+    std::string m_name;
+    // 描述
+    std::string m_description;
+</code></pre>
+<h2><span id="class-configvar配置参数"><em>class</em> ConfigVar（配置参数）</span></h2><pre><code class="c">c复制代码/* 
+ *  T 参数的具体类型
+ *  FromStr 从std::string转换成T类型的仿函数
+ *  ToStr 从T转换成std::string的仿函数
+ *  std::string 为YAML格式的字符串
+ */
+template &lt;class T, class FromStr = LexicalCast&lt;std::string, T&gt;
+                , class ToStr = LexicalCast&lt;T, std::string&gt; &gt;
+class ConfigVar : public ConfigVarBase &#123;&#125;;
+</code></pre>
+<p>其中，<code>FromStr</code>和<code>ToStr</code>使用仿函数片特化的方式，实现不同类型<code>T</code>与<code>string</code>之间的相互转化，例如<code>vector</code>与<code>string</code>之间的转化，在转化的过程中，字符串格式都是以<code>YAML</code>为标准。</p>
+<pre><code class="c">c复制代码//F from_type, T to_type
+template&lt;class F, class T&gt;
+class LexicalCast &#123;
+public:
+    T operator() (const F &amp;v) &#123;
+        return boost::lexical_cast&lt;T&gt;(v);
+    &#125;
+&#125;;
+
+// string To vector
+// &quot;[1, 2, 3]&quot; ——&gt; [1, 2, 3]
+template&lt;class T&gt;
+class LexicalCast&lt;std::string, std::vector&lt;T&gt;&gt; &#123;
+public:
+    std::vector&lt;T&gt; operator() (const std::string&amp; v) &#123;
+        YAML::Node node = YAML::Load(v);
+        typename std::vector&lt;T&gt; vec;
+        std::stringstream ss;
+        for (size_t i = 0; i &lt; node.size(); ++i) &#123;
+            ss.str(&quot;&quot;);
+            ss &lt;&lt; node[i];
+            vec.push_back(LexicalCast&lt;std::string, T&gt;()(ss.str()));
+        &#125;
+        return vec;
+    &#125;
+&#125;;
+
+// vector To string
+// [1, 2, 3] ——&gt; - 1
+//               - 2
+//               - 3             
+template&lt;class T&gt;
+class LexicalCast&lt;std::vector&lt;T&gt;, std::string&gt; &#123;
+public:
+    std::string operator() (const std::vector&lt;T&gt;&amp; v) &#123;
+        YAML::Node node;
+        for (auto&amp; i : v) &#123;
+            node.push_back(YAML::Load(LexicalCast&lt;T, std::string&gt;()(i)));
+        &#125;
+        std::stringstream ss;
+        ss &lt;&lt; node;
+        return ss.str();
+    &#125;
+&#125;;
+</code></pre>
+<h4><span id="mumber成员变量">mumber（成员变量）</span></h4><pre><code class="arduino">arduino复制代码    // 参数值
+    T m_val;
+    // 变更回调函数组， uint64_t key(要求唯一，一般可以用hash)
+    // typedef std::function&lt;void(const T &amp;old_value, const T &amp;new_value)&gt; on_change_cb;
+    std::map&lt;uint64_t, on_change_cb&gt; m_cbs;
+    // 读写锁
+    mutable RWMutexType m_mutex;
+</code></pre>
+<h4><span id="configvar构造函数">ConfigVar（构造函数）</span></h4><p>给<code>配置名</code>、<code>描述</code>、<code>参数值</code>赋值</p>
+<pre><code class="c">c复制代码ConfigVar(const std::string&amp; name
+        , const T&amp; defult_val
+        , const std::string&amp; description = &quot;&quot;)
+    : ConfigVarBase(name, description)
+    , m_val(defult_val) &#123;
+
+    &#125;
+</code></pre>
+<h4><span id="tostring从参数转为string">toString（从参数转为string）</span></h4><p>若成功，返回转化后的<code>string</code>，失败打出日志，异常以及值的类型</p>
+<pre><code class="csharp">csharp复制代码std::string toString() override &#123;
+    try&#123;
+        RWMutexType::ReadLock lock(m_mutex);
+        return ToStr()(m_val);
+    &#125;
+    catch (std::exception &amp;e)
+    &#123;
+        SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) &lt;&lt; &quot;ConfigVar::toString exception&quot;
+            &lt;&lt; e.what() &lt;&lt; &quot;convert: &quot; &lt;&lt; typeid(m_val).name() &lt;&lt; &quot;to String&quot;;
+    &#125;
+    return &quot;&quot;;
+&#125;
+</code></pre>
+<h4><span id="fromstring从string转为值">fromString（从string转为值）</span></h4><p>从<code>YAML String</code>转为参数值，失败打出日志，异常以及值的类型</p>
+<pre><code class="kotlin">kotlin复制代码bool fromString(const std::string&amp; val) override &#123;
+    try &#123;
+        setValue(FromStr()(val));
+    &#125;
+    catch (std::exception &amp;e)
+    &#123;
+        SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) &lt;&lt; &quot;ConfigVar::fromString exception &quot;
+            &lt;&lt; e.what() &lt;&lt; &quot; convert: String to &quot; &lt;&lt; typeid(m_val).name()
+            &lt;&lt; &quot; - &quot; &lt;&lt; val;
+    &#125;
+    return false;
+&#125;
+</code></pre>
+<h4><span id="getvalue获取和setvalue设置参数">getValue（获取）和setValue（设置参数）</span></h4><p>获取参数直接返回<code>m_val</code>，设置参数时，判断<code>v</code>与<code>m_val</code>是否相同，若相同，直接返回，若不相同，则回调变更函数</p>
+<pre><code class="arduino">arduino复制代码// 获取参数
+const T getValue() const &#123;
+    RWMutexType::ReadLock lock(m_mutex);
+    return m_val;
+&#125;
+
+// 设置参数
+void setValue(const T&amp; v) &#123;
+    &#123;
+        RWMutexType::ReadLock lock(m_mutex);
+        if (v == m_val) &#123;
+            return;
+        &#125;
+        for (auto&amp; i : m_cbs) &#123;
+            i.second(m_val, v);
+        &#125;
+    &#125;
+    RWMutexType::WriteLock lock(m_mutex);
+    m_val = v;
+&#125;
+</code></pre>
+<h4><span id="addlistener添加变化回调函数">addListener（添加变化回调函数）</span></h4><p>返回该回调函数对应的唯一id，用于删除回调函数</p>
+<pre><code class="ini">ini复制代码uint64_t addListener(on_change_cb cb) &#123;
+    static uint64_t s_fun_id = 0;
+    RWMutexType::WriteLock lock(m_mutex);
+    ++s_fun_id;
+    m_cbs[s_fun_id] = cb;
+
+    return s_fun_id;
+&#125;
+</code></pre>
+<h4><span id="dellistener删除回调函数">delListener（删除回调函数）</span></h4><pre><code class="arduino">arduino复制代码void delListener(uint64_t key) &#123;
+    RWMutexType::WriteLock lock(m_mutex);
+    m_cbs.erase(key);
+&#125;
+</code></pre>
+<h4><span id="getlistener获取回调函数">getListener（获取回调函数）</span></h4><pre><code class="ini">ini复制代码on_change_cb getListener(uint64_t key) &#123;
+    RWMutexType::ReadLock lock(m_mutex);
+    auto it = m_cbs.find(key);
+    return it == m_cbs.end() ? nullptr : it-&gt;second;
+&#125;
+</code></pre>
+<h4><span id="clearlistener清除回调函数">clearListener（清除回调函数）</span></h4><pre><code class="csharp">csharp复制代码void clearListener() &#123;
+    RWMutexType::WriteLock lock(m_mutex);
+    m_cbs.clear();
+&#125; 
+</code></pre>
+<h2><span id="class-configconfigvar管理类"><em>class</em> Config（ConfigVar管理类）</span></h2><h4><span id="mumber成员变量">mumber（成员变量）</span></h4><p>使用静态方法返回参数，保证初始化顺序</p>
+<p>c++保证，函数内的<code>local static</code>对象会在”该函数被调用期间“”首次遇上该对象之定义式“时被初始化。</p>
+<pre><code class="arduino">arduino复制代码// typedef std::unordered_map&lt;std::string, ConfigVarBase::ptr&gt; ConfigVarMap;
+// 返回所有的配置项
+static ConfigVarMap&amp; GetDatas() &#123;
+    static ConfigVarMap s_datas;
+    return s_datas;
+&#125;
+
+// 配置项的RWMutex
+static RWMutexType&amp; GetMutex() &#123;
+    static RWMutexType s_mutex;
+    return s_mutex;
+&#125;
+</code></pre>
+<h4><span id="lookup获取x2f创建对应参数名的配置参数">Lookup（获取&#x2F;创建对应参数名的配置参数）</span></h4><pre><code class="scss">scss复制代码template&lt;class T&gt;
+static typename ConfigVar&lt;T&gt;::ptr Lookup(const std::string&amp; name
+        , const T&amp; default_value, const std::string&amp; description = &quot;&quot;) &#123;
+        RWMutexType::WriteLock lock(GetMutex());
+        auto it = GetDatas().find(name);
+        // 找到了
+        if (it != GetDatas().end()) &#123;
+            // 将ConfigVarBase转换为ConfigVar
+            auto tmp = std::dynamic_pointer_cast&lt;ConfigVar&lt;T&gt;&gt;(it-&gt;second);
+            // 若转换成功，显示显示成功
+            if (tmp) &#123;
+                SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) &lt;&lt; &quot;Lookup name = &quot; &lt;&lt; name &lt;&lt; &quot; exists&quot;;
+                return tmp;
+            &#125;   else &#123;
+                SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) &lt;&lt; &quot;Lookup name = &quot; &lt;&lt; name &lt;&lt; &quot; exitst but type not &quot;
+                                                  &lt;&lt; typeid(T).name() &lt;&lt; &quot;, real_type = &quot; &lt;&lt; it-&gt;second-&gt;getTypeName()
+                                                  &lt;&lt; &quot; &quot; &lt;&lt; it-&gt;second-&gt;toString();
+                return nullptr;
+            &#125;
+        &#125;
+    
+        // 用于在当前字符串中查找第一个不属于指定字符集合的字符，并返回该字符位置的索引。如果没有找到任何字符，则返回 std::string::npos。
+        // name不全在 &quot;abcdefghigklmnopqrstuvwxyz._012345678&quot; 中 
+        // name中有非法字符，抛出异常
+        if (name.find_first_not_of(&quot;abcdefghigklmnopqrstuvwxyz._012345678&quot;)
+                != std::string::npos) &#123;
+            SYLAR_LOG_ERROR(SYLAR_LOG_ROOT()) &lt;&lt; &quot;Lookup name invalid&quot; &lt;&lt; name;
+            throw std::invalid_argument(name);
+        &#125;
+        
+        // 若没有，则创建一个新的ConfigVar
+        // typename：用于告诉编译器 ConfigVar&lt;T&gt;::ptr 是一个类型而不是成员变量。
+        typename ConfigVar&lt;T&gt;::ptr v(new ConfigVar&lt;T&gt;(name, default_value, description));
+        GetDatas()[name] = v;
+        return v;
+&#125;
+</code></pre>
+<h4><span id="lookup查找配置参数">Lookup（查找配置参数）</span></h4><pre><code class="arduino">arduino复制代码template&lt;class T&gt;
+static typename ConfigVar&lt;T&gt;::ptr Lookup(const std::string&amp; name) &#123;
+        RWMutexType::ReadLock lock(GetMutex());
+        auto it = GetDatas().find(name);
+        if (it == GetDatas().end()) &#123;
+            return nullptr;
+        &#125;
+        return std::dynamic_pointer_cast&lt;ConfigVar&lt;T&gt;&gt;(it-&gt;second);
+&#125;
+</code></pre>
+<h4><span id="lookupbase查找配置参数返回配置参数的基类">LookupBase（查找配置参数,返回配置参数的基类）</span></h4><pre><code class="scss">scss复制代码ConfigVarBase::ptr Config::LookupBase(const std::string&amp; name) &#123;
+    RWMutexType::ReadLock lock(GetMutex());
+    auto it = GetDatas().find(name);
+    return it == GetDatas().end() ? nullptr : it-&gt;second;
+&#125;
+</code></pre>
+<h4><span id="loadfromyaml使用yamlnode初始化配置模块">LoadFromYaml（使用YAML::Node初始化配置模块）</span></h4><pre><code class="c">c复制代码// 递归方式，遍历YAML格式的配置文件中的所有成员，将每个节点的名称和值存在list中
+static void ListAllMember(const std::string&amp; prefix,
+                          const YAML::Node&amp; node,
+                          std::list&lt;std::pair&lt;std::string, const YAML::Node&gt; &gt;&amp; output) &#123;
+    // prefix字符不合法
+    if (prefix.find_first_not_of(&quot;abcdefghigklmnopqrstuvwxyz._012345678&quot;) 
+            != std::string::npos) &#123;
+        SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) &lt;&lt; &quot;Config invalid name: &quot; &lt;&lt; prefix &lt;&lt; &quot; ! &quot; &lt;&lt; node;
+        return;
+    &#125;
+    output.push_back(std::make_pair(prefix, node));
+    // 若解析的是map
+    if (node.IsMap()) &#123;
+        for (auto it = node.begin();
+                 it != node.end(); ++it) &#123;
+            // 若前缀为空,说明为顶层，prefix为key的值，否则为子层，prefix为父层加上当前层。it-&gt;second为当前node
+            ListAllMember(prefix.empty() ? it-&gt;first.Scalar() : prefix + &quot;.&quot; + it-&gt;first.Scalar(), it-&gt;second, output);
+        &#125;
+    &#125;
+&#125;
+
+void Config::LoadFromYaml(const YAML::Node&amp; root) &#123;
+    // 将root中的所有节点信息保存到all_nodes中
+    std::list&lt;std::pair&lt;std::string, const YAML::Node&gt; &gt; all_nodes;
+    ListAllMember(&quot;&quot;, root, all_nodes);
+    
+    // 遍历list
+    for(auto &amp;i : all_nodes) &#123;
+        std::string &amp;key = i.first;
+        if (key.empty()) &#123;
+            continue;
+        &#125;
+        
+        // 无视大小写
+        std::transform(key.begin(), key.end(), key.begin(), ::tolower);
+        // 查找名为key的配置参数
+        ConfigVarBase::ptr var = LookupBase(key);
+        // 若找到
+        if (var) &#123;
+            // 若为纯量，则调用fromString(会调用setValue设值)
+            if (i.second.IsScalar()) &#123;
+                var-&gt;fromString(i.second.Scalar());
+            // 否则为数组，将其转换为字符串
+            &#125; else &#123;
+                std::stringstream ss;
+                ss &lt;&lt; i.second;
+                var-&gt;fromString(ss.str());
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="visit遍历配置模块里面所有配置项">Visit（遍历配置模块里面所有配置项）</span></h4><pre><code class="scss">scss复制代码void Config::Visit(std::function&lt;void(ConfigVarBase::ptr)&gt; cb) &#123;
+    RWMutexType::ReadLock lock(GetMutex());
+    ConfigVarMap&amp; m = GetDatas();
+    for (auto it = m.begin();
+         it != m.end(); ++it) &#123;
+        cb(it-&gt;second);
+    &#125;
+&#125;
+</code></pre>
+<h2><span id="log和config整合">Log和Config整合</span></h2><h4><span id="logyml内容格式如下">log.yml内容格式如下</span></h4><pre><code class="yaml">yaml复制代码logs:
+    - name: root
+      level: info
+      formatter: &quot;%d%T%m%n&quot;
+      appenders:
+          - type: FileLogAppender
+            file: root.txt
+          - type: StdoutLogAppender
+    - name: system
+      level: debug
+      formatter: &quot;%d%T%m%n&quot;
+      appenders:
+          - type: FileLogAppender
+            file: system.txt
+            formatter: &quot;%d%T[%p]%T%m%n&quot;
+          - type: StdoutLogAppender
+</code></pre>
+<h4><span id="logappender结构体重载">LogAppender结构体重载<code>==</code></span></h4><pre><code class="ini">ini复制代码struct LogAppenderDefine &#123;
+    int type = 0;   //1 File, 2 Stdout
+    LogLevel::Level level = LogLevel::UNKNOW;
+    std::string formatter;
+    std::string file;
+
+    bool operator==(const LogAppenderDefine&amp; oth) const &#123;
+        return type == oth.type
+            &amp;&amp; level == oth.level
+            &amp;&amp; formatter == oth.formatter
+            &amp;&amp; file == oth.file;
+    &#125;
+&#125;;
+</code></pre>
+<h4><span id="log结构体重载-lt">Log结构体，重载<code>==</code>、<code>&lt;</code></span></h4><pre><code class="c">c复制代码struct LogDefine &#123;
+    std::string name;
+    LogLevel::Level level = LogLevel::UNKNOW;
+    std::string formatter;
+    std::vector&lt;LogAppenderDefine&gt; appenders;
+
+    bool operator==(const LogDefine&amp; oth) const&#123;
+        return name == oth.name
+            &amp;&amp; level == oth.level
+            &amp;&amp; formatter == oth.formatter
+            &amp;&amp; appenders == oth.appenders;
+    &#125;
+
+    bool operator&lt;(const LogDefine&amp; oth) const &#123;
+        return name &lt; oth.name;
+    &#125;
+&#125;;
+</code></pre>
+<h4><span id="string-to-logdefine"><code>string</code> To <code>LogDefine</code></span></h4><pre><code class="c">c复制代码template&lt;&gt;
+class LexicalCast&lt;std::string, LogDefine&gt; &#123;
+public:
+    // 仿函数
+    LogDefine operator()(const std::string&amp; v) &#123;
+        // 将文本格式YAML数据v解析为内存中YAML节点n
+        YAML::Node n = YAML::Load(v);
+        LogDefine ld;
+        // 若未定义名为&quot;name&quot;的键，抛出异常
+        if(!n[&quot;name&quot;].IsDefined()) &#123;
+            std::cout &lt;&lt; &quot;log config error: name is null, &quot; &lt;&lt; n
+                      &lt;&lt; std::endl;
+            throw std::logic_error(&quot;log config name is null&quot;);
+        &#125;
+        // 将n[&quot;name&quot;]值转为string赋给ld.name
+        ld.name = n[&quot;name&quot;].as&lt;std::string&gt;();
+        // 若n定义了level，则直接赋值，否则为空
+        ld.level = LogLevel::FromString(n[&quot;level&quot;].IsDefined() ? n[&quot;level&quot;].as&lt;std::string&gt;() : &quot;&quot;);
+        // 若n定义了formatter，则使用当前值，否则为默认的formatter
+        if(n[&quot;formatter&quot;].IsDefined()) &#123;
+            ld.formatter = n[&quot;formatter&quot;].as&lt;std::string&gt;();
+        &#125;
+        
+        // 若n定义了appenders
+        if(n[&quot;appenders&quot;].IsDefined()) &#123;
+            // 遍历所有的appenders
+            for(size_t x = 0; x &lt; n[&quot;appenders&quot;].size(); ++x) &#123;
+                auto a = n[&quot;appenders&quot;][x];
+                // 若当前appender没有定义type，输出错误日志
+                if(!a[&quot;type&quot;].IsDefined()) &#123;
+                    std::cout &lt;&lt; &quot;log config error: appender type is null, &quot; &lt;&lt; a
+                              &lt;&lt; std::endl;
+                    continue;
+                &#125;
+                std::string type = a[&quot;type&quot;].as&lt;std::string&gt;();
+                // 定义LogAppenderDefine对象 lad
+                LogAppenderDefine lad;
+                // 若type为FileLogAppender
+                if(type == &quot;FileLogAppender&quot;) &#123;
+                    // type置为1
+                    lad.type = 1;
+                    // 若没有设置文件路径，输出错误日志
+                    if(!a[&quot;file&quot;].IsDefined()) &#123;
+                        std::cout &lt;&lt; &quot;log config error: fileappender file is null, &quot; &lt;&lt; a
+                              &lt;&lt; std::endl;
+                        continue;
+                    &#125;
+                    // 设置文件路径
+                    lad.file = a[&quot;file&quot;].as&lt;std::string&gt;();
+                    // 设置appender的formatter
+                    if(a[&quot;formatter&quot;].IsDefined()) &#123;
+                        lad.formatter = a[&quot;formatter&quot;].as&lt;std::string&gt;();
+                    &#125;
+                  // 若type为STdoutLogAppender
+                &#125; else if(type == &quot;StdoutLogAppender&quot;) &#123;
+                    // type置为2
+                    lad.type = 2;
+                    // 设置appender的formatter
+                    if(a[&quot;formatter&quot;].IsDefined()) &#123;
+                        lad.formatter = a[&quot;formatter&quot;].as&lt;std::string&gt;();
+                    &#125;
+                  // type输入错误
+                &#125; else &#123;
+                    std::cout &lt;&lt; &quot;log config error: appender type is invalid, &quot; &lt;&lt; a
+                              &lt;&lt; std::endl;
+                    continue;
+                &#125;
+                ld.appenders.push_back(lad);
+            &#125;
+        &#125;
+        return ld;
+    &#125;
+&#125;;
+</code></pre>
+<h4><span id="logdefine-to-string"><code>LogDefine</code> To <code>string</code></span></h4><pre><code class="css">css复制代码template&lt;&gt;
+class LexicalCast&lt;LogDefine, std::string&gt; &#123;
+public:
+    std::string operator()(const LogDefine&amp; i) &#123;
+        YAML::Node n;
+        n[&quot;name&quot;] = i.name;
+        if(i.level != LogLevel::UNKNOW) &#123;
+            n[&quot;level&quot;] = LogLevel::ToString(i.level);
+        &#125;
+        if(!i.formatter.empty()) &#123;
+            n[&quot;formatter&quot;] = i.formatter;
+        &#125;
+
+        for(auto&amp; a : i.appenders) &#123;
+            YAML::Node na;
+            if(a.type == 1) &#123;
+                na[&quot;type&quot;] = &quot;FileLogAppender&quot;;
+                na[&quot;file&quot;] = a.file;
+            &#125; else if(a.type == 2) &#123;
+                na[&quot;type&quot;] = &quot;StdoutLogAppender&quot;;
+            &#125;
+            if(a.level != LogLevel::UNKNOW) &#123;
+                na[&quot;level&quot;] = LogLevel::ToString(a.level);
+            &#125;
+
+            if(!a.formatter.empty()) &#123;
+                na[&quot;formatter&quot;] = a.formatter;
+            &#125;
+
+            n[&quot;appenders&quot;].push_back(na);
+        &#125;
+        std::stringstream ss;
+        ss &lt;&lt; n;
+        return ss.str();
+    &#125;
+&#125;;
+</code></pre>
+<h4><span id="按照yaml配置文件初始化log">按照YAML配置文件初始化Log</span></h4><pre><code class="scss">scss复制代码sylar::ConfigVar&lt;std::set&lt;LogDefine&gt; &gt;::ptr g_log_defines =
+    sylar::Config::Lookup(&quot;logs&quot;, std::set&lt;LogDefine&gt;(), &quot;logs config&quot;);
+
+struct LogIniter &#123;
+    LogIniter() &#123;
+        // 添加变化回调函数
+        g_log_defines-&gt;addListener([](const std::set&lt;LogDefine&gt;&amp; old_value
+                    , const std::set&lt;LogDefine&gt;&amp; new_value) &#123;
+            SYLAR_LOG_INFO(SYLAR_LOG_ROOT()) &lt;&lt; &quot;on_logger_conf_changed&quot;;
+            for(auto&amp; i : new_value) &#123;
+                auto it = old_value.find(i);
+                sylar::Logger::ptr logger;
+                // new有 old没有 
+                if (it == old_value.end()) &#123;
+                    //新增logger
+                    logger = SYLAR_LOG_NAME(i.name);
+                &#125;
+                else &#123;
+                    if (!(i == *it)) &#123;
+                        // 修改的logger
+                        logger = SYLAR_LOG_NAME(i.name);
+                    &#125; else &#123;
+                        continue;
+                    &#125;
+                &#125;
+                // 设置level
+                logger-&gt;setLevel(i.level);
+                // 设置默认formatter
+                if (!i.formatter.empty()) &#123;
+                    logger-&gt;setFormatter(i.formatter);
+                &#125;
+
+                logger-&gt;clearAppenders();
+                // 设置appenders
+                for (auto &amp;a : i.appenders) &#123;
+                    sylar::LogAppender::ptr ap;
+                    // File
+                    if (a.type == 1) &#123;
+                        ap.reset(new FileLogAppender(a.file));
+                        // Stdout
+                    &#125; else if (a.type == 2) &#123;
+                        ap.reset(new StdoutLogAppender);
+                    &#125;
+                    // 设置appenderlevel
+                    ap-&gt;setLevel(a.level);
+                    
+                    // 设置appender的formatter
+                    if(!a.formatter.empty()) &#123;
+                        LogFormatter::ptr fmt(new LogFormatter(a.formatter));
+                        // 若格式无错误
+                        if (!fmt-&gt;isError()) &#123;
+                            ap-&gt;setFormatter(fmt);
+                        &#125; else &#123;
+                            std::cout &lt;&lt; &quot;log.name&quot; &lt;&lt; i.name &lt;&lt; &quot;, appender type = &quot; &lt;&lt; a.type
+                                      &lt;&lt; &quot;, formatter = &quot; &lt;&lt; a.formatter &lt;&lt; &quot;is invalid&quot; &lt;&lt; std::endl;
+                        &#125;
+                    &#125;
+                    // 放入logger的appender中
+                    logger-&gt;addAppender(ap);
+                &#125;
+            &#125;
+
+            for(auto&amp; i : old_value) &#123;
+                auto it = new_value.find(i);
+                // old有 new没有
+                if(it == new_value.end()) &#123;
+                    //删除logger
+                    auto logger = SYLAR_LOG_NAME(i.name);
+                    logger-&gt;setLevel((LogLevel::Level)100);
+                    logger-&gt;clearAppenders();
+                &#125;
+            &#125;
+        &#125;);
+    &#125;
+&#125;;
+
+// 保证在main之前初始化
+static LogIniter __log_init;
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 PHM&#39;s world
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;ailasukasan
+        </div>
+        <div>
+            可以点击一下Try Try <a target="_blank" rel="noopener" href="https://github.com/ailasukasan">歡迎來到我的世界</a> &amp;
+            <a href="">站在能分割世界的桥</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+
+
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+
+
+</body>
+</html>

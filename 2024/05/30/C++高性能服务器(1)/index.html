@@ -206,7 +206,7 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com
             
             <span class="tag">
                 
-                <a href="/tags/C/" style="color: #00bcd4">C++</a>
+                <a href="/tags/C/" style="color: #ffa2c4">C++</a>
             </span>
             
         </span>
@@ -214,7 +214,39 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com
     </div>
     
     <div class="content" v-pre>
-        <h2><span id="c实现高性能服务器1logger模块">C++实现高性能服务器（1）—Logger模块</span></h2><h3><span id="1-主要功能">1. 主要功能</span></h3><ul>
+        <p>该项目是一个高性能的基于协程的服务器框架，主要特性包括支持多线程、多协程协同调度和异步处理，以提高服务器性能。具体功能模块包括日志模块、线程模块、IO协程调度模块、定时器模块、hook模块和HTTP模块。各模块的功能：</p>
+<h3><span id="日志模块">日志模块</span></h3><ul>
+<li><strong>宏实现流式输出</strong>：使用宏来实现日志的流式输出，便于记录日志信息。</li>
+<li><strong>同步日志与异步日志</strong>：支持同步和异步两种日志记录方式。</li>
+<li><strong>自定义日志格式</strong>：可以根据需求自定义日志格式。</li>
+<li><strong>日志级别</strong>：支持不同的日志级别（如DEBUG、INFO、WARN、ERROR等）。</li>
+<li><strong>多日志分离</strong>：可以将不同类型的日志分开记录，便于管理和查阅。</li>
+</ul>
+<h3><span id="线程模块">线程模块</span></h3><ul>
+<li><strong>封装pthread相关方法</strong>：对pthread库的常用方法进行封装，简化多线程编程。</li>
+<li><strong>封装常用锁</strong>：包括信号量、读写锁、自旋锁等，提供多种同步机制以满足不同需求。</li>
+</ul>
+<h3><span id="io协程调度模块">IO协程调度模块</span></h3><ul>
+<li><strong>非对称协程模型</strong>：基于<code>ucontext_t</code>实现非对称协程模型，实现轻量级任务切换。</li>
+<li><strong>多线程协同调度</strong>：以线程池的方式实现多线程、多协程协同调度，提高并发处理能力。</li>
+<li><strong>事件监听机制</strong>：依赖<code>epoll</code>实现高效的事件监听和处理。</li>
+</ul>
+<h3><span id="定时器模块">定时器模块</span></h3><ul>
+<li><strong>最小堆管理定时器</strong>：使用最小堆数据结构管理定时器，确保定时任务按时执行。</li>
+<li><strong>协程定时任务调度</strong>：配合IO协程调度模块，可以实现基于协程的定时任务调度。</li>
+</ul>
+<h3><span id="hook模块">Hook模块</span></h3><ul>
+<li><strong>封装同步系统调用为异步操作</strong>：将常用的同步系统调用（如<code>accept</code>、<code>recv</code>、<code>send</code>等）封装成异步操作，大幅提升服务器性能。</li>
+</ul>
+<h3><span id="http模块">HTTP模块</span></h3><ul>
+<li><strong>封装socket常用方法</strong>：对socket的常用操作进行封装，简化网络编程。</li>
+<li><strong>支持HTTP协议解析</strong>：实现HTTP请求和响应的解析。</li>
+<li><strong>客户端连接池</strong>：客户端实现连接池机制，提高连接复用率和请求处理效率。</li>
+<li><strong>服务器端servlet模式</strong>：服务器端采用servlet模式处理客户端请求，支持灵活的请求处理。</li>
+<li><strong>Reactor模式</strong>：支持单Reactor多线程和多Reactor多线程模式，提升服务器的并发处理能力。</li>
+</ul>
+<p>这个服务器框架通过上述各个模块的配合，实现了高性能、高并发的网络服务器，为用户提供了搭建HTTP服务器或WebSocket服务器的便捷方式。</p>
+<h2><span id="c实现高性能服务器1logger模块">C++实现高性能服务器（1）—Logger模块</span></h2><h3><span id="1-主要功能">1. 主要功能</span></h3><ul>
 <li>支持不同日志级别</li>
 <li>可以自由的控制日志输出的位置（目前包括输出到控制台，文件）</li>
 <li>支持自定义日志格式</li>
