@@ -202,6 +202,306 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com
         
 
 <div class="post">
+    <a href="/2024/02/27/%E6%A8%AA%E6%B8%A1%E6%B5%B7%E5%B3%A1/">
+        <h2 class="post-title">横渡海峡</h2>
+    </a>
+
+
+
+    <div class="category-and-date">
+
+        
+        <span class="category">
+            <a href="/categories/%E6%97%A5%E8%AE%B0/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                日记
+            </a>
+        </span>
+
+        
+
+
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/2/27
+        </span>
+
+
+
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+        </div>
+    </div>
+<!--
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h2><span id="渤海海峡">渤海海峡</span></h2><pre><code class="自由">我的思绪在这高耸的云间
+在鸟儿的翅膀上
+在路边盛开的的蔷薇花瓣中
+在一个叫做自由地方
+</code></pre>
+<p><img src="/../image/image.jpg" alt="image"></p>
+<pre><code class="rabbit"> (\(\  
+ ( -.-) 
+ o_(&quot;)(&quot;)
+</code></pre>
+
+            
+        </div>
+    </div>
+-->
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C/" style="color: #00bcd4">你好世界</a>
+        </span>
+        
+    </div>
+
+<!--
+    <span class="icon">
+        <i class="fa-solid fa-tags fa-fw"></i>
+    </span>
+
+    <span class="date">
+        <span class="icon">
+            <i class="fa-solid fa-calendar fa-fw"></i>
+        </span>
+        2024/2/27
+    </span>
+-->
+    <a href="/2024/02/27/%E6%A8%AA%E6%B8%A1%E6%B5%B7%E5%B3%A1/" class="go-post">阅读全文</a>
+
+</div>
+
+<div class="post">
+    <a href="/2024/02/01/UI%E4%BA%94%E5%AD%90%E6%A3%8B/">
+        <h2 class="post-title">UI界面的五子棋</h2>
+    </a>
+
+
+
+    <div class="category-and-date">
+
+        
+        <span class="category">
+            <a href="/categories/Java%E9%A1%B9%E7%9B%AE/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                Java项目
+            </a>
+        </span>
+
+        
+
+
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/2/1
+        </span>
+
+
+
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+        </div>
+    </div>
+<!--
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1><span id="具体代码如下所示">具体代码如下所示</span></h1><h2><span id="黑子和白子可以自定义将下方图片路径修改为你的路径即可">黑子和白子可以自定义，将下方图片路径修改为你的路径即可</span></h2><pre><code class="java">import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class GomokuGame extends JFrame &#123;
+    private static final int BOARD_SIZE = 15;
+    private static final int CELL_SIZE = 40;
+    private static final int BOARD_OFFSET = 20;
+
+    private enum Player &#123; BLACK, WHITE &#125;
+
+    private Player currentPlayer;
+    private JButton[][] board;
+
+    private ImageIcon blackIcon;
+    private ImageIcon whiteIcon;
+
+    public GomokuGame() &#123;
+        setTitle(&quot;老杨大战老云，谁将获得版权费用？&quot;);
+        setSize(BOARD_SIZE * CELL_SIZE + BOARD_OFFSET, BOARD_SIZE * CELL_SIZE + BOARD_OFFSET);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        currentPlayer = Player.BLACK;
+
+        blackIcon = new ImageIcon(&quot;在这里输入你的图片路径（黑子）&quot;);
+        blackIcon.setImage(blackIcon.getImage().getScaledInstance(CELL_SIZE, CELL_SIZE, Image.SCALE_DEFAULT));
+
+        whiteIcon = new ImageIcon(&quot;在这里输入你的图片路径（白子）&quot;);
+        whiteIcon.setImage(whiteIcon.getImage().getScaledInstance(CELL_SIZE, CELL_SIZE, Image.SCALE_DEFAULT));
+
+        initializeBoard();
+    &#125;
+
+    private void initializeBoard() &#123;
+        setLayout(new GridLayout(BOARD_SIZE, BOARD_SIZE));
+        board = new JButton[BOARD_SIZE][BOARD_SIZE];
+
+        for (int i = 0; i &lt; BOARD_SIZE; i++) &#123;
+            for (int j = 0; j &lt; BOARD_SIZE; j++) &#123;
+                JButton cell = new JButton();
+                cell.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
+                cell.setBackground(new Color(139, 69, 19));
+                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                cell.addMouseListener(new CellClickListener(i, j));
+                board[i][j] = cell;
+                add(cell);
+            &#125;
+        &#125;
+    &#125;
+
+    private class CellClickListener extends MouseAdapter &#123;
+        private int row, col;
+
+        public CellClickListener(int row, int col) &#123;
+            this.row = row;
+            this.col = col;
+        &#125;
+
+        @Override
+        public void mouseClicked(MouseEvent e) &#123;
+            JButton cell = (JButton) e.getComponent();
+
+            if (cell.getBackground().equals(new Color(139, 69, 19))) &#123;
+                if (currentPlayer == Player.BLACK) &#123;
+                    cell.setIcon(blackIcon);
+                    checkWin(row, col, blackIcon);
+                    currentPlayer = Player.WHITE;
+                &#125; else &#123;
+                    cell.setIcon(whiteIcon);
+                    checkWin(row, col, whiteIcon);
+                    currentPlayer = Player.BLACK;
+                &#125;
+                cell.setBackground(null);
+            &#125;
+        &#125;
+    &#125;
+
+    private boolean checkDirection(int row, int col, int rowIncrement, int colIncrement, ImageIcon icon) &#123;
+        int count = 0;
+
+        for (int i = -4; i &lt;= 4; i++) &#123;
+            int newRow = row + i * rowIncrement;
+            int newCol = col + i * colIncrement;
+
+            if (newRow &gt;= 0 &amp;&amp; newRow &lt; BOARD_SIZE &amp;&amp; newCol &gt;= 0 &amp;&amp; newCol &lt; BOARD_SIZE) &#123;
+                if (board[newRow][newCol].getIcon() == icon) &#123;
+                    count++;
+                    if (count == 5) &#123;
+                        return true;
+                    &#125;
+                &#125; else &#123;
+                    count = 0;
+                &#125;
+            &#125; else &#123;
+                count = 0;
+            &#125;
+        &#125;
+
+        return false;
+    &#125;
+
+    private void checkWin(int row, int col, ImageIcon icon) &#123;
+        if (checkDirection(row, col, 1, 0, icon) ||
+                checkDirection(row, col, 0, 1, icon) ||
+                checkDirection(row, col, 1, 1, icon) ||
+                checkDirection(row, col, 1, -1, icon)) &#123;
+            JOptionPane.showMessageDialog(GomokuGame.this, icon == blackIcon ? &quot;老杨获胜&quot; : &quot;老云获胜&quot;);
+            resetBoard();
+        &#125;
+    &#125;
+
+    private void resetBoard() &#123;
+        for (int i = 0; i &lt; BOARD_SIZE; i++) &#123;
+            for (int j = 0; j &lt; BOARD_SIZE; j++) &#123;
+                board[i][j].setIcon(null);
+                board[i][j].setBackground(new Color(139, 69, 19));
+            &#125;
+        &#125;
+        currentPlayer = Player.BLACK;
+    &#125;
+
+    public static void main(String[] args) &#123;
+        SwingUtilities.invokeLater(() -&gt; &#123;
+            new GomokuGame().setVisible(true);
+        &#125;);
+    &#125;
+&#125;
+</code></pre>
+
+            
+        </div>
+    </div>
+-->
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Java/" style="color: #ff7d73">Java</a>
+        </span>
+        
+    </div>
+
+<!--
+    <span class="icon">
+        <i class="fa-solid fa-tags fa-fw"></i>
+    </span>
+
+    <span class="date">
+        <span class="icon">
+            <i class="fa-solid fa-calendar fa-fw"></i>
+        </span>
+        2024/2/1
+    </span>
+-->
+    <a href="/2024/02/01/UI%E4%BA%94%E5%AD%90%E6%A3%8B/" class="go-post">阅读全文</a>
+
+</div>
+
+<div class="post">
     <a href="/2023/11/01/C++/">
         <h2 class="post-title">C++学习笔记</h2>
     </a>
@@ -263,7 +563,7 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com
         
         <span class="tag">
             
-            <a href="/tags/C/" style="color: #00a596">C++</a>
+            <a href="/tags/C/" style="color: #00bcd4">C++</a>
         </span>
         
     </div>
@@ -314,10 +614,10 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com
         </div>
         <div class="name">ailasukasan</div>
         <div class="description">
-            <p>你好，我是来自北大软微的一名学生<br><a target="_blank" rel="noopener" href="https://www.ss.pku.edu.cn/">北京大學軟件與微電子學院</a><br>軟件工程專業<br>こんにちは<br>僕は北大ソフトウェア工学の学生です<br>a student from Peking University of<br>Software and Microelectronics</p>
+            <p>你好，我是来自北大软微的一名学生<br><a target="_blank" rel="noopener" href="https://www.ss.pku.edu.cn/">北京大學軟件與微電子學院</a><br>軟件工程專業<br>こんにちは<br>僕は北大ソフトウェア工学の学生です<br><a target="_blank" rel="noopener" href="https://github.com/ailasukasan">我的GitHub主页</a></p>
 
             <hr>
-            <p><a target="_blank" rel="noopener" href="https://github.com/ailasukasan">我的GitHub主页</a><br>虽然啥也没有…万一以后想用呢？</p>
+            <p>无法飞翔的羽翼<br>仍然有它存在的意义</p>
 
         </div>
         

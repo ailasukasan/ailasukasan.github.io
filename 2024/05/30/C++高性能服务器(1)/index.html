@@ -1,0 +1,882 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!--
+    <script src="/js/leaves.js"></script>
+-->
+    <!-- 爆炸红心效果 -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+<!--流星雨背景
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+-->
+    <meta charset="utf-8" />
+    <title>C++实现高性能服务器(1) | PHM&#39;s world</title>
+    <meta name="author" content="ailasukasan" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.loli.net" />
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>歡迎來到烏托邦的世界</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>PHM&#39;S WORLD</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;PHM</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;PHM&#39;S WORLD</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">PHM</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>C++实现高性能服务器(1)</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/5/31
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%8F%91/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                服务器开发
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/C/" style="color: #00bcd4">C++</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h2><span id="c实现高性能服务器1logger模块">C++实现高性能服务器（1）—Logger模块</span></h2><h3><span id="1-主要功能">1. 主要功能</span></h3><ul>
+<li>支持不同日志级别</li>
+<li>可以自由的控制日志输出的位置（目前包括输出到控制台，文件）</li>
+<li>支持自定义日志格式</li>
+<li>设置了一系列<code>工具宏</code>，实现流式输出</li>
+<li>目前还是同步日志，后期再添加异步日志</li>
+</ul>
+<h2><span id="2主要的类">2.主要的类</span></h2><ul>
+<li><p><strong>class LogLevel</strong>：定义日志级别。并提供将日志级别与文本之间的互相转化</p>
+</li>
+<li><p><strong>class Logger</strong>：日志器。定义日志级别，设置输出地，设置日志格式。</p>
+</li>
+<li><p><strong>class LogEvent</strong>：记录日志事件。主要记录一下信息</p>
+</li>
+<li><p><strong>class LogEventWarp</strong>：日志事件包装器。将logEvent打包，可以直接通过使用该类完成对日志的定义。</p>
+</li>
+<li><p><strong>class LogFormatter</strong>：日志格式化。</p>
+</li>
+<li><p><strong>class LogAppender</strong>：日志输出目标。有两个子类 <strong>class StdoutLogAppender</strong> 和 <strong>class FileLogAppender</strong>，可以分别输出到控制台和文件</p>
+</li>
+<li><p><strong>class LoggerManager</strong>：日志管理器。单列模式</p>
+</li>
+</ul>
+<h2><span id="class-loglevel日志级别"><em>class</em> LogLevel（日志级别）</span></h2><p>通过枚举定义了6个日志级别：</p>
+<pre><code class="cpp">enum Level&#123;
+        //  未知 级别
+        UNKNOW = 0,
+        //  DEBUG 级别
+        DEBUG = 1,
+        //  INFO 级别
+        INFO = 2,
+        //  WARN 级别
+        WARN = 3,
+        //  ERROR 级别
+        ERROR = 4,
+        //  FATAL 级别
+        FATAL = 5
+    &#125;;
+</code></pre>
+<h2><span id="class-logevent日志事件"><em>class</em> LogEvent（日志事件）</span></h2><p>成员变量：</p>
+<pre><code class="cpp">    const char* m_file = nullptr;   //文件名
+    int32_t m_line = 0;             //行号
+    uint32_t m_elapse = 0;          //程序启动开始到现在的毫秒数
+    uint32_t m_thieadId = 0;        //线程id
+    uint32_t m_fiberId = 0;         //协程id
+    uint64_t m_time;                //时间戳
+    std::string m_threadName;       //线程名称
+    std::stringstream m_ss;         //日志内容流
+    std::shared_ptr&lt;Logger&gt; m_logger;   //日志器
+    LogLevel::Level m_level;        //日志等级
+</code></pre>
+<p>format方法（格式化写入日志内容）</p>
+<p>1）首先在函数里定义一具<code>va_list</code>型的变量<code>al</code>，这个变量是指向参数的指。</p>
+<p>2）使用 <code>va_start(al, fmt)</code> 宏初始化 <code>al</code>, 并将其指向参数列表中的第一个参数。</p>
+<p>3）将<code>fmt</code>和<code>al</code>传入<code>format</code>中。</p>
+<p>4）使用<code>vasprintf(&amp;buf, fmt, al)</code>将 <code>al</code>按照<code>fmt格式</code>放到<code>buf</code>中。</p>
+<p>5）若成功，则将<code>buf</code>输出到流中 。</p>
+<p>6）最后使用 <code>va_end()</code> 宏清理 <code>va_list</code>。</p>
+<p>（这段代码没有被使用）</p>
+<pre><code class="cpp">void LogEvent::format(const char* fmt, ...) &#123;
+    va_list al;  		//1）
+    va_start(al, fmt);	//2）
+    format(fmt, al);	//3）
+    va_end(al);			//6)
+&#125;
+
+void LogEvent::format(const char* fmt, va_list al)&#123;
+    char *buf = nullptr;
+    // len返回写入buf的长度
+    int len = vasprintf(&amp;buf, fmt, al);	//4）
+    if(len != -1) &#123;
+        m_ss &lt;&lt; std::string(buf, len);	//5）
+        free(buf);
+    &#125;
+&#125;
+</code></pre>
+<h2><span id="class-logeventwarp日志事件包装器"><em>class</em> LogEventWarp（日志事件包装器）</span></h2><pre><code class="cpp">// 日志事件
+LogEvent::ptr m_event;
+</code></pre>
+<p>在此说一下使用日志的宏，这里定义了<code>SYLAR_LOG_LEVEL</code>宏，用来输出<code>Level</code>级别的<code>LogEvent</code>，并将<code>LogEvent</code>写入到<code>Logger</code>中。</p>
+<p>这里也说明了为什么要使用<code>LogEventWarp</code>这个类。当想使用该宏打一次日志后，由于LogEvent使用的是智能指针，在定义该宏的作用域下这个<code>LogEvent</code>并不会立即释放，所以使用<code>LogEventWarp</code>包装<code>LogEvent::ptr</code>当定义该宏的语句执行完后就会自动进入析构函数，并将<code>LogEvent</code>写入<code>Logger</code>中,打印出日志。</p>
+<pre><code class="less">less复制代码#define SYLAR_LOG_LEVEL(logger, level) \
+    if (logger-&gt;getLevel() &lt;= level) \
+        sylar::LogEventWarp(sylar::LogEvent::ptr (new sylar::LogEvent(logger, level, \
+                __FILE__, __LINE__, 0, sylar::GetThreadId(), \
+            sylar::GetFiberId(), time(0), sylar::Thread::GetName()))).getSS()
+
+#define SYLAR_LOG_DEBUG(logger) SYLAR_LOG_LEVEL(logger, sylar::LogLevel::DEBUG)
+</code></pre>
+<h2><span id="class-logformatter-amp-class-formatitem"><em>class</em> LogFormatter &amp; <em>class</em> FormatItem</span></h2><h3><span id="class-formatitem日志内容格式化"><em>class</em> FormatItem（日志内容格式化）</span></h3><p>该类为<code>LogFormatter</code>的public内部类成员，通过该类得到解析后的格式。</p>
+<p>此类为抽象类，不同事件的子类继承该类，并且重写纯虚函数<code>format</code>将日志格式转化到流</p>
+<p>格式化日志到流</p>
+<pre><code class="rust">rust复制代码// 消息format
+class MessageFormatItem : public LogFormatter::FormatItem&#123;
+public:
+    MessageFormatItem(const std::string&amp; str = &quot;&quot;) &#123;&#125;
+    void format(std::ostream&amp; os, std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event) override &#123;
+        os &lt;&lt; event-&gt;getContent(); 
+    &#125;
+&#125;;
+
+// 日志级别format
+class LevelFormatItem : public LogFormatter::FormatItem&#123;
+public:
+    LevelFormatItem(const std::string&amp; str = &quot;&quot;) &#123;&#125;
+    void format(std::ostream&amp; os, std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event) override &#123;
+        os &lt;&lt; LogLevel::ToString(level);
+    &#125;
+&#125;;
+
+// 执行时间format
+class ElapseFormatItem : public LogFormatter::FormatItem&#123;
+public:
+    ElapseFormatItem(const std::string&amp; str = &quot;&quot;) &#123;&#125;
+    void format(std::ostream&amp; os, std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event) override &#123;
+        os &lt;&lt; event-&gt;getElapse(); 
+    &#125;
+&#125;;
+
+// 日志器名称format
+class NameFormatItem : public LogFormatter::FormatItem&#123;
+public:
+    NameFormatItem(const std::string&amp; str = &quot;&quot;) &#123;&#125;
+    void format(std::ostream&amp; os, std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event) override &#123;
+        os &lt;&lt; event-&gt;getLogger()-&gt;getName(); 
+    &#125;
+&#125;;
+
+// 线程id format
+class ThreadIdFormatItem : public LogFormatter::FormatItem&#123;
+public:
+    ThreadIdFormatItem(const std::string&amp; str = &quot;&quot;) &#123;&#125;
+    void format(std::ostream&amp; os, std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event) override &#123;
+        os &lt;&lt; event-&gt;getThieadId(); 
+    &#125;
+&#125;;
+
+// 协程id format
+class FiberIdFormatItem : public LogFormatter::FormatItem&#123;
+public:
+    FiberIdFormatItem(const std::string&amp; str = &quot;&quot;) &#123;&#125;
+    void format(std::ostream&amp; os, std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event) override &#123;
+        os &lt;&lt; event-&gt;getFiberId(); 
+    &#125;
+&#125;;
+
+// 线程名称format
+class ThreadNameFormatItem : public LogFormatter::FormatItem&#123;
+public:
+    ThreadNameFormatItem(const std::string&amp; str = &quot;&quot;) &#123;&#125;
+    void format(std::ostream&amp; os, std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event) override &#123;
+        os &lt;&lt; event-&gt;getThreadName(); 
+    &#125;
+&#125;;
+
+// 时间format
+class DateTimeFormatItem : public LogFormatter::FormatItem&#123;
+public:
+    DateTimeFormatItem(const std::string&amp; format = &quot;%Y-%m-%d %H:%M:%S&quot;)
+        :m_format(format) &#123;
+            if(m_format.empty()) &#123;
+                m_format = &quot;%Y-%m-%d %H:%M:%S&quot;; 
+            &#125;
+        &#125;
+    void format(std::ostream&amp; os, std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event) override &#123;
+        struct tm tm;
+        time_t time = event-&gt;getTime();	//创建event时默认给的 time(0) 当前时间戳
+        localtime_r(&amp;time, &amp;tm);	//将给定时间戳转换为本地时间，并将结果存储在tm中
+        char buf[64];
+        strftime(buf, sizeof(buf), m_format.c_str(), &amp;tm);	//将tm格式化为m_format格式，并存储到buf中
+        os &lt;&lt; buf; 
+    &#125;
+private:
+    std::string m_format;
+&#125;;
+</code></pre>
+<h3><span id="class-logformatter日志格式化"><em>class</em> LogFormatter（日志格式化）</span></h3><h4><span id="mumber成员变量">mumber（成员变量）</span></h4><pre><code class="c">c复制代码	// 日志格式模板
+    std::string m_pattern;
+    // 日志格式解析后格式
+    std::vector&lt;FormatItem::ptr&gt; m_items;
+    // 判断日志格式错误
+    bool m_error = false;
+</code></pre>
+<h4><span id="logformatter构造函数">LogFormatter（构造函数）</span></h4><p>初始化日志格式，并解析</p>
+<pre><code class="c">c复制代码LogFormatter::LogFormatter(const std::string&amp; pattern)
+    :m_pattern(pattern) &#123;
+        init();
+&#125;
+</code></pre>
+<h4><span id="format返回格式化日志文本">format（返回格式化日志文本）</span></h4><p>将解析后的日志信息输出到流中</p>
+<pre><code class="c">c复制代码std::string LogFormatter::format (std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event)&#123;
+    std::stringstream ss;
+    for(auto&amp; i : m_items) &#123;
+        i-&gt;format(ss, logger, level, event);
+    &#125;
+    return ss.str();
+&#125;
+</code></pre>
+<h4><span id="init解析格式">init（解析格式）</span></h4><p>得到相应<code>FormatItem</code>放入<code>m_items</code></p>
+<p>默认格式模板为：<code>&quot;%d&#123;%Y-%m-%d %H:%M:%S&#125;%T%t%T%N%T%F%T[%p]%T[%c]%T%f:%l%T%m%n&quot;</code></p>
+<p>e.g.<code>Y-M-D H:M:S threadId threadName fiberId [Level] [logName] FILE:LINE message</code></p>
+<pre><code class="scss">scss复制代码//%xxx %xxx&#123;xxx&#125; %%
+// m_pattern &quot;%d&#123;%Y-%m-%d %H:%M:%S&#125;%T%t%T%N%T%F%T[%p]%T[%c]%T%f:%l%T%m%n&quot;
+void LogFormatter::init()&#123; 
+    //string, format, type
+    std::vector&lt;std::tuple&lt;std::string, std::string, int&gt;&gt; vec;
+    std::string nstr;	// 存放 [ ] :
+    for(size_t i = 0; i &lt; m_pattern.size(); ++i) &#123;
+        if (m_pattern[i] != &#39;%&#39;)	//若解析的不是&#39;%&#39;
+        &#123;
+            nstr.append(1, m_pattern[i]);	//在nstr后面添加一个该字符
+            continue;
+        &#125;
+
+        if((i + 1) &lt; m_pattern.size()) &#123;	//保证m_pattern不越界
+            if (m_pattern[i + 1] == &#39;%&#39;) &#123;	//解析 &quot;%%&quot;
+                nstr.append(1, &#39;%&#39;);		//在nstr后面加上%
+                continue;
+            &#125;
+        
+                                                
+        size_t n = i + 1;		//遇到&#39;%&#39;往下  (e.g.) n = 1, m_pattern[1] = &#39;d&#39;
+        int fmt_status = 0;		//状态1: 解析时间&#123;%Y-%m-%d %H:%M:%S&#125; 状态0：解析之后的
+        size_t fmt_begin = 0;	//开始位置 为&#123;
+
+        std::string str;		//d T t N等格式
+        std::string fmt;		//保存时间格式 %Y-%m-%d %H:%M:%S	
+
+        while(n &lt; m_pattern.size())&#123;
+            // fmt_status != 0, m_attern[n]不是字母，m_pattern[n]不是&#39;&#123;&#39;, m_pattern[n]不是&#39;&#125;&#39;
+            // (e.g.) %T%  (i -&gt; %, n -&gt; T, while循环 n -&gt; % 此时解析完一个T， break
+            // (e.g.) 遇到 [ ] break，取出[%p]中的p
+            if(!fmt_status &amp;&amp; (!isalpha(m_pattern[n]) &amp;&amp; m_pattern[n] != &#39;&#123;&#39; //返回0表示该字符不是字母字符。
+                    &amp;&amp; m_pattern[n] != &#39;&#125;&#39;)) &#123;
+                str = m_pattern.substr(i + 1, n - i - 1);
+                break;
+            &#125;
+            if(fmt_status == 0)&#123;	//开始解析时间格式
+                if(m_pattern[n] == &#39;&#123;&#39;)&#123;
+                    str = m_pattern.substr(i + 1, n - i - 1);	//str = &quot;d&quot;
+                    fmt_status = 1;	
+                    fmt_begin = n;
+                    ++n;
+                    continue;
+                &#125;
+            &#125; else if(fmt_status == 1) &#123;	//结束解析时间格式
+                if(m_pattern[n] == &#39;&#125;&#39;) &#123;
+                    // fmt = %Y-%m-%d %H:%M:%S
+                    fmt = m_pattern.substr(fmt_begin + 1, n - fmt_begin - 1);
+                    fmt_status = 0;
+                    ++n;
+                    break;		//解析时间结束break
+                &#125;
+            &#125;
+            ++n;
+            if (n == m_pattern.size()) &#123;	//最后一个字符
+                if (str.empty()) &#123;
+                    str = m_pattern.substr(i + 1);
+                &#125;
+            &#125;
+        &#125;
+        if(fmt_status == 0&#123;
+            if(!nstr.empty())&#123;	// nstr: [ :
+                vec.push_back(std::make_tuple(nstr, std::string(), 0));	// 将[ ]放入， type为0
+                nstr.clear();
+            &#125;
+            vec.push_back(std::make_tuple(str, fmt, 1));	//(e.g.) (&quot;d&quot;, %Y-%m-%d %H:%M:%S, 1) type为1
+            i = n - 1;	 //跳过已解析的字符，让i指向当前处理的字符，下个for循环会++i处理下个字符
+        &#125; else if(fmt_status == 1) &#123;
+            std::cout &lt;&lt; &quot;Pattern parde error: &quot; &lt;&lt; m_pattern &lt;&lt; &quot; - &quot; &lt;&lt; m_pattern.substr(i) &lt;&lt; std::endl;
+            m_error = true;
+            vec.push_back(std::make_tuple(&quot;&lt;&lt;pattern_error&gt;&gt;&quot;, fmt, 0));
+        &#125; 
+    &#125;
+
+    if(!nstr.empty()) &#123;
+        vec.push_back(std::make_tuple(nstr, &quot;&quot;, 0));	//(e.g.) 最后一个字符为[ ] :
+    &#125;
+    
+    // map类型为&lt;string, cb&gt;, string为相应的日志格式， cb返回相应的FormatItem智能指针
+    static std::map&lt;std::string, std::function&lt;FormatItem::ptr(const std::string&amp; fmt)&gt; &gt; s_format_items = &#123;
+#define XX(str, C) \
+        &#123;#str, [] (const std::string&amp; fmt) &#123; return FormatItem::ptr(new C(fmt)); &#125;&#125;
+
+        XX(m, MessageFormatItem),           //m:消息
+        XX(p, LevelFormatItem),             //p:日志级别
+        XX(r, ElapseFormatItem),            //r:累计毫秒数
+        XX(c, NameFormatItem),              //c:日志名称
+        XX(t, ThreadIdFormatItem),          //t:线程id
+        XX(n, NewLineFormatItem),           //n:换行
+        XX(d, DateTimeFormatItem),          //d:时间
+        XX(f, FilenameFormatItem),          //f:文件名
+        XX(l, LineFormatItem),              //l:行号
+        XX(T, TabFormatItem),               //T:Tab
+        XX(F, FiberIdFormatItem),           //F:协程id
+        XX(N, ThreadNameFormatItem),		//N:线程名称
+
+#undef XX
+    &#125;;
+
+    for (auto&amp; i : vec)&#123;
+        if (std::get&lt;2&gt;(i) == 0) &#123;	//若type为0
+            //将解析出的FormatItem放到m_items中 [ ] :
+            m_items.push_back(FormatItem::ptr(new StringFormatItem(std::get&lt;0&gt;(i))));
+        &#125; else &#123;	//type为1
+            auto it = s_format_items.find(std::get&lt;0&gt;(i));	//从map中找到相应的FormatItem
+            if(it == s_format_items.end()) &#123;	//若没有找到则用StringFormatItem显示错误信息 并设置错误标志位
+                m_items.push_back(FormatItem::ptr(new StringFormatItem(&quot;&lt;&lt;error_format %&quot; + std::get&lt;0&gt;(i) + &quot;&gt;&gt;&quot;)));
+                m_error = true;
+            &#125; else &#123;	//返回相应格式的FormatItem，其中std::get&lt;1&gt;(i)作为cb的参数
+                m_items.push_back(it-&gt;second(std::get&lt;1&gt;(i)));
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h2><span id="class-logappender-amp-class-stdoutlogappender-amp-class-filelogappender"><em>class</em> LogAppender &amp; <em>class</em> StdoutLogAppender &amp; <em>class</em> FileLogAppender</span></h2><h3><span id="class-logappender日志输出目标"><em>class</em> LogAppender（日志输出目标）</span></h3><p><code>class LogAppender</code>是抽象类，有两个子类，分别为<code>StdoutLogAppender</code>和<code>FileLogAppender</code>，分别实现控制台和文件的输出。两个类都重写纯虚函数<code>log</code>方法实现写入日志，重写纯虚函数<code>toYamlString</code>方法实现将日志转化为<code>YAML</code>格式的字符串</p>
+<h4><span id="mumber成员变量">mumber（成员变量）</span></h4><pre><code class="ini">ini复制代码	//日志级别
+    LogLevel::Level m_level = LogLevel::DEBUG;
+    //日志格式器
+    LogFormatter::ptr m_formatter;
+    // 互斥锁
+    MutexType m_mutex;
+    // 是否有formatter
+    bool m_hasFormatter = false;
+</code></pre>
+<h4><span id="setformatter更改日志格式器">setFormatter（更改日志格式器）</span></h4><pre><code class="ini">ini复制代码void LogAppender::setFormatter(LogFormatter::ptr val) &#123;
+    MutexType::Lock lock(m_mutex);
+    m_formatter = val;
+    if (m_formatter) &#123;
+        m_hasFormatter = true;
+    &#125; else &#123;
+        m_hasFormatter = false;
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="getformatter获得日志格式器">getFormatter（获得日志格式器）</span></h4><pre><code class="css">css复制代码LogFormatter::ptr LogAppender::getFormatter() &#123;
+    MutexType::Lock lock(m_mutex);
+    return m_formatter;
+&#125;
+</code></pre>
+<h3><span id="class-stdoutlogappender输出到控制台的appender"><em>class</em> StdoutLogAppender（输出到控制台的Appender）</span></h3><pre><code class="ruby">ruby复制代码class StdoutLogAppender : public LogAppender &#123;
+public:
+    typedef std::shared_ptr&lt;StdoutLogAppender&gt; ptr;
+    void log(Logger::ptr logger, LogLevel::Level level, LogEvent::ptr event) override;
+    std::string toYamlString() override;
+&#125;;
+</code></pre>
+<h4><span id="log输出到流">log（输出到流）</span></h4><pre><code class="c">c复制代码void StdoutLogAppender::log(std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event)&#123;
+    if(level &gt;= m_level) &#123;
+        MutexType::Lock lock(m_mutex);
+        std::cout &lt;&lt; m_formatter-&gt;format(logger, level, event);	//这里调用Logformat的format，它会遍历m_items调用相应的format输出到流
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="toyamlstring输出yaml格式字符串">toYamlString（输出<code>Yaml</code>格式字符串）</span></h4><pre><code class="scss">scss复制代码std::string StdoutLogAppender::toYamlString() &#123;
+    MutexType::Lock lock(m_mutex);
+    YAML::Node node;
+    node[&quot;type&quot;] = &quot;StdoutLogAppender&quot;;
+    if(m_level != LogLevel::UNKNOW) &#123;
+        node[&quot;level&quot;] = LogLevel::ToString(m_level);
+    &#125;
+    if(m_hasFormatter &amp;&amp; m_formatter) &#123;
+        node[&quot;formatter&quot;] = m_formatter-&gt;getPattern();
+    &#125;
+    std::stringstream ss;
+    ss &lt;&lt; node;
+    return ss.str();
+&#125;
+</code></pre>
+<h3><span id="class-filelogappender输出到文件的appender"><em>class</em> FileLogAppender（输出到文件的Appender）</span></h3><h4><span id="mumber成员变量">mumber（成员变量）</span></h4><pre><code class="c">c复制代码	// 文件路径
+    std::string m_filename;
+    // 文件流
+    std::ofstream m_filestream;
+    // 每秒reopen一次，判断文件有没有被删
+    uint64_t m_lastTime = 0;
+</code></pre>
+<h4><span id="filelogappender构造函数">FileLogAppender（构造函数）</span></h4><p>初始化文件路径，并且打开文件</p>
+<pre><code class="c">c复制代码FileLogAppender::FileLogAppender(const std::string&amp; filename)
+    :m_filename(filename)&#123;
+        reopen();
+&#125;
+</code></pre>
+<h4><span id="reopen写入文件">reopen（写入文件）</span></h4><pre><code class="php">php复制代码bool FileLogAppender::reopen()&#123;
+    MutexType::Lock lock(m_mutex);
+    if (m_filestream)&#123;
+        m_filestream.close();
+    &#125;
+
+    m_filestream.open(m_filename, std::ios::app);	//以追加的方式写入文件中
+    return !!m_filestream;
+&#125;
+</code></pre>
+<h4><span id="log输出到文件">log（输出到文件）</span></h4><p>重写<code>log</code>方法，输出到文件</p>
+<pre><code class="c">c复制代码void FileLogAppender::log(std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event)&#123;
+    if (level &gt;= m_level)&#123;
+        uint64_t now = time(0);
+        if (now != m_lastTime) &#123;	//每秒重新reopen
+            reopen();
+            m_lastTime = now;
+        &#125;
+        MutexType::Lock lock(m_mutex);
+        if (!(m_filestream &lt;&lt; m_formatter-&gt;format(logger, level, event))) &#123;		//写到m_filestream流中
+            std::cout &lt;&lt; &quot;error&quot; &lt;&lt; std::endl;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="toyamlstring转化为yaml格式字符串">toYamlString（转化为YAML格式字符串）</span></h4><p>重写<code>toYamlString</code>方法，转化为YAML格式字符串</p>
+<pre><code class="scss">scss复制代码std::string FileLogAppender::toYamlString() &#123;
+    MutexType::Lock lock(m_mutex);
+    YAML::Node node;
+    node[&quot;type&quot;] = &quot;FileLogAppender&quot;;
+    node[&quot;file&quot;] = m_filename;
+    if(m_level != LogLevel::UNKNOW) &#123;
+        node[&quot;level&quot;] = LogLevel::ToString(m_level);
+    &#125;
+    if(m_hasFormatter &amp;&amp; m_formatter) &#123;
+        node[&quot;formatter&quot;] = m_formatter-&gt;getPattern();
+    &#125;
+    std::stringstream ss;
+    ss &lt;&lt; node;
+    return ss.str();
+&#125;
+</code></pre>
+<h2><span id="class-logger日志器"><em>class</em> Logger（日志器）</span></h2><h4><span id="mumber成员变量">mumber（成员变量</span></h4><pre><code class="c">c复制代码	//日志名称
+    std::string m_name;
+    //日志级别
+    LogLevel::Level m_level;
+    // 互斥锁
+    MutexType m_mutex;
+    // 日志目标集合
+    std::list&lt;LogAppender::ptr&gt; m_appenders;
+    //日志格式器
+    LogFormatter::ptr m_formatter;
+    // root Log
+    Logger::ptr m_root;
+</code></pre>
+<h4><span id="logger构造函数">Logger（构造函数）</span></h4><p><strong>名称</strong>，<code>def = root</code></p>
+<p><strong>日志级别</strong>， <code>def = DEBUG</code></p>
+<p><strong>日志格式</strong>， <code>def = &quot;%d&#123;%Y-%m-%d %H:%M:%S&#125;%T%t%T%N%T%F%T[%p]%T[%c]%T%f:%l%T%m%n&quot;</code></p>
+<pre><code class="perl">perl复制代码Logger::Logger(const std::string&amp; name)
+    :m_name(name) 
+    ,m_level(LogLevel::DEBUG)&#123;
+        m_formatter.reset(new LogFormatter(&quot;%d&#123;%Y-%m-%d %H:%M:%S&#125;%T%t%T%N%T%F%T[%p]%T[%c]%T%f:%l%T%m%n&quot;));
+&#125;
+</code></pre>
+<h4><span id="log写不同level日志到日志目标">log（写不同Level日志到日志目标）</span></h4><p>m_appenders为日志目标地，将当前logger输出到相应的appender，因为Appender的log要<strong>传入logger的智能指针</strong>，所以使用shared_from_this()获得当前logger的智能指针</p>
+<pre><code class="scss">scss复制代码void Logger::log(LogLevel::Level level, LogEvent::ptr event)&#123;
+    if (level &gt;= m_level)&#123;
+        auto self = shared_from_this();
+        MutexType::Lock lock(m_mutex);
+        if (!m_appenders.empty()) &#123;
+            for(auto&amp; i : m_appenders)&#123;
+                i-&gt;log(self, level, event);
+            &#125;
+        &#125; else if(m_root) &#123;		//当logger的appenders为空时，使用root写logger
+            m_root-&gt;log(level, event);
+        &#125;
+    &#125;	
+&#125;
+</code></pre>
+<h4><span id="addappender添加日志目标">addAppender（添加日志目标）</span></h4><p>若appender没有formatter的话就将默认formatter赋给他，若有formatter则直接添加到m_appenders队列中</p>
+<pre><code class="rust">rust复制代码void Logger::addAppender(LogAppender::ptr appender)&#123;
+        MutexType::Lock lock(m_mutex);
+        if (!appender-&gt;getFormatter()) &#123;
+            MutexType::Lock ll(appender-&gt;m_mutex);
+            appender-&gt;m_formatter = m_formatter;
+        &#125;
+    m_appenders.push_back(appender);
+&#125;
+</code></pre>
+<h4><span id="delappender删除日志目标">delAppender（删除日志目标）</span></h4><p>在m_appenders中找到要删除的appender，erase掉</p>
+<pre><code class="ini">ini复制代码void Logger::delAppender(LogAppender::ptr appender)&#123;
+    MutexType::Lock lock(m_mutex);
+    for (auto it = m_appenders.begin();
+        it != m_appenders.end(); ++it) &#123;
+         if(*it == appender) &#123;
+         	m_appenders.erase(it);
+        break;
+         &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="setformatter通过智能指针">setFormatter（通过智能指针 ）</span></h4><p>将新的formatter赋给m_formatter，若appender没有formatter，则将appender的formatter更新。</p>
+<pre><code class="css">css复制代码void Logger::setFormatter(LogFormatter::ptr val)&#123;
+    MutexType::Lock lock(m_mutex);
+    m_formatter = val;
+
+    for (auto&amp; i : m_appenders) &#123;
+        MutexType::Lock ll(i-&gt;m_mutex);
+        if (!i-&gt;m_hasFormatter) &#123;
+            i-&gt;m_formatter = m_formatter;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h4><span id="setformatter通过字符串">setFormatter（通过字符串）</span></h4><p>new一个新的formatter，若格式没错，调用上面的setFormatter设置Formatter。</p>
+<pre><code class="c">c复制代码void Logger::setFormatter(const std::string &amp;val)&#123;
+    sylar::LogFormatter::ptr new_val(new sylar::LogFormatter(val));
+    if (new_val-&gt;isError()) &#123;
+         std::cout &lt;&lt; &quot;Logger setFormatter name = &quot; &lt;&lt; m_name
+                   &lt;&lt; &quot;value = &quot; &lt;&lt; val &lt;&lt; &quot;invalid formatter&quot;
+                   &lt;&lt; std::endl;
+         return;
+    &#125;
+    // m_formatter = new_val;
+    setFormatter(new_val);
+&#125;
+</code></pre>
+<h4><span id="toyamlstring转换为yaml格式输出">toYamlString（转换为YAML格式输出）</span></h4><p>将当前logger <strong>name,level,formatter,appenders</strong> YAML格式按流输出</p>
+<pre><code class="css">css复制代码std::string Logger::toYamlString() &#123;
+    MutexType::Lock lock(m_mutex);
+    YAML::Node node;
+    node[&quot;name&quot;] = m_name;
+    if(m_level != LogLevel::UNKNOW) &#123;
+        node[&quot;level&quot;] = LogLevel::ToString(m_level);
+    &#125;
+    if (m_formatter) &#123;
+        node[&quot;formatter&quot;] = m_formatter-&gt;getPattern();
+    &#125;
+    for (auto&amp; i : m_appenders) &#123;
+        node[&quot;appenders&quot;].push_back(YAML::Load(i-&gt;toYamlString()));
+    &#125;
+    std::stringstream ss;
+    ss &lt;&lt; node;
+    return ss.str();
+&#125;
+</code></pre>
+<h2><span id="class-loggermanager日志管理器"><em>class</em> LoggerManager（日志管理器）</span></h2><p>使用单列模式管理日志管理器，都要通过<code>LoggerMgr</code>来获得logger</p>
+<pre><code class="ruby">ruby
+
+复制代码typedef sylar::Singleton&lt;LoggerManager&gt; LoggerMgr;
+</code></pre>
+<h4><span id="mumber成员变量">mumber（成员变量）</span></h4><pre><code class="c">c复制代码	// 互斥锁
+    MutexType m_mutex;
+    // 日志器容器
+    std::map&lt;std::string, Logger::ptr&gt; m_loggers;
+    // 主日志器
+    Logger::ptr m_root;
+</code></pre>
+<h4><span id="loggermanager构造函数">LoggerManager（构造函数）</span></h4><pre><code class="css">css复制代码LoggerManager::LoggerManager() &#123;
+    m_root.reset(new Logger);
+    m_root-&gt;addAppender(LogAppender::ptr(new StdoutLogAppender));
+
+    m_loggers[m_root-&gt;m_name] = m_root;
+&#125;
+</code></pre>
+<h4><span id="getlogger获取日志器">getLogger（获取日志器）</span></h4><p>在map中找到相应的<code>logger</code>就返回他，若没有就创建一个<code>logger</code>并将他放到日志器容器<code>m_loggers</code>中，再返回他</p>
+<pre><code class="ini">ini复制代码Logger::ptr LoggerManager::getLogger(const std::string&amp; name) &#123;
+    MutexType::Lock lock(m_mutex);
+    auto it = m_loggers.find(name);
+    if (it != m_loggers.end()) &#123;
+        return it-&gt;second;
+    &#125;
+    Logger::ptr logger(new Logger(name));
+    logger-&gt;m_root = m_root;	//将logger的root赋值，当没有appender时，使用root写logger
+    m_loggers[name] = logger;
+    return logger;
+&#125;
+</code></pre>
+<h4><span id="toyamlstring将日志格式转化为yaml字符串">toYamlString（将日志格式转化为YAML字符串）</span></h4><pre><code class="css">css复制代码std::string LoggerManager::toYamlString() &#123;
+    MutexType::Lock lock(m_mutex);
+    YAML::Node node;
+    for (auto&amp; i : m_loggers) &#123;
+        node.push_back(YAML::Load(i.second-&gt;toYamlString()));
+    &#125;
+    std::stringstream ss;
+    ss &lt;&lt; node;
+    return ss.str();
+&#125;
+</code></pre>
+<h2><span id="宏定义">宏定义</span></h2><h4><span id="使用流的方式将不同日志级别的事件写入logger中">使用流的方式，将不同日志级别的事件写入logger中</span></h4><pre><code class="less">less复制代码#define SYLAR_LOG_LEVEL(logger, level) \
+    if (logger-&gt;getLevel() &lt;= level) \
+        sylar::LogEventWarp(sylar::LogEvent::ptr (new sylar::LogEvent(logger, level, \
+                __FILE__, __LINE__, 0, sylar::GetThreadId(), \
+            sylar::GetFiberId(), time(0), sylar::Thread::GetName()))).getSS()
+
+#define SYLAR_LOG_DEBUG(logger) SYLAR_LOG_LEVEL(logger, sylar::LogLevel::DEBUG)
+#define SYLAR_LOG_INFO(logger) SYLAR_LOG_LEVEL(logger, sylar::LogLevel::INFO)
+#define SYLAR_LOG_WARN(logger) SYLAR_LOG_LEVEL(logger, sylar::LogLevel::WARN)
+#define SYLAR_LOG_ERROR(logger) SYLAR_LOG_LEVEL(logger, sylar::LogLevel::ERROR)
+#define SYLAR_LOG_FATAL(logger) SYLAR_LOG_LEVEL(logger, sylar::LogLevel::FATAL)
+</code></pre>
+<h4><span id="使用格式化方式-将不同日志级别的事件写入logger中">使用格式化方式， 将不同日志级别的事件写入logger中</span></h4><pre><code class="less">less复制代码#define SYLARY_LOG_FMT_LEVEL(logger, level, fmt, ...) \
+    if (logger-&gt;getLevel() &lt;= level) \
+        sylar::LogEventWarp(sylar::LogEvent::ptr(new sylar::LogEvent(logger, level, \
+                            __FILE__, __LINE__, 0, sylar::GetThreadId(), \
+                    sylar::GetFiberId(), time(0), sylar::Thread::GetName()))).getEvent()-&gt;format(fmt, __VA_ARGS__)
+#define SYLARY_LOG_FMT_DEBUG(logger, fmt, ...) SYLARY_LOG_FMT_LEVEL(logger, sylar::LogLevel::DEBUG, fmt, __VA_ARGS__)
+#define SYLARY_LOG_FMT_INFO(logger, fmt, ...) SYLARY_LOG_FMT_LEVEL(logger, sylar::LogLevel::INFO, fmt, __VA_ARGS__)
+#define SYLARY_LOG_FMT_WARN(logger, fmt, ...) SYLARY_LOG_FMT_LEVEL(logger, sylar::LogLevel::WARN, fmt, __VA_ARGS__)
+#define SYLARY_LOG_FMT_ERROR(logger, fmt, ...) SYLARY_LOG_FMT_LEVEL(logger, sylar::LogLevel::ERROR, fmt, __VA_ARGS__)
+#define SYLARY_LOG_FMT_FATAL(logger, fmt, ...) SYLARY_LOG_FMT_LEVEL(logger, sylar::LogLevel::FATAL, fmt, __VA_ARGS__)
+</code></pre>
+<h4><span id="获得主日志器">获得主日志器</span></h4><pre><code class="scss">scss
+
+复制代码#define SYLAR_LOG_ROOT() sylar::LoggerMgr::GetInstance()-&gt;getRoot()
+</code></pre>
+<h4><span id="获得相应名字的日志器">获得相应名字的日志器</span></h4><pre><code class="scss">scss
+
+复制代码#define SYLAR_LOG_NAME(name) sylar::LoggerMgr::GetInstance()-&gt;getLogger(name)
+</code></pre>
+<h1><span id="总结">总结</span></h1><p>这一个部分每个类之间的耦合度非常高。</p>
+<p>sylar在写代码时使用了大量的宏定义，这个谁用谁知道啊，在后面的项目过程中，也大量使用了宏定义，让代码更加的简洁。</p>
+<p>日志管理使用单例模式，保证从容器<code>m_loggers</code>中拿出的日志器是唯一不变的。日志管理器会初始化一个主日志器放到容器中，若再创建一个新的日志器时没有设置<code>appender</code>，则会使用这个主日志器进行日志的输出，但是输出时日志名称并不是主日志器的，因为在输出时是按照<code>event</code>中的<code>logger</code>的名称输出的。</p>
+<p>最后在这里给大家再梳理一遍当一个日志器被定义再到打印出日志是怎么一个流程，可以边看代码边看，希望可以帮助大家更好的理解日志模块的代码。</p>
+<ol>
+<li><p>首先我们使用日志管理器<code>LoggerMgr</code>获得一个<code>logger</code>，例如这里获得主日志器，可以使用宏<code>SYLAR_LOG_ROOT()</code>获得，例如<code>sylar::Logger::ptr g_logger = SYLAR_LOG_ROOT()</code>。此时<code>LoggerManager</code>会<code>new</code>一个新的<code>Logger</code>，默认为名字为<code>root</code>，<code>level</code>为<code>DEBUG</code>，<code>formatter</code>为<code>%d&#123;%Y-%m-%d %H:%M:%S&#125;%T%t%T%N%T%F%T[%p]%T[%c]%T%f:%l%T%m%n</code>。并且<code>addAppend()</code> 为<code>StdoutLogAppender</code>，然后将<code>root logger</code>放入日志器容器中。此时，一个日志器就初始化好了。</p>
+</li>
+<li><p>在过程1中，在初始化<code>g_logger</code>时，它的<code>formatter</code>也会被<code>init()</code>方法初始化，并将解析对应的<code>FormatItem</code>按照格式顺序放到<code>m_items</code>中。在也会将<code>StdoutLogAppender</code>加到<code>m_appenders</code>中，在<code>addAppender()</code>时，若<code>appender</code>没有<code>formatter</code>时，会将<code>g_logger</code>的<code>formatter</code>赋给它。</p>
+</li>
+<li><p>当我们想打印日志时，需要创建相应日志级别的<code>LogEvent</code>，其中包含了<code>时间 线程号 线程名称 协程号 [日志级别] [日志器名称] 文件名:行号 消息</code></p>
+</li>
+</ol>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 PHM&#39;s world
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;ailasukasan
+        </div>
+        <div>
+            可以点击一下Try Try <a target="_blank" rel="noopener" href="https://github.com/ailasukasan">歡迎來到我的世界</a> &amp;
+            <a href="">站在能分割世界的桥</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+
+
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+
+
+</body>
+</html>

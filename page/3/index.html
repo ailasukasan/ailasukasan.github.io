@@ -202,6 +202,893 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com
         
 
 <div class="post">
+    <a href="/2024/04/01/pytorch%E5%AD%A6%E4%B9%A0%E6%96%87%E6%A1%A3/">
+        <h2 class="post-title">pytorch和机器学习算法</h2>
+    </a>
+
+
+
+    <div class="category-and-date">
+
+        
+        <span class="category">
+            <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                基础知识
+            </a>
+        </span>
+
+        
+
+
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/4/1
+        </span>
+
+
+
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+        </div>
+    </div>
+<!--
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h6><span id="槽点太多了">槽点太多了…</span></h6><p>图片显示又卡bug了<del>（笑）</del></p>
+<h2><span id="21-tensor操作">2.1 Tensor操作</span></h2><p>理解的核心：张量其实就是矩阵</p>
+<p>又叫张量操作</p>
+<p>多维数组或者矩阵</p>
+<h5><span id="性质">性质：</span></h5><h6><span id="1张量属性">1.张量属性</span></h6><pre><code class="python">#形状、数据类型
+# 查看张量的形状
+print(x.size())  # 输出: torch.Size([2, 3])
+
+# 查看张量的数据类型
+print(x.dtype)  # 输出: torch.int64
+</code></pre>
+<h6><span id="2索引和切片">2.索引和切片</span></h6><pre><code class="python"># 获取张量的某个元素
+print(x[0, 1])  # 输出: tensor(2)
+
+# 切片操作
+print(x[:, 1])  # 获取第二列的所有元素
+</code></pre>
+<p>切片其实就是选取部分数据</p>
+<p>切片操作举例：</p>
+<pre><code class="python">import torch
+# 创建一个 3x3 的张量
+x = torch.tensor([[1, 2, 3],
+                  [4, 5, 6],
+                  [7, 8, 9]])
+
+# 选择第一行的所有元素
+slice1 = x[0, :]
+print(&quot;选择第一行的所有元素:&quot;)
+print(slice1)  # 输出: tensor([1, 2, 3])
+
+# 选择第一列的所有元素
+slice2 = x[:, 0]
+print(&quot;\n选择第一列的所有元素:&quot;)
+print(slice2)  # 输出: tensor([1, 4, 7])
+
+# 选择第一行到第二行（不包括第二行）的所有元素，以及第一列到第二列（不包括第二列）的所有元素
+slice3 = x[0:2, 0:2]
+print(&quot;\n选择第一行到第二行、第一列到第二列的所有元素:&quot;)
+print(slice3)
+# 输出:
+# tensor([[1, 2],
+#         [4, 5]])
+
+# 修改切片后的值会影响原始张量
+slice3[0, 0] = 10
+print(&quot;\n修改切片后的值会影响原始张量:&quot;)
+print(x)
+# 输出:
+# tensor([[10,  2,  3],
+#         [ 4,  5,  6],
+#         [ 7,  8,  9]])
+</code></pre>
+<h6><span id="3数学操作">3.数学操作</span></h6><pre><code class="python"># 加法
+result = torch.add(x, 2)
+
+# 逐元素乘法
+result = torch.mul(x, 2)
+
+# 求和
+result = torch.sum(x)
+
+# 矩阵乘法
+matrix1 = torch.tensor([[1, 2], [3, 4]])
+matrix2 = torch.tensor([[5, 6], [7, 8]])
+result = torch.matmul(matrix1, matrix2)
+</code></pre>
+<h6><span id="4形状操作">4.形状操作</span></h6><p>相当于矩阵的操作</p>
+<p>例如：</p>
+<pre><code class="python">import torch
+
+# 创建一个张量
+x = torch.tensor([[1, 2, 3],
+                  [4, 5, 6]])
+
+# 改变张量形状为 (3, 2)
+reshaped_tensor = x.view(3, 2)
+
+# 打印改变形状后的张量
+print(&quot;改变形状后的张量:&quot;)
+print(reshaped_tensor)
+#改变形状后的张量:
+tensor([[1, 2],
+        [3, 4],
+        [5, 6]])
+</code></pre>
+<p>函数：</p>
+<pre><code>1.# 改变张量形状
+reshaped_tensor = x.view(3, 2)
+
+2.# 转置
+transposed_tensor = x.t()
+
+3.# 拼接张量
+concatenated_tensor = torch.cat((x, x), dim=0)  # 沿着行拼接
+</code></pre>
+<h6><span id="5广播">5.广播</span></h6><p>广播就是改变维度不同的张量使得之间可以进行数学操作，比如：</p>
+<pre><code class="python">x = torch.tensor([[1, 2, 3],
+                  [4, 5, 6]])
+
+y = torch.tensor([10, 20, 30])
+#广播后：
+y_broadcasted = torch.tensor([[10, 20, 30],
+                              [10, 20, 30]])
+#结果：
+result = x + y_broadcasted
+# 结果为
+# [[ 11,  22,  33],
+#  [ 14,  25,  36]]
+</code></pre>
+<h2><span id="23-自动求导">2.3 自动求导</span></h2><p>理解的核心：梯度其实就是导数</p>
+<p><code>requires_grad=True</code>是一种标记，pytorch会跟踪x上的所有操作，在需要时自动计算x的相关操作</p>
+<p>分为三个步骤：</p>
+<h6><span id="1初始化tensor">1.初始化tensor</span></h6><p>初始化矩阵，并标记可以自动求导</p>
+<pre><code class="python">import torch
+
+# 创建一个张量并设置 requires_grad=True
+x = torch.tensor([2.0], requires_grad=True)
+</code></pre>
+<h6><span id="2定义函数表达式">2.定义函数表达式</span></h6><p>正规的表达是：定义计算操作</p>
+<pre><code class="python"># 定义计算图
+y = x ** 2 + 3 * x + 1
+</code></pre>
+<h6><span id="3计算梯度">3.计算梯度</span></h6><p>涉及到两个函数：</p>
+<p><code>backward()</code>计算梯度</p>
+<p><code>grad()</code>访问梯度</p>
+<pre><code class="python"># 自动计算梯度
+y.backward()
+
+# 访问梯度
+print(x.grad)  # 输出: tensor([7.])
+</code></pre>
+<h2><span id="3-pytorch-神经网络">3. PyTorch 神经网络</span></h2><h3><span id="理解神经网络">理解神经网络：</span></h3><h4><span id="1机器学习基础">1.机器学习基础</span></h4><h5><span id="机器学习的基本概念和算法">机器学习的基本概念和算法</span></h5><p>如：</p>
+<h6><span id="1监督学习">1.监督学习</span></h6><p>核心思想：从带有标签的数据中学习出一个模型</p>
+<p>监督学习的目标是从已标记的数据中学习到一个从输入到输出的映射关系。</p>
+<p>标记的数据（有标签的数据）指的是在机器学习或数据分析任务中，每个数据样本都附带了与之相关联的标签或输出信息。</p>
+<h6><span id="2无监督学习">2.无监督学习</span></h6><p>没有明确目的的机器学习，常用于发现异常数据</p>
+<p>常见的两类无监督学习算法：聚类、降维</p>
+<p>K均值聚类：就是制定分组的数量为K，自动进行分组。</p>
+<p>层次聚类：不知道应该分为几类，那么层次聚类就比较适合了。层次聚类会构建一个多层嵌套的分类，类似一个树状结构。</p>
+<p>降维算法：</p>
+<p>主成分分析：是把多指标转化为少数几个综合指标。</p>
+<p>主成分分析经常用减少数据集的维数，同时保持数据集的对方差贡献最大的特征。这是通过保留低阶主成分，忽略高阶主成分做到的。这样低阶成分往往能够保留住数据的最重要方面。</p>
+<p>从未标记的数据中学习，没有对应的输出标签。与监督学习不同，无监督学习的目标是在数据中发现隐藏的结构或模式，而不是进行特定的预测或分类。</p>
+<p>在无监督学习中，模型试图从数据中学习出一些有用的特征、关系或表示，以便对数据进行更好地理解、组织或压缩。无监督学习的主要任务通常包括聚类（Clustering）、降维（Dimensionality Reduction）、密度估计（Density Estimation）等。</p>
+<p>未标记的数据（无标签的数据）则是指在数据集中缺少与之关联的标签或输出信息的数据样本。</p>
+<h6><span id="3回归">3.回归</span></h6><h6><span id="4分类">4.分类</span></h6><h6><span id="5聚类">5.聚类</span></h6><p>聚类是将数据集中的样本分组到多个不同的类别中，使得同一类别内的样本更加相似，而不同类别之间的样本差异更大。常见的聚类算法包括K均值聚类、层次聚类等。</p>
+<h5><span id="常见的机器学习算法">常见的机器学习算法</span></h5><h6><span id="1线性回归">1.线性回归</span></h6><ul>
+<li>线性回归是一种用于建立输入变量（特征）和连续输出变量之间关系的回归模型。</li>
+<li>基本假设是输入变量和输出变量之间存在线性关系。线性回归模型通过拟合一条直线（在一维情况下）或超平面（在高维情况下），使得输入变量和输出变量之间的残差平方和最小化。</li>
+<li>线性回归的输出是连续的实数值，用于对实数域的目标变量进行预测。例如，房价预测、销售量预测等。</li>
+</ul>
+<h6><span id="2逻辑回归">2.逻辑回归</span></h6><ul>
+<li>逻辑回归是一种用于解决<strong>二分类问题</strong>的回归模型，虽然其名称中包含“回归”，但实际上是一种分类算法。</li>
+<li>逻辑回归模型利用逻辑函数（也称为Sigmoid函数）将输入特征的线性组合映射到[0, 1]区间内的概率值，表示样本属于某个类别的概率。</li>
+<li>在训练阶段，逻辑回归模型通过最大化似然函数或最小化交叉熵损失函数来优化模型参数。通常使用梯度下降等优化算法来实现。</li>
+<li>逻辑回归的<strong>输出是一个概率值</strong>，通常根据设定的阈值（通常为0.5）进行分类，小于阈值的样本被划分为一类，大于等于阈值的样本被划分为另一类。</li>
+</ul>
+<h6><span id="逻辑回归和线性回归的区别">逻辑回归和线性回归的区别</span></h6><ol>
+<li><p><strong>输出类型：</strong></p>
+<ul>
+<li>线性回归的输出是连续的实数值，可以是任意的实数。</li>
+<li>逻辑回归的输出是一个介于0和1之间的概率值，通常表示某个事件发生的概率。</li>
+</ul>
+</li>
+<li><p><strong>模型形式：</strong></p>
+<ul>
+<li><p>线性回归模型使用线性函数来建模输入特征和输出之间的关系。其形式为：<br>$$<br>y &#x3D; w_0 + w_1x_1 + w_2x_2 + … + w_nx_n<br>$$<br>其中 (y) 是输出变量，(w) 是权重参数，(x) 是输入特征。</p>
+</li>
+<li><p>逻辑回归模型使用逻辑函数（也称为Sigmoid函数）来建模输入特征和输出之间的关系。其形式为：<br>$$<br>p(y&#x3D;1|x) &#x3D; \frac{1}{1 + e^{-(w_0 + w_1x_1 + w_2x_2 + … + w_nx_n)}}<br>$$<br>其中 (p(y&#x3D;1|x)) 表示给定输入特征 (x) 条件下输出 (y) 为1的概率。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>损失函数：</strong></p>
+<ul>
+<li><p>线性回归通常使用平方损失函数（Mean Squared Error，均方差）来衡量预测值与真实值之间的差异。</p>
+</li>
+<li><p>逻辑回归通常使用对数损失函数（Log Loss）或交叉熵损失函数（因为p ( x ) p(x)p(x)是目标分布，所以用p pp来表示该事件是最好的。但是现在用了q ( x ) q(x)q(x)，多了一些不确定性因素，这个增加的信息量就是相对熵。<br>（Cross-entropy Loss）来衡量预测概率与真实标签之间的差异。<br>$$<br>DKL(p∥q)&#x3D;i&#x3D;1∑Np(xi)log(q(xi)p(xi))<br>$$</p>
+</li>
+</ul>
+</li>
+<li><p><strong>模型输出：</strong></p>
+<ul>
+<li>线性回归模型的输出是一个实数值，可以是任意的实数。</li>
+<li>逻辑回归模型的输出是一个概率值，通常大于0且小于1，表示某个事件发生的概率。</li>
+</ul>
+</li>
+</ol>
+<h6><span id="3决策树">3.决策树</span></h6><p>用于解决分类和回归问题</p>
+<p>每个<strong>内部节点表示一个特征&#x2F;属性</strong>，</p>
+<p>每个<strong>叶子节点表示一个类别标签或连续值输出。</strong></p>
+<p>是一种：非参数化模型：</p>
+<p>非参数模型并不是说模型中没有参数！而是参数很多或者说参数不确定。</p>
+<p>例如：</p>
+<p>假设你正在研究一种新药对患者疾病症状的影响。你收集了一些关于患者的基本信息（如年龄、性别、体重等）以及他们接受治疗前后的症状严重程度。你想要建立一个模型来预测药物治疗对症状改善的影响。</p>
+<p>如果你选择使用K近邻算法（K-Nearest Neighbors，KNN）来建立预测模型，那么你不需要做出特定的函数形式的假设。KNN算法会根据患者的特征与其他患者的特征之间的相似度，来预测该患者的症状改善程度。在这种情况下，模型不对函数形式做出假设，而是通过学习数据中的模式和结构来进行预测。</p>
+<p>它<strong>不需要假设特定的函数形式</strong>，而是<strong>根据数据的特征来进行预测</strong>。相比之下，线性回归模型是一种参数化模型，因为它假设了特定的线性函数形式。</p>
+<p>对比：</p>
+<p>在使用非参数化模型（如决策树、K近邻算法等）时，通常不需要像参数化模型那样手动初始化模型的参数。相反，非参数化模型会根据训练数据自动构建模型，学习数据中的模式和结构。在决策树的情况下，算法会自动选择特征进行节点分割，并根据数据集的特征和标签来构建树状结构。</p>
+<p>而在使用参数化模型时，通常需要手动初始化模型的参数，并选择合适的模型结构。例如，在线性回归模型中，需要手动选择模型的权重参数，并且假设特定的线性函数形式。这些参数通常是在训练过程中通过优化算法进行调整和学习的。</p>
+<p>因此，非参数化模型通常具有更强的灵活性和自动化，因为它们不需要假设特定的函数形式或参数数量。相比之下，参数化模型通常需要更多的人为干预和手动设置。</p>
+<p>但是：非参数模型仍然需要自己去手动设置和探索一些特征</p>
+<h6><span id="特征的提取">特征的提取：</span></h6><ol>
+<li><strong>基本特征提取：</strong> 这涉及从原始数据中提取最基本的特征，例如数值型特征（如年龄、收入）、类别型特征（如性别、城市）等。这些特征通常是直接从数据中提取的，不需要额外的处理。</li>
+<li><strong>特征变换：</strong> 特征变换可以将原始特征进行数学变换，以获得更具代表性或更有意义的特征。例如，对数变换、平方变换、指数变换等可以用于改变特征的分布或增强某些特征之间的相关性。</li>
+<li><strong>特征组合：</strong> 特征组合可以将多个原始特征进行组合，以创建新的特征。这可以通过加法、乘法、除法等运算来实现。例如，将身高和体重结合起来创建BMI（身体质量指数）特征。</li>
+<li><strong>离散化：</strong> 将连续型特征转换为离散型特征的过程称为离散化。这可以通过分箱（binning）或分段（segmentation）来实现。例如，将年龄划分为不同的年龄组。</li>
+<li><strong>文本特征提取：</strong> 对于文本数据，特征提取通常涉及将文本转换为数值特征的过程。常见的文本特征提取方法包括词袋模型（Bag-of-Words）、TF-IDF（Term Frequency-Inverse Document Frequency）等。</li>
+<li><strong>时间序列特征提取：</strong> 对于时间序列数据，特征提取可以涉及计算统计特征（如均值、方差）、滑动窗口统计特征、时序特征（如时间差、周期性特征）等。</li>
+<li><strong>高级特征工程：</strong> 针对具体问题，可能需要进行更高级的特征工程，例如基于领域知识的特征构建、特征选择、特征降维等。（也即提取主成分）</li>
+</ol>
+<h6><span id="4支持向量机">4.支持向量机</span></h6><p>是一种监督学习算法</p>
+<p>找到一个最优平面（最优超品面），将不同类别的数据点有效地分隔开来</p>
+<p>支持向量：在SVM中，支持向量是离超平面最近的一些数据点。这些支持向量对于定义超平面的位置和方向至关重要。换句话说，支持向量决定了最大间隔超平面的形状和位置。</p>
+<p>核函数：</p>
+<p><strong>将低维的原始特征空间映射到一个更高维的特征空间</strong>，原始空间中<strong>线性不可分的数据在新的高维空间可能会变得线性可分</strong>，使得支持向量机（SVM）等线性分类器能够更好地完成分类任务。</p>
+<p>假设我们有一组数据，这些数据在二维空间中是线性不可分的，也就是说，无法通过一条直线将两个类别的数据完全分开。但是，我们希望使用SVM来解决这个分类问题。</p>
+<p>核函数的作用就是将原始的特征空间映射到一个更高维的空间，使得在这个高维空间中数据变得线性可分。换句话说，核函数可以将非线性问题转换为线性问题来处理。</p>
+<p>例如，考虑一个二维的数据集，包含了横坐标和纵坐标两个特征。如果我们使用线性核函数，那么SVM将在二维空间中寻找一条直线来分隔两个类别。但是，如果数据在二维空间中不是线性可分的，那么使用线性核函数可能无法得到一个很好的分类结果。</p>
+<p>这时候，我们可以使用一个非线性的核函数，比如高斯核函数（也称为径向基函数核，RBF核）。高斯核函数的作用是将原始的二维空间映射到一个无限维的高维空间，使得数据在高维空间中变得线性可分。在高维空间中，SVM就可以找到一个超平面来完美地分隔两个类别的数据点。</p>
+<p>因此，核函数允许我们在低维空间中处理复杂的非线性问题，并且在高维空间中寻找一个线性的超平面来完成分类任务。常用的核函数包括高斯核函数、多项式核函数、Sigmoid核函数等，具体的选择取决于数据的性质和分类问题的需求。</p>
+<p>核函数的作用是隐式地定义了一个高维空间中的特征映射，而无需显式地计算出这个映射。常用的核函数有：</p>
+<ol>
+<li><strong>线性核（Linear Kernel）：</strong> 直接进行线性分隔，适用于数据线性可分的情况。</li>
+<li><strong>多项式核（Polynomial Kernel）：</strong> 将数据映射到多项式特征空间，通过多项式函数进行分隔，适用于数据的非线性分隔情况。</li>
+<li><strong>径向基函数核（Radial Basis Function，RBF Kernel）：</strong> 将数据映射到无穷维的特征空间，通过高斯函数进行分隔，适用于复杂的非线性分隔情况。</li>
+</ol>
+<h4><span id="2深度学习基础">2.深度学习基础</span></h4><h5><span id="基本术语">基本术语</span></h5><h6><span id="1损失函数">1.损失函数</span></h6><p>模型预测值与真实标签之间的差异程度，是训练过程中的优化目标。</p>
+<p>理解：是一个函数，函数的值是用于描述预测值和真实值之间的误差的</p>
+<p>作用：用损失函数来计算在<strong>测试数据（不仅仅是测试集，在训练过程中也很重要）</strong>上的表现，通过最小化损失函数，可以使得模型的预测值接近真实值，提高模型的准确性和性能</p>
+<p>最小化损失函数的方法：</p>
+<p><strong>梯度下降法（Gradient Descent）</strong>：</p>
+<p>沿着损失函数的<strong>负梯度方向</strong>调整参数来最小化损失函数。</p>
+<p>在每一次迭代中，根据损失函数关于模型参数的梯度方向和大小来更新参数，使得损失函数的值逐渐减小。</p>
+<p><strong>随机梯度下降法（Stochastic Gradient Descent，SGD）</strong>：</p>
+<p>梯度下降法的一种变体，每次迭代使用<strong>一个随机小批量的样本</strong>来计算损失函数的梯度，并更新参数。SGD通常比批量梯度下降法更快地收敛，并且在大规模数据集上更有效。</p>
+<p><strong>自适应学习率优化器（Adaptive Learning Rate Optimizers）</strong>：</p>
+<p><strong>学习率调度（Learning Rate Scheduling）</strong>：</p>
+<p>是一种超参数</p>
+<p>学习率决定了模型在参数空间中沿着梯度方向更新的幅度，即每一步参数更新的大小</p>
+<p><strong>正则化（Regularization）</strong>：</p>
+<p><strong>过大的参数会导致过拟合</strong></p>
+<p>本质是：限制模型的能力</p>
+<p>向损失函数添加额外的<strong>惩罚项</strong>来防止模型过拟合训练数据。正则化的惩罚函数通常包括 L1 正则化和 L2 正则化两种常见形式。</p>
+<p>L2 正则化通过迫使模型的参数趋向于较小的值，从而降低了模型的复杂度</p>
+<p>有以下的损失函数：</p>
+<ol>
+<li><p><strong>均方误差损失（Mean Squared Error，MSE）</strong>：</p>
+<ul>
+<li><p>表达式：<br>$$<br>\text{MSE} &#x3D; \frac{1}{n} \sum_{i&#x3D;1}^{n} (y_i - \hat{y}_i)^2<br>$$</p>
+</li>
+<li><p>适用于回归问题，用于衡量模型预测值与真实值之间的平均平方差。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>交叉熵损失（Cross-Entropy Loss）</strong>：</p>
+<ul>
+<li><p>二分类交叉熵损失：<br>$$<br> \text{CE} &#x3D; -\frac{1}{n} \sum_{i&#x3D;1}^{n} [y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i)]<br>$$</p>
+</li>
+<li><p>多分类交叉熵损失：<br>$$<br>\text{CE} &#x3D; -\frac{1}{n} \sum_{i&#x3D;1}^{n} \sum_{j&#x3D;1}^{C} y_{ij} \log(\hat{y}_{ij})<br>$$</p>
+</li>
+<li><p>适用于分类问题，用于衡量模型预测的概率分布与真实标签的差异。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>对数损失（Log Loss）</strong>：</p>
+<ul>
+<li><p>表达式：<br>$$<br> \text{Log Loss} &#x3D; -\frac{1}{n} \sum_{i&#x3D;1}^{n} [y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i)]<br>$$</p>
+</li>
+<li><p>适用于二分类或多分类问题，与交叉熵损失类似，用于衡量模型预测的概率分布与真实标签的差异。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Hinge Loss</strong>：</p>
+<ul>
+<li><p>表达式：<br>$$<br> \text{Hinge Loss} &#x3D; \max(0, 1 - y \cdot \hat{y})<br>$$</p>
+</li>
+<li><p>适用于支持向量机（SVM）等分类模型，用于衡量模型输出与真实标签之间的间隔。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Huber Loss</strong>：</p>
+<ul>
+<li><p>表达式：<br>$$<br>\text{Huber Loss} &#x3D; \begin{cases} \frac{1}{2}(y - \hat{y})^2, &amp; \text{if } |y - \hat{y}| \leq \delta \ \delta(|y - \hat{y}| - \frac{1}{2}\delta), &amp; \text{otherwise} \end{cases}<br>$$</p>
+</li>
+<li><p>适用于回归问题，比均方误差损失对异常值更加鲁棒。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h6><span id="2优化器">2.优化器</span></h6><p>用于调整模型参数以最小化损失函数的算法，如随机梯度下降（SGD）、Adam、RMSProp 等。</p>
+<p>这些算法涉及到手动调参数：</p>
+<p>有<strong>网格搜索</strong>：网格对每个超参数组合进行模型训练和评估，从而找到性能最佳的超参数组合。</p>
+<p>关键步骤：交叉验证：</p>
+<p>对于每个参数组合，使用交叉验证方法来评估模型在验证集上的性能。通常使用 K 折交叉验证，将训练数据分成 K 个子集，在每次迭代中使用 K-1 个子集进行训练，剩余的一个子集用于验证。重复 K 次后取平均得到模型的性能评估指标，如准确率、F1 值等。（K通常是5或10）</p>
+<p>F1 值是精确率和召回率的调和平均数</p>
+<h6><span id="3批量处理">3.批量处理</span></h6><p>在训练过程中，将训练数据分成多个批次进行训练，以加快训练速度和减少内存占用。</p>
+<h6><span id="4神经元">4.神经元</span></h6><p>神经网络的基本组成单元</p>
+<p>人工神经元接收来自其他神经元或外部源的输入，每个输入都有一个相关的权值（w），它是根据该输入对当前神经元的重要性来确定的，<strong>对该输入加权并与其他输入求和后，经过一个激活函数 f，计算得到该神经元的输出</strong>。</p>
+<p><img src="https://img-blog.csdnimg.cn/9a29d5391ee744b5bc44e20833acb815.png#pic_center" alt="在这里插入图片描述"></p>
+<h6><span id="5激活函数">5.激活函数</span></h6><p>引入了非线性、解决了线性不可分问题、稀疏性和正则化</p>
+<p>用来求得神经元的输出的</p>
+<p>有一些常用的激活函数</p>
+<p><strong>分层表示</strong>：神经网络通常是分层的结构，由多个层次组成，每一层都负责不同层次的特征提取和抽象表示。底层包含原始数据的基本特征，而高层则包含更加抽象和复杂的特征。</p>
+<h6><span id="6前向传播-反向传播">6.前向传播、反向传播</span></h6><p>神经网络是通过反向传播算法实现学习的。下面是实现学习的基本步骤：</p>
+<ol>
+<li><p><strong>前向传播</strong>：首先，将输入数据通过神经网络进行前向传播，从输入层开始逐层向前传递，直到输出层得到网络的预测结果。在每一层中，神经元根据输入数据和连接权重计算出激活值，并通过激活函数得到输出。</p>
+</li>
+<li><p><strong>计算损失</strong>：将网络的输出与真实标签进行比较，计算预测值与真实值之间的差异，这个差异通常用损失函数来表示。损失函数可以是各种形式，比如均方误差（MSE）、交叉熵等。</p>
+</li>
+<li><p><strong>反向传播</strong>：接下来，利用反向传播算法计算损失函数对网络参数的梯度。反向传播从损失函数开始，沿着网络的反方向逐层传播梯度，根据链式法则计算每一层参数的梯度。这个过程使得我们能够知道如何调整参数才能降低损失函数的值。</p>
+</li>
+<li><p><strong>参数更新</strong>：最后，根据梯度下降（或其他优化算法）的原理，利用计算得到的梯度来更新网络中的参数。更新参数后，重复前面的步骤，继续进行前向传播、计算损失和反向传播，直到达到停止条件（如达到最大迭代次数或损失函数收敛）。</p>
+</li>
+</ol>
+<p>通过这个过程，神经网络能够根据输入数据逐渐调整网络参数，使得网络的预测结果逐渐接近真实值，从而实现学习的目的。这就是神经网络是如何通过反向传播算法实现学习的基本过程。</p>
+<p>前向传播：（求误差）</p>
+<p>反向传播：（误差回传，即修改误差）</p>
+<h5><span id="常见的深度学习模型">常见的深度学习模型</span></h5><h6><span id="1如多层感知机mlp">1.如多层感知机（MLP）</span></h6><p>是传统的多层感知机</p>
+<p><img src="C:\Users\86186\AppData\Roaming\Typora\typora-user-images\image-20240330222436276.png" alt="image-20240330222436276"></p>
+<p>多层感知机（MLP，Multilayer Perceptron）也叫<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C&spm=1001.2101.3001.7020">人工神经网络</a>（ANN，Artificial Neural Network），除了输入输出层，它中间可以有多个隐层，最简单的MLP只含一个隐层，即三层的结构，如下图：</p>
+<p><img src="https://img-blog.csdnimg.cn/20190623203530221.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZnMTM4MjEyNjc4MzY=,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>多层感知机层与层之间是全连接的</p>
+<p>最底层是输入层，中间是隐藏层，最后是输出层。 </p>
+<p>Sigmoid型激活函数</p>
+<p><img src="https://img-blog.csdnimg.cn/20190623205326304.png" alt="img"></p>
+<p>这个函数通常用做二分类</p>
+<p>MLP（多层感知机）中通常会使用随机梯度下降（Stochastic Gradient Descent, SGD）或其变体来训练模型。SGD是一种优化算法，用于更新神经网络中的权重以最小化损失函数。</p>
+<p>随机梯度下降和和梯度提升树都是最小化损失函数的算法，但是两者在实现方式上有所不同</p>
+<ul>
+<li><strong>随机梯度下降</strong> 是一种迭代优化算法，用于更新模型的参数以最小化损失函数。在每次迭代中，它使用单个训练样本的梯度来更新参数。由于每次更新只考虑单个样本，因此更新是随机的。SGD通常用于训练神经网络等大规模数据集和高维特征空间的模型。</li>
+<li><strong>梯度提升树</strong> 是一种集成学习技术，它通过迭代地训练弱模型（通常是决策树），并通过优化损失函数的梯度来改进每个模型的性能。在每次迭代中，新模型被构建以减少前一个模型残差的损失。最终，所有模型的预测结果被加权结合以得到最终的预测结果。梯度提升树通常用于回归和分类问题，是一种非常强大且灵活的模型。</li>
+</ul>
+<p>梯度下降的基本思想是沿着损失函数的负梯度方向更新参数的值，以使得损失函数逐渐减小。<strong>这里的下降表示损失函数的下降</strong></p>
+<p>“提升”一词在梯度提升中表示通过迭代地构建和组合模型来提高整体模型的性能。这里的<strong>提升代表模型的功能提升</strong></p>
+<h6><span id="2卷积神经网络cnn">2.卷积神经网络（CNN）</span></h6><p>区别于BP神经网络：多层感知机</p>
+<p>BP神经网络是指“反向传播神经网络”</p>
+<p>BP神经网络通常是指多层感知机（Multi-Layer Perceptron，MLP）。</p>
+<ul>
+<li>BP神经网络：BP神经网络通常是全连接的，每个神经元与上一层的所有神经元相连，各个层之间的连接权重是可学习的。BP神经网络的隐藏层和输出层可以包含任意数量的神经元。</li>
+<li>CNN：CNN包含了卷积层、池化层和全连接层等不同类型的层。在卷积层中，神经元只与输入数据的局部区域相连，并且通过共享权重来提取局部特征。通过卷积和池化操作，CNN能够有效地提取图像等数据中的空间特征，并减少模型参数数量。</li>
+</ul>
+<p>卷积层：一系列滤波器（卷积核）来扫描输入数据</p>
+<p>池化层：</p>
+<p>池化窗口？</p>
+<p>减少数据空间维度</p>
+<p>池化又叫下采样(Dwon sampling), 与之相对的是上采样(Up sampling). 卷积得到的特征图一般需要一个池化层以降低数据量. </p>
+<p><img src="https://img-blog.csdnimg.cn/20200109232036372.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXBmOA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>和卷积一样, 池化也有一个滑动的核, 可以称之为滑动窗口, 上图中滑动窗口的大小为 2 × 2 2\times 22×2, 步幅为 2 22, 每滑动到一个区域, 则取最大值作为输出, 这样的操作称为 Max Pooling. 还可以采用输出均值的方式, 称为 Mean Pooling.</p>
+<p>全连接层：是传统的神经网络结构，每个神经元都和前一层所有神经元相连，将卷积层和池化层提取到的特征进行组合和整合，以便最终的分类或回归任务。</p>
+<p>卷积操作：</p>
+<p>对卷积的理解</p>
+<p>卷积：</p>
+<p>旋转，相乘、积分</p>
+<p>卷积的物理意义！火车进山洞的理解：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Di4y1o7vX/?spm_id_from=333.337.search-card.all.click&vd_source=424e5faeb592b5cc55161aba63be3b0a">【卷积】直观形象的实例，10分钟彻底搞懂_哔哩哔哩_bilibili</a></p>
+<p>卷积：解决在信号邻域内时域与频域的问题</p>
+<p><img src="C:\Users\86186\AppData\Roaming\Typora\typora-user-images\image-20240327234010486.png" alt="image-20240327234010486"></p>
+<p>卷积就是对信号进行滤波，系统就是滤波器</p>
+<p><img src="C:\Users\86186\AppData\Roaming\Typora\typora-user-images\image-20240327234510477.png" alt="image-20240327234510477"></p>
+<p>卷积神经网络：</p>
+<p>在把图片交给神经网络之前，先进行卷积的操作</p>
+<p>1.图片转化为数字的矩阵</p>
+<p>2.然后创建一个3*3的矩阵，叫做卷积核</p>
+<p>3.然后开始卷积</p>
+<p>意义何在：</p>
+<p>被卷积后的图像：经过卷积核（过滤器），提取特征</p>
+<p>卷积</p>
+<p>对卷积这个名词的理解：<strong>所谓两个函数的卷积，本质上就是先将一个函数翻转，然后进行滑动叠加。</strong></p>
+<p>卷积操作是将一个小的窗口（通常称为卷积核或过滤器）在输入图像上滑动，并将卷积核中的权重与输入图像中对应位置的像素值相乘，然后将所有乘积的结果相加，最后得到一个输出值。这个输出值通常对应于输入图像的某种特征，例如边缘、纹理等。</p>
+<p>卷：指的是函数的翻转，还有窗口滑动的意思</p>
+<p>积：指的是积分、加权求和</p>
+<p>关于为什么要积？：</p>
+<p>需要把每个像素周边的信息，甚至整个图像都要考虑进来，对当前像素进行某种加权处理。所以说“积”是一种全局的概念，或者是一种混合，两个函数在空间上的一种混合</p>
+<p>关于为什么要卷？：</p>
+<p>为什么不直接相乘，卷是在空间上添加一种约束，指定了积的时候以什么作为参照。</p>
+<p>理解“约束”：</p>
+<p>卷积核：</p>
+<p>卷积核一般有多个，不同的卷积核处理不同的信息</p>
+<p>滤波器：多个卷积核堆叠而成的三维矩阵。在只有一个通道，也就是二维的情况下，卷积核就相当于滤波器。</p>
+<p>卷积仍然是线性变换</p>
+<p>激活层：引入非线性</p>
+<p>全连接层：传统上的神经网络</p>
+<p>BP神经网络的实现过程：<img src="https://img-blog.csdnimg.cn/0070a964e66846ba826c8b5633d1cd45.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMzI4MzEz,size_16,color_0000FF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>反向传播就是一个负反馈的过程，使得误差变小</p>
+<p>池化：</p>
+<p>池化操作：为了简化，抓住主要矛盾，忽视次要矛盾，比如每个区域内只选择最大的数字。</p>
+<p>池“就是汇集、聚集</p>
+<p>权值共享：是在网络的不同位置或不同层之间共享相同的参数（权重）。这意味着在网络的不同部分使用相同的权重来计算特征，而不是为每个部分单独学习不同的权重。常用于具有某种结构或模式的数据。减少了参数数量、提高了网络的泛化能力、降低了过拟合的风险，并且能够更好地利用数据的结构和模式。</p>
+<p>局部连接：指的是在神经网络的不同层之间建立连接时，只连接部分神经元，而不是全连接所有神经元。每个神经元仅与输入数据的局部区域进行连接，而不是与整个输入层的所有神经元连接。允许网络更加高效地处理大规模输入数据，</p>
+<h6><span id="3循环神经网络rnn">3.循环神经网络（RNN）</span></h6><p>区别：神经网络多感知模型。MLP：神经元数量是预先固定的。每一个神经元都代表一个字或者词</p>
+<p>RNN适合于序列分析；</p>
+<p>对动态影像添加描述</p>
+<p>LSTM是RNN的一种</p>
+<p>简单RNN模型：</p>
+<h6><span id="4长短期记忆网络lstm">4.长短期记忆网络（LSTM）</span></h6><p>一种时间递归神经网络，<strong>适合于处理和预测时间序列中间隔和延迟相对较长的重要事件</strong>。</p>
+<p>解决循环神经网络RNN结构中存在的“梯度消失”问题而提出的，是一种特殊的循环神经网络。</p>
+<p>在深度学习中，梯度通常指的是损失函数相对于模型参数的梯度。</p>
+<h6><span id="5变换器transformer">5.变换器（Transformer）</span></h6><p>通过自注意力机制来捕捉序列中的关系</p>
+<p>有效地捕捉长距离依赖关系，这使得它在处理自然语言处理任务时非常有效。</p>
+<p>自注意力机制：自注意力机制（Self-Attention Mechanism）是一种用于处理序列数据的机制，主要用于捕捉序列中<strong>不同位置之间的依赖关系</strong>。它在给定序列中的每个元素上计算权重，以表示与该元素相关的其他元素的重要性。</p>
+<p>编码器：将输入序列中的每个元素编码成一个向量，并将其添加到全局编码器的状态中。<br>解码器：从全局编码器的状态中读取编码器的输出，然后将其解码为输出序列中的每个元素。<br>注意力机制：计算解码器当前正在处理的元素与全局编码器状态中所有元素之间的注意力关系，然后根据注意力关系对解码器的输出进行加权平均。<br>位置编码：对于每个输入元素，使用预先定义的位置编码来计算其在全局编码器状态中的位置。<br>训练：使用数据集训练模型，并优化模型的参数以最小化损失函数。</p>
+<h3><span id="构建神经网络">构建神经网络：</span></h3>
+            
+        </div>
+    </div>
+-->
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="color: #ff7d73">机器学习</a>
+        </span>
+        
+    </div>
+
+<!--
+    <span class="icon">
+        <i class="fa-solid fa-tags fa-fw"></i>
+    </span>
+
+    <span class="date">
+        <span class="icon">
+            <i class="fa-solid fa-calendar fa-fw"></i>
+        </span>
+        2024/4/1
+    </span>
+-->
+    <a href="/2024/04/01/pytorch%E5%AD%A6%E4%B9%A0%E6%96%87%E6%A1%A3/" class="go-post">阅读全文</a>
+
+</div>
+
+<div class="post">
+    <a href="/2024/03/31/Java%E5%AE%9E%E7%8E%B0%E4%BA%BA%E6%9C%BA%E5%AF%B9%E6%88%98%E4%BA%94%E5%AD%90%E6%A3%8B%E6%B8%B8%E6%88%8F/">
+        <h2 class="post-title">Java实现人机对战五子棋游戏</h2>
+    </a>
+
+
+
+    <div class="category-and-date">
+
+        
+        <span class="category">
+            <a href="/categories/Java%E9%A1%B9%E7%9B%AE/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                Java项目
+            </a>
+        </span>
+
+        
+
+
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/3/31
+        </span>
+
+
+
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+        </div>
+    </div>
+<!--
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1><span id="思路很简单就是简单的启发式搜索算法">思路很简单，就是简单的启发式搜索算法。</span></h1><h2><span id="机器端通过对棋盘的打分来计算落子位置">机器端通过对棋盘的“打分”来计算落子位置。</span></h2><pre><code class="java">import java.util.Scanner;
+import java.awt.Point;
+import java.util.Random;
+
+public class ChessGame &#123;
+
+​    private static final int BOARD_GRAD_SIZE = 15;
+
+​    public class ChessData &#123;
+​        int[][] chessMap = new int[BOARD_GRAD_SIZE][BOARD_GRAD_SIZE];
+​        int[][] scoreMap = new int[BOARD_GRAD_SIZE][BOARD_GRAD_SIZE];
+​        boolean playerFlag;
+​    &#125;
+
+​    public class Point &#123;
+​        int row;
+​        int col;
+
+​        public Point(int row, int col) &#123;
+​            this.row = row;
+​            this.col = col;
+​        &#125;
+​    &#125;
+
+​    public void initializeChessData(ChessData data) &#123;
+​        if (data == null)
+​            return;
+
+​        for (int row = 0; row &lt; BOARD_GRAD_SIZE; row++) &#123;
+​            for (int col = 0; col &lt; BOARD_GRAD_SIZE; col++) &#123;
+​                data.chessMap[row][col] = 0;
+​                data.scoreMap[row][col] = 0;
+​            &#125;
+​        &#125;
+​        data.playerFlag = true;
+​    &#125;
+
+​    public void updateGameMap(ChessData data, int row, int col) &#123;
+​        if (data == null)
+​            return;
+
+​        if (data.playerFlag) &#123;
+​            data.chessMap[row][col] = 1;
+​        &#125; else &#123;
+​            data.chessMap[row][col] = -1;
+​        &#125;
+
+​        data.playerFlag = !data.playerFlag;
+​    &#125;
+
+​    public boolean checkWin(ChessData game, int row, int col) &#123;
+​        for (int i = 0; i &lt; 5; i++) &#123;
+​            if (col - i &gt;= 0 &amp;&amp;
+​                    col - i + 4 &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                    game.chessMap[row][col - i] == game.chessMap[row][col - i + 1] &amp;&amp;
+​                    game.chessMap[row][col - i] == game.chessMap[row][col - i + 2] &amp;&amp;
+​                    game.chessMap[row][col - i] == game.chessMap[row][col - i + 3] &amp;&amp;
+​                    game.chessMap[row][col - i] == game.chessMap[row][col - i + 4]) &#123;
+​                return true;
+​            &#125;
+​        &#125;
+
+​        for (int i = 0; i &lt; 5; i++) &#123;
+​            if (row - i &gt;= 0 &amp;&amp;
+​                    row - i + 4 &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                    game.chessMap[row - i][col] == game.chessMap[row - i + 1][col] &amp;&amp;
+​                    game.chessMap[row - i][col] == game.chessMap[row - i + 2][col] &amp;&amp;
+​                    game.chessMap[row - i][col] == game.chessMap[row - i + 3][col] &amp;&amp;
+​                    game.chessMap[row - i][col] == game.chessMap[row - i + 4][col]) &#123;
+​                return true;
+​            &#125;
+​        &#125;
+
+​        for (int i = 0; i &lt; 5; i++) &#123;
+​            if (row + i &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                    row + i - 4 &gt;= 0 &amp;&amp;
+​                    col - i &gt;= 0 &amp;&amp;
+​                    col - i + 4 &lt; BOARD_GRAD_SIZE) &#123;
+​                boolean isWin = true;
+​                for (int j = 0; j &lt; 5; j++) &#123;
+​                    if (game.chessMap[row + i - j][col - i + j] != game.chessMap[row + i][col - i]) &#123;
+​                        isWin = false;
+​                        break;
+​                    &#125;
+​                &#125;
+​                if (isWin) &#123;
+​                    return true;
+​                &#125;
+​            &#125;
+​        &#125;
+
+​        for (int i = 0; i &lt; 5; i++) &#123;
+​            if (row - i &gt;= 0 &amp;&amp;
+​                    row - i + 4 &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                    col - i &gt;= 0 &amp;&amp;
+​                    col - i + 4 &lt; BOARD_GRAD_SIZE) &#123;
+​                boolean isWin = true;
+​                for (int j = 0; j &lt; 5; j++) &#123;
+​                    if (game.chessMap[row - i + j][col - i + j] != game.chessMap[row - i][col - i]) &#123;
+​                        isWin = false;
+​                        break;
+​                    &#125;
+​                &#125;
+​                if (isWin) &#123;
+​                    return true;
+​                &#125;
+​            &#125;
+​        &#125;
+
+​        return false;
+​    &#125;
+
+​    public Point actionByAI(ChessData data) &#123;
+​        calculateScore(data);
+
+​        int maxScore = 0;
+​        Point[] maxPoints = new Point[BOARD_GRAD_SIZE * BOARD_GRAD_SIZE];
+​        int k = 0;
+
+​        for (int row = 0; row &lt; BOARD_GRAD_SIZE; row++) &#123;
+​            for (int col = 0; col &lt; BOARD_GRAD_SIZE; col++) &#123;
+​                if (data.chessMap[row][col] == 0) &#123;
+​                    if (data.scoreMap[row][col] &gt; maxScore) &#123;
+​                        k = 0;
+​                        maxScore = data.scoreMap[row][col];
+​                        maxPoints[k] = new Point(row, col);
+​                        k++;
+​                    &#125; else if (data.scoreMap[row][col] == maxScore) &#123;
+​                        maxPoints[k] = new Point(row, col);
+​                        k++;
+​                    &#125;
+​                &#125;
+​            &#125;
+​        &#125;
+
+​        Random rand = new Random();
+​        int index = rand.nextInt(k);
+​        return maxPoints[index];
+​    &#125;
+
+​    public void calculateScore(ChessData data) &#123;
+​        int personNum;
+​        int botNum;
+​        int emptyNum;
+
+​        for (int row = 0; row &lt; BOARD_GRAD_SIZE; row++) &#123;
+​            for (int col = 0; col &lt; BOARD_GRAD_SIZE; col++) &#123;
+​                if (row &gt;= 0 &amp;&amp; col &gt;= 0 &amp;&amp; data.chessMap[row][col] == 0) &#123;
+​                    int[][] directs = &#123;
+​                            &#123; 1, 0 &#125;,
+​                            &#123; 1, 1 &#125;,
+​                            &#123; 0, 1 &#125;,
+​                            &#123; -1, 1 &#125;
+​                    &#125;;
+
+​                    for (int k = 0; k &lt; 4; k++) &#123;
+​                        int x = directs[k][0];
+​                        int y = directs[k][1];
+
+​                        personNum = 0;
+​                        botNum = 0;
+​                        emptyNum = 0;
+
+​                        for (int i = 1; i &lt;= 4; i++) &#123;
+​                            if (row + i * y &gt;= 0 &amp;&amp; row + i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col + i * x &gt;= 0 &amp;&amp; col + i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row + i * y][col + i * x] == 1) &#123;
+​                                personNum++;
+​                            &#125; else if (row + i * y &gt;= 0 &amp;&amp; row + i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col + i * x &gt;= 0 &amp;&amp; col + i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row + i * y][col + i * x] == 0) &#123;
+​                                emptyNum++;
+​                                break;
+​                            &#125; else &#123;
+​                                break;
+​                            &#125;
+​                        &#125;
+
+​                        for (int i = 1; i &lt;= 4; i++) &#123;
+​                            if (row - i * y &gt;= 0 &amp;&amp; row - i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col - i * x &gt;= 0 &amp;&amp; col - i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row - i * y][col - i * x] == 1) &#123;
+​                                personNum++;
+​                            &#125; else if (row - i * y &gt;= 0 &amp;&amp; row - i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col - i * x &gt;= 0 &amp;&amp; col - i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row - i * y][col - i * x] == 0) &#123;
+​                                emptyNum++;
+​                                break;
+​                            &#125; else &#123;
+​                                break;
+​                            &#125;
+​                        &#125;
+
+​                        if (personNum == 1) &#123;
+​                            data.scoreMap[row][col] += 10;
+​                        &#125; else if (personNum == 2) &#123;
+​                            if (emptyNum == 1) &#123;
+​                                data.scoreMap[row][col] += 30;
+​                            &#125; else if (emptyNum == 2) &#123;
+​                                data.scoreMap[row][col] += 40;
+​                            &#125;
+​                        &#125; else if (personNum == 3) &#123;
+​                            if (emptyNum == 1) &#123;
+​                                data.scoreMap[row][col] += 60;
+​                            &#125; else if (emptyNum == 2) &#123;
+​                                data.scoreMap[row][col] += 200;
+​                            &#125;
+​                        &#125; else if (personNum == 4) &#123;
+​                            data.scoreMap[row][col] += 20000;
+​                        &#125;
+
+​                        emptyNum = 0;
+
+​                        for (int i = 1; i &lt;= 4; i++) &#123;
+​                            if (row + i * y &gt; 0 &amp;&amp; row + i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col + i * x &gt; 0 &amp;&amp; col + i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row + i * y][col + i * x] == -1) &#123;
+​                                botNum++;
+​                            &#125; else if (row + i * y &gt; 0 &amp;&amp; row + i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col + i * x &gt; 0 &amp;&amp; col + i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row + i * y][col + i * x] == 0) &#123;
+​                                emptyNum++;
+​                                break;
+​                            &#125; else &#123;
+​                                break;
+​                            &#125;
+​                        &#125;
+
+​                        for (int i = 1; i &lt;= 4; i++) &#123;
+​                            if (row - i * y &gt; 0 &amp;&amp; row - i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col - i * x &gt; 0 &amp;&amp; col - i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row - i * y][col - i * x] == -1) &#123;
+​                                botNum++;
+​                            &#125; else if (row - i * y &gt; 0 &amp;&amp; row - i * y &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    col - i * x &gt; 0 &amp;&amp; col - i * x &lt; BOARD_GRAD_SIZE &amp;&amp;
+​                                    data.chessMap[row - i * y][col - i * x] == 0) &#123;
+​                                emptyNum++;
+​                                break;
+​                            &#125; else &#123;
+​                                break;
+​                            &#125;
+​                        &#125;
+
+​                        if (botNum == 0) &#123;
+​                            data.scoreMap[row][col] += 5;
+​                        &#125; else if (botNum == 1) &#123;
+​                            data.scoreMap[row][col] += 10;
+​                        &#125; else if (botNum == 2) &#123;
+​                            if (emptyNum == 1) &#123;
+​                                data.scoreMap[row][col] += 25;
+​                            &#125; else if (emptyNum == 2) &#123;
+​                                data.scoreMap[row][col] += 50;
+​                            &#125;
+​                        &#125; else if (botNum == 3) &#123;
+​                            if (emptyNum == 1) &#123;
+​                                data.scoreMap[row][col] += 55;
+​                            &#125; else if (emptyNum == 2) &#123;
+​                                data.scoreMap[row][col] += 300;
+​                            &#125;
+​                        &#125; else if (botNum &gt;= 4) &#123;
+​                            data.scoreMap[row][col] += 30000;
+​                        &#125;
+​                    &#125;
+​                &#125;
+​            &#125;
+​        &#125;
+​    &#125;
+
+​    public static void main(String[] args) &#123;
+​        ChessGame game = new ChessGame();
+​        ChessData data = game.new ChessData();
+​        game.initializeChessData(data);
+
+​        Scanner scanner = new Scanner(System.in);
+
+​        // 游戏主循环
+​        while (true) &#123;
+​            Point point = game.actionByAI(data);
+​            System.out.println(&quot;AI选择下在这里: (&quot; + point.row + &quot;, &quot; + point.col + &quot;)&quot;);
+​            game.updateGameMap(data, point.row, point.col);
+​            if (game.checkWin(data, point.row, point.col)) &#123;
+​                System.out.println(&quot;对不起，你输了，AI获胜&quot;);
+​                break;
+​            &#125;
+
+​            // 玩家输入逻辑
+​            System.out.println(&quot;轮到你下了，请输入坐标 (例如, &#39;3 4&#39;): &quot;);
+​            int playerRow = scanner.nextInt();
+​            int playerCol = scanner.nextInt();
+
+​            if (playerRow &lt; 0 || playerRow &gt;= BOARD_GRAD_SIZE || playerCol &lt; 0 || playerCol &gt;= BOARD_GRAD_SIZE) &#123;
+​                System.out.println(&quot;你不能下在这里，请重新输入！&quot;);
+​                continue;
+​            &#125;
+
+​            if (data.chessMap[playerRow][playerCol] != 0) &#123;
+​                System.out.println(&quot;你不能下在这里，这里已经有棋子了，下在其他地方吧&quot;);
+​                continue;
+​            &#125;
+
+​            game.updateGameMap(data, playerRow, playerCol);
+​            if (game.checkWin(data, playerRow, playerCol)) &#123;
+​                System.out.println(&quot;恭喜你赢了！&quot;);
+​                break;
+​            &#125;
+
+​            // 打印棋盘状态
+​            printChessboard(data);
+​        &#125;
+​    &#125;
+
+​    // 打印棋盘状态
+​    private static void printChessboard(ChessData data) &#123;
+​        for (int row = 0; row &lt; BOARD_GRAD_SIZE; row++) &#123;
+​            for (int col = 0; col &lt; BOARD_GRAD_SIZE; col++) &#123;
+​                if (data.chessMap[row][col] == 1) &#123;
+​                    System.out.print(&quot;X &quot;);
+​                &#125; else if (data.chessMap[row][col] == -1) &#123;
+​                    System.out.print(&quot;O &quot;);
+​                &#125; else &#123;
+​                    System.out.print(&quot;. &quot;);
+​                &#125;
+​            &#125;
+​            System.out.println();
+​        &#125;
+​    &#125;
+&#125;
+
+</code></pre>
+
+            
+        </div>
+    </div>
+-->
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Java/" style="color: #ffa2c4">Java</a>
+        </span>
+        
+    </div>
+
+<!--
+    <span class="icon">
+        <i class="fa-solid fa-tags fa-fw"></i>
+    </span>
+
+    <span class="date">
+        <span class="icon">
+            <i class="fa-solid fa-calendar fa-fw"></i>
+        </span>
+        2024/3/31
+    </span>
+-->
+    <a href="/2024/03/31/Java%E5%AE%9E%E7%8E%B0%E4%BA%BA%E6%9C%BA%E5%AF%B9%E6%88%98%E4%BA%94%E5%AD%90%E6%A3%8B%E6%B8%B8%E6%88%8F/" class="go-post">阅读全文</a>
+
+</div>
+
+<div class="post">
     <a href="/2024/03/31/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
         <h2 class="post-title">Python学习笔记</h2>
     </a>
@@ -1832,7 +2719,7 @@ plt.show()
         
         <span class="tag">
             
-            <a href="/tags/python/" style="color: #ffa2c4">python</a>
+            <a href="/tags/python/" style="color: #00a596">python</a>
         </span>
         
     </div>
@@ -1965,7 +2852,7 @@ echo &quot;Hello, World!&quot;;
         
         <span class="tag">
             
-            <a href="/tags/hello-world/" style="color: #ff7d73">hello world</a>
+            <a href="/tags/hello-world/" style="color: #00a596">hello world</a>
         </span>
         
     </div>
@@ -2167,306 +3054,6 @@ C++ 码农真下头！滚，别坐我旁边，看着都恶心！”
 
 </div>
 
-<div class="post">
-    <a href="/2024/02/27/%E6%A8%AA%E6%B8%A1%E6%B5%B7%E5%B3%A1/">
-        <h2 class="post-title">横渡海峡</h2>
-    </a>
-
-
-
-    <div class="category-and-date">
-
-        
-        <span class="category">
-            <a href="/categories/%E6%97%A5%E8%AE%B0/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                日记
-            </a>
-        </span>
-
-        
-
-
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/2/27
-        </span>
-
-
-
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-        </div>
-    </div>
-<!--
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h2><span id="渤海海峡">渤海海峡</span></h2><pre><code class="自由">我的思绪在这高耸的云间
-在鸟儿的翅膀上
-在路边盛开的的蔷薇花瓣中
-在一个叫做自由地方
-</code></pre>
-<p><img src="/../image/image.jpg" alt="image"></p>
-<pre><code class="rabbit"> (\(\  
- ( -.-) 
- o_(&quot;)(&quot;)
-</code></pre>
-
-            
-        </div>
-    </div>
--->
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C/" style="color: #ff7d73">你好世界</a>
-        </span>
-        
-    </div>
-
-<!--
-    <span class="icon">
-        <i class="fa-solid fa-tags fa-fw"></i>
-    </span>
-
-    <span class="date">
-        <span class="icon">
-            <i class="fa-solid fa-calendar fa-fw"></i>
-        </span>
-        2024/2/27
-    </span>
--->
-    <a href="/2024/02/27/%E6%A8%AA%E6%B8%A1%E6%B5%B7%E5%B3%A1/" class="go-post">阅读全文</a>
-
-</div>
-
-<div class="post">
-    <a href="/2024/02/01/UI%E4%BA%94%E5%AD%90%E6%A3%8B/">
-        <h2 class="post-title">UI界面的五子棋</h2>
-    </a>
-
-
-
-    <div class="category-and-date">
-
-        
-        <span class="category">
-            <a href="/categories/Java%E9%A1%B9%E7%9B%AE/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Java项目
-            </a>
-        </span>
-
-        
-
-
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2024/2/1
-        </span>
-
-
-
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-        </div>
-    </div>
-<!--
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1><span id="具体代码如下所示">具体代码如下所示</span></h1><h2><span id="黑子和白子可以自定义将下方图片路径修改为你的路径即可">黑子和白子可以自定义，将下方图片路径修改为你的路径即可</span></h2><pre><code class="java">import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-public class GomokuGame extends JFrame &#123;
-    private static final int BOARD_SIZE = 15;
-    private static final int CELL_SIZE = 40;
-    private static final int BOARD_OFFSET = 20;
-
-    private enum Player &#123; BLACK, WHITE &#125;
-
-    private Player currentPlayer;
-    private JButton[][] board;
-
-    private ImageIcon blackIcon;
-    private ImageIcon whiteIcon;
-
-    public GomokuGame() &#123;
-        setTitle(&quot;老杨大战老云，谁将获得版权费用？&quot;);
-        setSize(BOARD_SIZE * CELL_SIZE + BOARD_OFFSET, BOARD_SIZE * CELL_SIZE + BOARD_OFFSET);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
-        currentPlayer = Player.BLACK;
-
-        blackIcon = new ImageIcon(&quot;在这里输入你的图片路径（黑子）&quot;);
-        blackIcon.setImage(blackIcon.getImage().getScaledInstance(CELL_SIZE, CELL_SIZE, Image.SCALE_DEFAULT));
-
-        whiteIcon = new ImageIcon(&quot;在这里输入你的图片路径（白子）&quot;);
-        whiteIcon.setImage(whiteIcon.getImage().getScaledInstance(CELL_SIZE, CELL_SIZE, Image.SCALE_DEFAULT));
-
-        initializeBoard();
-    &#125;
-
-    private void initializeBoard() &#123;
-        setLayout(new GridLayout(BOARD_SIZE, BOARD_SIZE));
-        board = new JButton[BOARD_SIZE][BOARD_SIZE];
-
-        for (int i = 0; i &lt; BOARD_SIZE; i++) &#123;
-            for (int j = 0; j &lt; BOARD_SIZE; j++) &#123;
-                JButton cell = new JButton();
-                cell.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
-                cell.setBackground(new Color(139, 69, 19));
-                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                cell.addMouseListener(new CellClickListener(i, j));
-                board[i][j] = cell;
-                add(cell);
-            &#125;
-        &#125;
-    &#125;
-
-    private class CellClickListener extends MouseAdapter &#123;
-        private int row, col;
-
-        public CellClickListener(int row, int col) &#123;
-            this.row = row;
-            this.col = col;
-        &#125;
-
-        @Override
-        public void mouseClicked(MouseEvent e) &#123;
-            JButton cell = (JButton) e.getComponent();
-
-            if (cell.getBackground().equals(new Color(139, 69, 19))) &#123;
-                if (currentPlayer == Player.BLACK) &#123;
-                    cell.setIcon(blackIcon);
-                    checkWin(row, col, blackIcon);
-                    currentPlayer = Player.WHITE;
-                &#125; else &#123;
-                    cell.setIcon(whiteIcon);
-                    checkWin(row, col, whiteIcon);
-                    currentPlayer = Player.BLACK;
-                &#125;
-                cell.setBackground(null);
-            &#125;
-        &#125;
-    &#125;
-
-    private boolean checkDirection(int row, int col, int rowIncrement, int colIncrement, ImageIcon icon) &#123;
-        int count = 0;
-
-        for (int i = -4; i &lt;= 4; i++) &#123;
-            int newRow = row + i * rowIncrement;
-            int newCol = col + i * colIncrement;
-
-            if (newRow &gt;= 0 &amp;&amp; newRow &lt; BOARD_SIZE &amp;&amp; newCol &gt;= 0 &amp;&amp; newCol &lt; BOARD_SIZE) &#123;
-                if (board[newRow][newCol].getIcon() == icon) &#123;
-                    count++;
-                    if (count == 5) &#123;
-                        return true;
-                    &#125;
-                &#125; else &#123;
-                    count = 0;
-                &#125;
-            &#125; else &#123;
-                count = 0;
-            &#125;
-        &#125;
-
-        return false;
-    &#125;
-
-    private void checkWin(int row, int col, ImageIcon icon) &#123;
-        if (checkDirection(row, col, 1, 0, icon) ||
-                checkDirection(row, col, 0, 1, icon) ||
-                checkDirection(row, col, 1, 1, icon) ||
-                checkDirection(row, col, 1, -1, icon)) &#123;
-            JOptionPane.showMessageDialog(GomokuGame.this, icon == blackIcon ? &quot;老杨获胜&quot; : &quot;老云获胜&quot;);
-            resetBoard();
-        &#125;
-    &#125;
-
-    private void resetBoard() &#123;
-        for (int i = 0; i &lt; BOARD_SIZE; i++) &#123;
-            for (int j = 0; j &lt; BOARD_SIZE; j++) &#123;
-                board[i][j].setIcon(null);
-                board[i][j].setBackground(new Color(139, 69, 19));
-            &#125;
-        &#125;
-        currentPlayer = Player.BLACK;
-    &#125;
-
-    public static void main(String[] args) &#123;
-        SwingUtilities.invokeLater(() -&gt; &#123;
-            new GomokuGame().setVisible(true);
-        &#125;);
-    &#125;
-&#125;
-</code></pre>
-
-            
-        </div>
-    </div>
--->
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/Java/" style="color: #ff7d73">Java</a>
-        </span>
-        
-    </div>
-
-<!--
-    <span class="icon">
-        <i class="fa-solid fa-tags fa-fw"></i>
-    </span>
-
-    <span class="date">
-        <span class="icon">
-            <i class="fa-solid fa-calendar fa-fw"></i>
-        </span>
-        2024/2/1
-    </span>
--->
-    <a href="/2024/02/01/UI%E4%BA%94%E5%AD%90%E6%A3%8B/" class="go-post">阅读全文</a>
-
-</div>
-
 
 
 
@@ -2503,10 +3090,10 @@ public class GomokuGame extends JFrame &#123;
         </div>
         <div class="name">ailasukasan</div>
         <div class="description">
-            <p>你好，我是来自北大软微的一名学生<br><a target="_blank" rel="noopener" href="https://www.ss.pku.edu.cn/">北京大學軟件與微電子學院</a><br>軟件工程專業<br>こんにちは<br>僕は北大ソフトウェア工学の学生です<br>a student from Peking University of<br>Software and Microelectronics</p>
+            <p>你好，我是来自北大软微的一名学生<br><a target="_blank" rel="noopener" href="https://www.ss.pku.edu.cn/">北京大學軟件與微電子學院</a><br>軟件工程專業<br>こんにちは<br>僕は北大ソフトウェア工学の学生です<br><a target="_blank" rel="noopener" href="https://github.com/ailasukasan">我的GitHub主页</a></p>
 
             <hr>
-            <p><a target="_blank" rel="noopener" href="https://github.com/ailasukasan">我的GitHub主页</a><br>虽然啥也没有…万一以后想用呢？</p>
+            <p>无法飞翔的羽翼<br>仍然有它存在的意义</p>
 
         </div>
         
