@@ -1,0 +1,509 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!--
+    <script src="/js/leaves.js"></script>
+-->
+    <!-- 爆炸红心效果 -->
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="/js/firework.js"></script>
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+<!--流星雨背景
+<canvas
+    id="background"
+    style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1"
+></canvas>
+<script src="/js/background.min.js"></script>
+-->
+    <meta charset="utf-8" />
+    <title>C++智能指针总结 | PHM&#39;s world</title>
+    <meta name="author" content="ailasukasan" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.loli.net" />
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>歡迎來到烏托邦的世界</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>PHM&#39;S WORLD</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;PHM</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;PHM&#39;S WORLD</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">PHM</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>C++智能指针总结</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/4/12
+        </span>
+        
+        <span class="category">
+            <a href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                基础知识
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/C/" style="color: #ff7d73">C++</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <ul>
+<li><p>四个智能指针，auto_ptr, unique_ptr, shared_ptr, weak_ptr，其中</p>
+</li>
+<li><p>后三个是C++11支持，第一个已经启用。</p>
+</li>
+<li><p>auto_ptr缺点：</p>
+</li>
+<li><ol>
+<li>两个auto_ptr指向同一个内存的话会造成多次析构释放。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>采用“&#x3D;”赋值语句的时候，会将右边的所指向的内存转移到左边的智能指针上，这样原来的右边的智能指针就不再指向原来那块内存了。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>当他作为参数时，会将实参的内存转移到形参上，这样实参也无法找到原来的那块内存了。</li>
+</ol>
+</li>
+</ul>
+<p>  使用普通指针，容易造成堆内存泄露（忘记释放），二次释放，程序发生异常时内存泄露等问题等，使用智能指针能更好的管理堆内存。</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+using namespace std;
+ 
+
+class A: public enable_shared_from_this&lt;A&gt;
+&#123;
+public:
+    shared_ptr&lt;A&gt; GetSelf() &#123;
+        //return shared_ptr&lt;A&gt;(this); // 不要这么做
+        return shared_from_this();
+    &#125;
+    ~A()&#123;
+        cout &lt;&lt; &quot;delete A\n&quot; &lt;&lt; endl;
+    &#125;
+&#125;;
+ 
+class B;
+class C;
+ 
+class B&#123;
+public:
+    //shared_ptr&lt;C&gt; cptr;
+    weak_ptr&lt;C&gt; cptr;//改为weak
+    int *val;
+    B() &#123;
+        val = new int;
+    &#125;
+    ~B() &#123;
+        cout &lt;&lt; &quot;delete B&quot; &lt;&lt; endl;
+        delete val;
+    &#125;
+&#125;;
+ 
+class C&#123;
+public:
+    shared_ptr&lt;B&gt; bptr;
+    ~C() &#123;
+        cout &lt;&lt; &quot;delete C&quot; &lt;&lt; endl;
+    &#125;
+&#125;;
+ 
+void deletePtr(int *p) &#123;
+    cout &lt;&lt; &quot;call delete&quot; &lt;&lt; endl;
+    delete p;
+&#125;
+ 
+void test() &#123;
+    shared_ptr&lt;A&gt; ap(new A);
+    weak_ptr&lt;A&gt; wp1 = ap;
+    weak_ptr&lt;A&gt; wp2 = ap;
+    cout &lt;&lt; &quot;ap.use_count()&quot; &lt;&lt; ap.use_count() &lt;&lt; endl;
+&#125;
+ 
+void test2() &#123;
+    shared_ptr&lt;A&gt; wp;
+    &#123;
+        shared_ptr&lt;A&gt; ap(new A);
+        wp = ap;
+    &#125;
+    cout &lt;&lt; &quot;wp.use_count()&quot; &lt;&lt; wp.use_count() &lt;&lt; endl;
+    if(!wp.expired()) &#123;
+        //wp不能直接操作对象的成员和方法，需要先lock获取shared
+        shared_ptr&lt;A&gt; ptr = wp.lock();
+        *(ptr-&gt;val) = 20;//资源已经被释放了
+    &#125;
+&#125;
+ 
+int main()
+&#123;
+    &#123;
+        A *pa = new A;//没有调用delete对指针进行释放导致内存泄漏。
+        std::shared_ptr&lt;A&gt; pb(new A);//智能指针，加强内存释放问题。
+    &#125;
+    &#123;
+        /*
+         * pb,pb1,pb2都指向的是同一块内存
+         * shared引入了一个计数机制，每个引用一个就加一操作
+         * 当引用计数降为0才释放。
+         * 不要用地址传递的方式。
+         * 不能通过直接将原始这种赋值来初始化，需要通过构造函数和辅助方法来初始化。
+         * 应该先使用make_shared来构造智能指针，因为更高效。
+         * 通过get方法来获取原始指针，但不推荐使用
+         * 如果用shared_ptr管理非new对象或没有析构函数的类时，应为其传递合适的删除器。
+         * shared_ptr实现包含了两部分，
+                一个指向堆上创建的对象的裸指针，raw_ptr
+                一个指向内部隐藏的、共享的管理对象。share_count_object
+         * 对于一个未初始化的智能指针，可以通过reset方法
+         * 来初始化，当智能指针有值的时候调用reset会引起引用计数减1。
+         * 智能指针可以通过重载的bool类型操作符来判断。
+         * 不要保存p.get()的返回值 ，无论是保存为裸指针还是shared_ptr都是错误的
+         * 保存为裸指针不知什么时候就会变成空悬指针，保存为shared_ptr则产生了独立指针
+         * 不要delete p.get()的返回值 ，会导致对一块内存delete两次的错误
+         */
+        shared_ptr&lt;A&gt; pb(new A);
+        shared_ptr&lt;A&gt; pb1 = pb;
+        shared_ptr&lt;A&gt; pb2 = pb;
+        &#123;
+            //shared_ptr&lt;int&gt; p = new int(1);//不能将一个原始指针直接赋值给一个之恩那个指针。
+        &#125;
+        shared_ptr&lt;int&gt; p1;
+        p1.reset(new int(1)); //分配资源
+        shared_ptr&lt;int&gt; p2 = p1;//此时p2.use_count()打印出的应该是2
+        p1.reset(); //没有参数就是手动释放资源。此时打印p2.use_count()打印出的是1
+        if(!p1) &#123;//此时p1是空的
+            cout &lt;&lt; &quot;p1 is empty\n&quot; &lt;&lt; endl;
+        &#125;
+        if(!p2) &#123;//p2非空
+            cout &lt;&lt; &quot;p2 is empty\n&quot; &lt;&lt; endl;
+        &#125;
+        p2.reset();
+        if(!p2) &#123;//p2空
+            cout &lt;&lt; &quot;p2 is empty\n&quot; &lt;&lt; endl;
+        &#125;
+    &#125;
+    shared_ptr&lt;int&gt; p(new int(1), deletePtr);
+    //使用匿名函数的方式
+    shared_ptr&lt;int&gt; b1(new int(1), [](int *p) &#123;
+        cout &lt;&lt; &quot;call&quot; &lt;&lt; endl;
+        delete p;
+    &#125;);
+    shared_ptr&lt;int&gt; b2(new int[1], [](int *p) &#123;
+        cout &lt;&lt; &quot;call&quot; &lt;&lt; endl;
+        delete []p;
+    &#125;);
+    cout &lt;&lt; &quot;Hello World!&quot; &lt;&lt; endl;
+    auto sp1 = make_shared&lt;int&gt;(100);//相当于shared_ptr&lt;int&gt; sp1(new int(100));
+    shared_ptr&lt;int&gt; ptr(new int(1));
+    int *e = ptr.get();
+    /*
+     * 不要用一个原始指针初始化多个shared_ptr
+     * int *ptr = new int;
+     * shared_ptr&lt;int&gt; p1(ptr);
+     * shared_ptr&lt;int&gt; p2(ptr);
+     *
+     * 不要在函数实参中创建shared_ptr
+     * function(shared_ptr&lt;int&gt;(new int), g());
+     * 因为C++的函数参数的计算顺序在不同的编译器不同的约定下可能是不一样的，一般是从右到左，但也
+可能从左到右，所以，可能的过程是先new int，然后调用g()，如果恰好g()发生异常，而shared_ptr还
+没有创建， 则int内存泄漏了，正确的写法应该是先创建智能指针.
+     *通过shared_from_this()返回this指针。不要将this指针作为shared_ptr返回出来，因为this指针
+本质上是一个裸指针，因此，这样可能会导致重复析构。
+     * 通过shared_from_this()返回this指针。不要将this指针作为shared_ptr返回出来，因为this指针
+本质上是一个裸指针，因此，这样可能会导致重复析构。
+     */
+ 
+    /*
+     * 测试this
+     */
+    shared_ptr&lt;A&gt; st1(new A);
+    shared_ptr&lt;A&gt; st2 = st1-&gt;GetSelf();//执行段错误，会有二次析构
+    cout &lt;&lt; &quot;st1---------&gt;&quot; &lt;&lt; st1.use_count() &lt;&lt; endl;
+    //结果都为1，显然是错误的。由于用同一个指针（this)构造了两个智能指针sp1和sp2，而他们之间(智能指针)是没有任何关系
+    //的，在离开作用域之后this将会被构造的两个智能指针各自析构，导致重复析构的错误。
+    //正确返回this的shared_ptr的做法是：让目标类通过std::enable_shared_from_this类，然后使用基类的
+    //成员函数shared_from_this()来返回this的shared_ptr,修改之后结果为2
+    cout &lt;&lt; &quot;st2---------&gt;&quot; &lt;&lt; st2.use_count() &lt;&lt; endl;
+ 
+    /*
+     * 避免循环引用。循环引用会导致内存泄漏
+     */
+ 
+    shared_ptr&lt;B&gt; b(new B);
+    shared_ptr&lt;C&gt; c(new C);
+    b-&gt;cptr = c;
+    c-&gt;bptr = b;
+    b-&gt;cptr.reset();
+    //在程序结束之后没有调用B和C的析构函数，需要手动释放
+    //因为他们循环引用，导致指针不为0，产生内存泄漏，解决办法：将B和C任何一个成员变量改为weak_ptr
+ 
+    /*
+     * unique_ptr:独占型智能指针，不允许其他智能指针共享内部指针，
+     * 不允许通过赋值将一个unique_ptr赋值给另一个智能指针。
+     * unique_ptr&lt;T&gt; my_ptr(new T);
+     * unique_ptr&lt;T&gt; my_other_ptr = my_ptr;//报错不能赋值
+     * 但是它可以通过函数返回给其他的智能指针，还可以通过move来转移到其他指针上。
+     * unique可以指向一个数组，但是shared不行
+     * unique_ptr&lt;A[]&gt; ptr(new A[10]);正确
+     * shared_ptr&lt;A[]&gt; ptr2(new A[10]);错误
+     * unique的指定删除器和shared_ptr也不一样
+     * shared_ptr&lt;int&gt; ptr3(new int(1), [](int* p)&#123;delete p;&#125;);正确
+     * unique_ptr&lt;int&gt; ptr4(new int(1), [](int* p)&#123;delete p;&#125;);错误
+     * unique需要确定删除器的类型
+     * unique_ptr&lt;int, void(*)(int*)&gt; ptr5(new int(1), [](int* p)&#123;delete p;&#125;);正确
+     * 总之，unique和shared区别：
+     * 1. unique独占不能赋值，只能转移
+     * 2. unique可以指向数组，shared不可以
+     * 3. make_unique出现在C++14，make_shared出现在C++11
+     * 4. unique删除器需要确定类型
+     */
+    unique_ptr&lt;A&gt; my_ptr(new A);
+    unique_ptr&lt;A&gt; my_other_ptr = move(my_ptr);//这是my_ptr变为空
+    /*
+     * C++14中提出了make_unique
+     */
+ 
+    /*
+     * weak_ptr：weak_ptr 是一种不控制对象生命周期的智能指针, 它指向一个 shared_ptr 管理的对象.
+     * 进行该对象的内存管理的是那个强引用的shared_ptr， weak_ptr只是提供了对管理对象的一个访问手段
+     * 它只可以从一个shared_ptr 或另一个 weak_ptr 对象构造, 它的构造和析构不会引起引用记数的增加或减少
+     * 通过use_count()方法获取当前观察资源的引用计数
+     * 通过expired()方法判断所观察资源是否已经释放
+     * 通过lock方法获取监视的shared_ptr
+     * 不能直接将this指针返回shared_ptr，需要通过派生
+std::enable_shared_from_this类，并通过其方法shared_from_this来返回指针，原因是
+std::enable_shared_from_this类中有一个weak_ptr，这个weak_ptr用来观察this智能指针，调用
+shared_from_this()方法是，会调用内部这个weak_ptr的lock()方法，将所观察的shared_ptr返回
+     * weak_ptr使用注意事项：
+     * weak_ptr在使用前需要检查合法性。
+     */
+    auto uni(make_unique&lt;A&gt;());
+    test();
+    /*
+     * 智能指针安全问题：
+     * shared_ptr安全：引用计数本身是安全的，多线程下，复制几次就加几次。比如参数使用的是值传递
+     * shared_ptr不安全：不同线程如果共用一个shared_ptr，比如参数是使用引用传递，所管理的对象不是线程安全的，
+     * sp1，sp2，sp3实际都是指向A，三个线程同时操作A，对象的数据安全必然需要对象A自己保证。
+     */
+    return 0;
+&#125;
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 PHM&#39;s world
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;ailasukasan
+        </div>
+        <div>
+            可以点击一下Try Try <a target="_blank" rel="noopener" href="https://github.com/ailasukasan">歡迎來到我的世界</a> &amp;
+            <a href="">站在能分割世界的桥</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+
+
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+
+
+</body>
+</html>

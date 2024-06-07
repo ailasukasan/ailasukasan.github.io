@@ -206,7 +206,7 @@ color="220,220,220" opacity='0.9' zIndex="-2" count="100" src="//cdn.bootcss.com
             
             <span class="tag">
                 
-                <a href="/tags/C/" style="color: #ffa2c4">C++</a>
+                <a href="/tags/C/" style="color: #03a9f4">C++</a>
             </span>
             
         </span>
@@ -338,7 +338,7 @@ LogEvent::ptr m_event;
 <h2><span id="class-logformatter-amp-class-formatitem"><em>class</em> LogFormatter &amp; <em>class</em> FormatItem</span></h2><h3><span id="class-formatitem日志内容格式化"><em>class</em> FormatItem（日志内容格式化）</span></h3><p>该类为<code>LogFormatter</code>的public内部类成员，通过该类得到解析后的格式。</p>
 <p>此类为抽象类，不同事件的子类继承该类，并且重写纯虚函数<code>format</code>将日志格式转化到流</p>
 <p>格式化日志到流</p>
-<pre><code class="rust">rust复制代码// 消息format
+<pre><code class="rust">// 消息format
 class MessageFormatItem : public LogFormatter::FormatItem&#123;
 public:
     MessageFormatItem(const std::string&amp; str = &quot;&quot;) &#123;&#125;
@@ -422,7 +422,7 @@ private:
     std::string m_format;
 &#125;;
 </code></pre>
-<h3><span id="class-logformatter日志格式化"><em>class</em> LogFormatter（日志格式化）</span></h3><h4><span id="mumber成员变量">mumber（成员变量）</span></h4><pre><code class="c">c复制代码	// 日志格式模板
+<h3><span id="class-logformatter日志格式化"><em>class</em> LogFormatter（日志格式化）</span></h3><h4><span id="mumber成员变量">mumber（成员变量）</span></h4><pre><code class="c">    // 日志格式模板
     std::string m_pattern;
     // 日志格式解析后格式
     std::vector&lt;FormatItem::ptr&gt; m_items;
@@ -430,13 +430,13 @@ private:
     bool m_error = false;
 </code></pre>
 <h4><span id="logformatter构造函数">LogFormatter（构造函数）</span></h4><p>初始化日志格式，并解析</p>
-<pre><code class="c">c复制代码LogFormatter::LogFormatter(const std::string&amp; pattern)
+<pre><code class="c">LogFormatter::LogFormatter(const std::string&amp; pattern)
     :m_pattern(pattern) &#123;
         init();
 &#125;
 </code></pre>
 <h4><span id="format返回格式化日志文本">format（返回格式化日志文本）</span></h4><p>将解析后的日志信息输出到流中</p>
-<pre><code class="c">c复制代码std::string LogFormatter::format (std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event)&#123;
+<pre><code class="c">std::string LogFormatter::format (std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event)&#123;
     std::stringstream ss;
     for(auto&amp; i : m_items) &#123;
         i-&gt;format(ss, logger, level, event);
@@ -447,7 +447,7 @@ private:
 <h4><span id="init解析格式">init（解析格式）</span></h4><p>得到相应<code>FormatItem</code>放入<code>m_items</code></p>
 <p>默认格式模板为：<code>&quot;%d&#123;%Y-%m-%d %H:%M:%S&#125;%T%t%T%N%T%F%T[%p]%T[%c]%T%f:%l%T%m%n&quot;</code></p>
 <p>e.g.<code>Y-M-D H:M:S threadId threadName fiberId [Level] [logName] FILE:LINE message</code></p>
-<pre><code class="scss">scss复制代码//%xxx %xxx&#123;xxx&#125; %%
+<pre><code class="scss">//%xxx %xxx&#123;xxx&#125; %%
 // m_pattern &quot;%d&#123;%Y-%m-%d %H:%M:%S&#125;%T%t%T%N%T%F%T[%p]%T[%c]%T%f:%l%T%m%n&quot;
 void LogFormatter::init()&#123; 
     //string, format, type
@@ -563,7 +563,7 @@ void LogFormatter::init()&#123;
 &#125;
 </code></pre>
 <h2><span id="class-logappender-amp-class-stdoutlogappender-amp-class-filelogappender"><em>class</em> LogAppender &amp; <em>class</em> StdoutLogAppender &amp; <em>class</em> FileLogAppender</span></h2><h3><span id="class-logappender日志输出目标"><em>class</em> LogAppender（日志输出目标）</span></h3><p><code>class LogAppender</code>是抽象类，有两个子类，分别为<code>StdoutLogAppender</code>和<code>FileLogAppender</code>，分别实现控制台和文件的输出。两个类都重写纯虚函数<code>log</code>方法实现写入日志，重写纯虚函数<code>toYamlString</code>方法实现将日志转化为<code>YAML</code>格式的字符串</p>
-<h4><span id="mumber成员变量">mumber（成员变量）</span></h4><pre><code class="ini">ini复制代码	//日志级别
+<h4><span id="mumber成员变量">mumber（成员变量）</span></h4><pre><code class="ini">    //日志级别
     LogLevel::Level m_level = LogLevel::DEBUG;
     //日志格式器
     LogFormatter::ptr m_formatter;
@@ -572,7 +572,7 @@ void LogFormatter::init()&#123;
     // 是否有formatter
     bool m_hasFormatter = false;
 </code></pre>
-<h4><span id="setformatter更改日志格式器">setFormatter（更改日志格式器）</span></h4><pre><code class="ini">ini复制代码void LogAppender::setFormatter(LogFormatter::ptr val) &#123;
+<h4><span id="setformatter更改日志格式器">setFormatter（更改日志格式器）</span></h4><pre><code class="ini">void LogAppender::setFormatter(LogFormatter::ptr val) &#123;
     MutexType::Lock lock(m_mutex);
     m_formatter = val;
     if (m_formatter) &#123;
@@ -582,26 +582,26 @@ void LogFormatter::init()&#123;
     &#125;
 &#125;
 </code></pre>
-<h4><span id="getformatter获得日志格式器">getFormatter（获得日志格式器）</span></h4><pre><code class="css">css复制代码LogFormatter::ptr LogAppender::getFormatter() &#123;
+<h4><span id="getformatter获得日志格式器">getFormatter（获得日志格式器）</span></h4><pre><code class="css">LogFormatter::ptr LogAppender::getFormatter() &#123;
     MutexType::Lock lock(m_mutex);
     return m_formatter;
 &#125;
 </code></pre>
-<h3><span id="class-stdoutlogappender输出到控制台的appender"><em>class</em> StdoutLogAppender（输出到控制台的Appender）</span></h3><pre><code class="ruby">ruby复制代码class StdoutLogAppender : public LogAppender &#123;
+<h3><span id="class-stdoutlogappender输出到控制台的appender"><em>class</em> StdoutLogAppender（输出到控制台的Appender）</span></h3><pre><code class="ruby">class StdoutLogAppender : public LogAppender &#123;
 public:
     typedef std::shared_ptr&lt;StdoutLogAppender&gt; ptr;
     void log(Logger::ptr logger, LogLevel::Level level, LogEvent::ptr event) override;
     std::string toYamlString() override;
 &#125;;
 </code></pre>
-<h4><span id="log输出到流">log（输出到流）</span></h4><pre><code class="c">c复制代码void StdoutLogAppender::log(std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event)&#123;
+<h4><span id="log输出到流">log（输出到流）</span></h4><pre><code class="c">void StdoutLogAppender::log(std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event)&#123;
     if(level &gt;= m_level) &#123;
         MutexType::Lock lock(m_mutex);
         std::cout &lt;&lt; m_formatter-&gt;format(logger, level, event);	//这里调用Logformat的format，它会遍历m_items调用相应的format输出到流
     &#125;
 &#125;
 </code></pre>
-<h4><span id="toyamlstring输出yaml格式字符串">toYamlString（输出<code>Yaml</code>格式字符串）</span></h4><pre><code class="scss">scss复制代码std::string StdoutLogAppender::toYamlString() &#123;
+<h4><span id="toyamlstring输出yaml格式字符串">toYamlString（输出<code>Yaml</code>格式字符串）</span></h4><pre><code class="scss">std::string StdoutLogAppender::toYamlString() &#123;
     MutexType::Lock lock(m_mutex);
     YAML::Node node;
     node[&quot;type&quot;] = &quot;StdoutLogAppender&quot;;
@@ -616,7 +616,7 @@ public:
     return ss.str();
 &#125;
 </code></pre>
-<h3><span id="class-filelogappender输出到文件的appender"><em>class</em> FileLogAppender（输出到文件的Appender）</span></h3><h4><span id="mumber成员变量">mumber（成员变量）</span></h4><pre><code class="c">c复制代码	// 文件路径
+<h3><span id="class-filelogappender输出到文件的appender"><em>class</em> FileLogAppender（输出到文件的Appender）</span></h3><h4><span id="mumber成员变量">mumber（成员变量）</span></h4><pre><code class="c">    // 文件路径
     std::string m_filename;
     // 文件流
     std::ofstream m_filestream;
@@ -624,7 +624,7 @@ public:
     uint64_t m_lastTime = 0;
 </code></pre>
 <h4><span id="filelogappender构造函数">FileLogAppender（构造函数）</span></h4><p>初始化文件路径，并且打开文件</p>
-<pre><code class="c">c复制代码FileLogAppender::FileLogAppender(const std::string&amp; filename)
+<pre><code class="c">FileLogAppender::FileLogAppender(const std::string&amp; filename)
     :m_filename(filename)&#123;
         reopen();
 &#125;
@@ -640,7 +640,7 @@ public:
 &#125;
 </code></pre>
 <h4><span id="log输出到文件">log（输出到文件）</span></h4><p>重写<code>log</code>方法，输出到文件</p>
-<pre><code class="c">c复制代码void FileLogAppender::log(std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event)&#123;
+<pre><code class="c">void FileLogAppender::log(std::shared_ptr&lt;Logger&gt; logger, LogLevel::Level level, LogEvent::ptr event)&#123;
     if (level &gt;= m_level)&#123;
         uint64_t now = time(0);
         if (now != m_lastTime) &#123;	//每秒重新reopen
@@ -655,7 +655,7 @@ public:
 &#125;
 </code></pre>
 <h4><span id="toyamlstring转化为yaml格式字符串">toYamlString（转化为YAML格式字符串）</span></h4><p>重写<code>toYamlString</code>方法，转化为YAML格式字符串</p>
-<pre><code class="scss">scss复制代码std::string FileLogAppender::toYamlString() &#123;
+<pre><code class="scss">std::string FileLogAppender::toYamlString() &#123;
     MutexType::Lock lock(m_mutex);
     YAML::Node node;
     node[&quot;type&quot;] = &quot;FileLogAppender&quot;;
@@ -671,7 +671,7 @@ public:
     return ss.str();
 &#125;
 </code></pre>
-<h2><span id="class-logger日志器"><em>class</em> Logger（日志器）</span></h2><h4><span id="mumber成员变量">mumber（成员变量</span></h4><pre><code class="c">c复制代码	//日志名称
+<h2><span id="class-logger日志器"><em>class</em> Logger（日志器）</span></h2><h4><span id="mumber成员变量">mumber（成员变量</span></h4><pre><code class="c">    //日志名称
     std::string m_name;
     //日志级别
     LogLevel::Level m_level;
@@ -687,14 +687,14 @@ public:
 <h4><span id="logger构造函数">Logger（构造函数）</span></h4><p><strong>名称</strong>，<code>def = root</code></p>
 <p><strong>日志级别</strong>， <code>def = DEBUG</code></p>
 <p><strong>日志格式</strong>， <code>def = &quot;%d&#123;%Y-%m-%d %H:%M:%S&#125;%T%t%T%N%T%F%T[%p]%T[%c]%T%f:%l%T%m%n&quot;</code></p>
-<pre><code class="perl">perl复制代码Logger::Logger(const std::string&amp; name)
+<pre><code class="perl">Logger::Logger(const std::string&amp; name)
     :m_name(name) 
     ,m_level(LogLevel::DEBUG)&#123;
         m_formatter.reset(new LogFormatter(&quot;%d&#123;%Y-%m-%d %H:%M:%S&#125;%T%t%T%N%T%F%T[%p]%T[%c]%T%f:%l%T%m%n&quot;));
 &#125;
 </code></pre>
 <h4><span id="log写不同level日志到日志目标">log（写不同Level日志到日志目标）</span></h4><p>m_appenders为日志目标地，将当前logger输出到相应的appender，因为Appender的log要<strong>传入logger的智能指针</strong>，所以使用shared_from_this()获得当前logger的智能指针</p>
-<pre><code class="scss">scss复制代码void Logger::log(LogLevel::Level level, LogEvent::ptr event)&#123;
+<pre><code class="scss">void Logger::log(LogLevel::Level level, LogEvent::ptr event)&#123;
     if (level &gt;= m_level)&#123;
         auto self = shared_from_this();
         MutexType::Lock lock(m_mutex);
@@ -709,7 +709,7 @@ public:
 &#125;
 </code></pre>
 <h4><span id="addappender添加日志目标">addAppender（添加日志目标）</span></h4><p>若appender没有formatter的话就将默认formatter赋给他，若有formatter则直接添加到m_appenders队列中</p>
-<pre><code class="rust">rust复制代码void Logger::addAppender(LogAppender::ptr appender)&#123;
+<pre><code class="rust">void Logger::addAppender(LogAppender::ptr appender)&#123;
         MutexType::Lock lock(m_mutex);
         if (!appender-&gt;getFormatter()) &#123;
             MutexType::Lock ll(appender-&gt;m_mutex);
@@ -719,7 +719,7 @@ public:
 &#125;
 </code></pre>
 <h4><span id="delappender删除日志目标">delAppender（删除日志目标）</span></h4><p>在m_appenders中找到要删除的appender，erase掉</p>
-<pre><code class="ini">ini复制代码void Logger::delAppender(LogAppender::ptr appender)&#123;
+<pre><code class="cpp">void Logger::delAppender(LogAppender::ptr appender)&#123;
     MutexType::Lock lock(m_mutex);
     for (auto it = m_appenders.begin();
         it != m_appenders.end(); ++it) &#123;
@@ -731,7 +731,7 @@ public:
 &#125;
 </code></pre>
 <h4><span id="setformatter通过智能指针">setFormatter（通过智能指针 ）</span></h4><p>将新的formatter赋给m_formatter，若appender没有formatter，则将appender的formatter更新。</p>
-<pre><code class="css">css复制代码void Logger::setFormatter(LogFormatter::ptr val)&#123;
+<pre><code class="css">void Logger::setFormatter(LogFormatter::ptr val)&#123;
     MutexType::Lock lock(m_mutex);
     m_formatter = val;
 
@@ -744,7 +744,7 @@ public:
 &#125;
 </code></pre>
 <h4><span id="setformatter通过字符串">setFormatter（通过字符串）</span></h4><p>new一个新的formatter，若格式没错，调用上面的setFormatter设置Formatter。</p>
-<pre><code class="c">c复制代码void Logger::setFormatter(const std::string &amp;val)&#123;
+<pre><code class="c">void Logger::setFormatter(const std::string &amp;val)&#123;
     sylar::LogFormatter::ptr new_val(new sylar::LogFormatter(val));
     if (new_val-&gt;isError()) &#123;
          std::cout &lt;&lt; &quot;Logger setFormatter name = &quot; &lt;&lt; m_name
@@ -757,7 +757,7 @@ public:
 &#125;
 </code></pre>
 <h4><span id="toyamlstring转换为yaml格式输出">toYamlString（转换为YAML格式输出）</span></h4><p>将当前logger <strong>name,level,formatter,appenders</strong> YAML格式按流输出</p>
-<pre><code class="css">css复制代码std::string Logger::toYamlString() &#123;
+<pre><code class="css">std::string Logger::toYamlString() &#123;
     MutexType::Lock lock(m_mutex);
     YAML::Node node;
     node[&quot;name&quot;] = m_name;
@@ -776,18 +776,16 @@ public:
 &#125;
 </code></pre>
 <h2><span id="class-loggermanager日志管理器"><em>class</em> LoggerManager（日志管理器）</span></h2><p>使用单列模式管理日志管理器，都要通过<code>LoggerMgr</code>来获得logger</p>
-<pre><code class="ruby">ruby
-
-复制代码typedef sylar::Singleton&lt;LoggerManager&gt; LoggerMgr;
+<pre><code class="ruby">typedef sylar::Singleton&lt;LoggerManager&gt; LoggerMgr;
 </code></pre>
-<h4><span id="mumber成员变量">mumber（成员变量）</span></h4><pre><code class="c">c复制代码	// 互斥锁
+<h4><span id="mumber成员变量">mumber（成员变量）</span></h4><pre><code class="c">// 互斥锁
     MutexType m_mutex;
     // 日志器容器
     std::map&lt;std::string, Logger::ptr&gt; m_loggers;
     // 主日志器
     Logger::ptr m_root;
 </code></pre>
-<h4><span id="loggermanager构造函数">LoggerManager（构造函数）</span></h4><pre><code class="css">css复制代码LoggerManager::LoggerManager() &#123;
+<h4><span id="loggermanager构造函数">LoggerManager（构造函数）</span></h4><pre><code class="css">LoggerManager::LoggerManager() &#123;
     m_root.reset(new Logger);
     m_root-&gt;addAppender(LogAppender::ptr(new StdoutLogAppender));
 
@@ -795,7 +793,7 @@ public:
 &#125;
 </code></pre>
 <h4><span id="getlogger获取日志器">getLogger（获取日志器）</span></h4><p>在map中找到相应的<code>logger</code>就返回他，若没有就创建一个<code>logger</code>并将他放到日志器容器<code>m_loggers</code>中，再返回他</p>
-<pre><code class="ini">ini复制代码Logger::ptr LoggerManager::getLogger(const std::string&amp; name) &#123;
+<pre><code class="ini">Logger::ptr LoggerManager::getLogger(const std::string&amp; name) &#123;
     MutexType::Lock lock(m_mutex);
     auto it = m_loggers.find(name);
     if (it != m_loggers.end()) &#123;
@@ -807,7 +805,7 @@ public:
     return logger;
 &#125;
 </code></pre>
-<h4><span id="toyamlstring将日志格式转化为yaml字符串">toYamlString（将日志格式转化为YAML字符串）</span></h4><pre><code class="css">css复制代码std::string LoggerManager::toYamlString() &#123;
+<h4><span id="toyamlstring将日志格式转化为yaml字符串">toYamlString（将日志格式转化为YAML字符串）</span></h4><pre><code class="css">std::string LoggerManager::toYamlString() &#123;
     MutexType::Lock lock(m_mutex);
     YAML::Node node;
     for (auto&amp; i : m_loggers) &#123;
@@ -818,7 +816,7 @@ public:
     return ss.str();
 &#125;
 </code></pre>
-<h2><span id="宏定义">宏定义</span></h2><h4><span id="使用流的方式将不同日志级别的事件写入logger中">使用流的方式，将不同日志级别的事件写入logger中</span></h4><pre><code class="less">less复制代码#define SYLAR_LOG_LEVEL(logger, level) \
+<h2><span id="宏定义">宏定义</span></h2><h4><span id="使用流的方式将不同日志级别的事件写入logger中">使用流的方式，将不同日志级别的事件写入logger中</span></h4><pre><code class="less">#define SYLAR_LOG_LEVEL(logger, level) \
     if (logger-&gt;getLevel() &lt;= level) \
         sylar::LogEventWarp(sylar::LogEvent::ptr (new sylar::LogEvent(logger, level, \
                 __FILE__, __LINE__, 0, sylar::GetThreadId(), \
@@ -830,7 +828,7 @@ public:
 #define SYLAR_LOG_ERROR(logger) SYLAR_LOG_LEVEL(logger, sylar::LogLevel::ERROR)
 #define SYLAR_LOG_FATAL(logger) SYLAR_LOG_LEVEL(logger, sylar::LogLevel::FATAL)
 </code></pre>
-<h4><span id="使用格式化方式-将不同日志级别的事件写入logger中">使用格式化方式， 将不同日志级别的事件写入logger中</span></h4><pre><code class="less">less复制代码#define SYLARY_LOG_FMT_LEVEL(logger, level, fmt, ...) \
+<h4><span id="使用格式化方式-将不同日志级别的事件写入logger中">使用格式化方式， 将不同日志级别的事件写入logger中</span></h4><pre><code class="less">#define SYLARY_LOG_FMT_LEVEL(logger, level, fmt, ...) \
     if (logger-&gt;getLevel() &lt;= level) \
         sylar::LogEventWarp(sylar::LogEvent::ptr(new sylar::LogEvent(logger, level, \
                             __FILE__, __LINE__, 0, sylar::GetThreadId(), \
@@ -841,13 +839,9 @@ public:
 #define SYLARY_LOG_FMT_ERROR(logger, fmt, ...) SYLARY_LOG_FMT_LEVEL(logger, sylar::LogLevel::ERROR, fmt, __VA_ARGS__)
 #define SYLARY_LOG_FMT_FATAL(logger, fmt, ...) SYLARY_LOG_FMT_LEVEL(logger, sylar::LogLevel::FATAL, fmt, __VA_ARGS__)
 </code></pre>
-<h4><span id="获得主日志器">获得主日志器</span></h4><pre><code class="scss">scss
-
-复制代码#define SYLAR_LOG_ROOT() sylar::LoggerMgr::GetInstance()-&gt;getRoot()
+<h4><span id="获得主日志器">获得主日志器</span></h4><pre><code class="scss">#define SYLAR_LOG_ROOT() sylar::LoggerMgr::GetInstance()-&gt;getRoot()
 </code></pre>
-<h4><span id="获得相应名字的日志器">获得相应名字的日志器</span></h4><pre><code class="scss">scss
-
-复制代码#define SYLAR_LOG_NAME(name) sylar::LoggerMgr::GetInstance()-&gt;getLogger(name)
+<h4><span id="获得相应名字的日志器">获得相应名字的日志器</span></h4><pre><code class="scss">#define SYLAR_LOG_NAME(name) sylar::LoggerMgr::GetInstance()-&gt;getLogger(name)
 </code></pre>
 <h1><span id="总结">总结</span></h1><p>这一个部分每个类之间的耦合度非常高。</p>
 <p>sylar在写代码时使用了大量的宏定义，这个谁用谁知道啊，在后面的项目过程中，也大量使用了宏定义，让代码更加的简洁。</p>
